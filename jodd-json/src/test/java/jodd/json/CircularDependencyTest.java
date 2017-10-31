@@ -26,16 +26,16 @@
 package jodd.json;
 
 import jodd.util.StringUtil;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings("Duplicates")
-public class CircularDependencyTest {
+class CircularDependencyTest {
 
 	public static class A {
 		private String name = null;
@@ -61,7 +61,7 @@ public class CircularDependencyTest {
 	}
 
 	@Test
-	public void testCircularDependency_none() {
+	void testCircularDependency_none() {
 		A a1 = new A();
 		a1.setName("a1");
 
@@ -85,7 +85,7 @@ public class CircularDependencyTest {
 	}
 
 	@Test
-	public void testCircularDependency_property() {
+	void testCircularDependency_property() {
 		A a1 = new A();
 		a1.setName("a1");
 
@@ -110,7 +110,7 @@ public class CircularDependencyTest {
 	}
 
 	@Test
-	public void testCircularDependency_propertyArray() {
+	void testCircularDependency_propertyArray() {
 		A a1 = new A();
 		a1.setName("a1");
 

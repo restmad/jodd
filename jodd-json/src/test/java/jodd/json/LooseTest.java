@@ -25,20 +25,20 @@
 
 package jodd.json;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class LooseTest {
+class LooseTest {
 
 	@Test
-	public void testInvalidEscape() {
+	void testInvalidEscape() {
 		try {
 			assertEquals("ABC\\D", new JsonParser().parse("\"ABC\\D\""));
-			fail();
+			fail("error");
 		} catch (JsonException ignore) {
 		}
 		assertEquals("ABC\\D", new JsonParser().looseMode(true).parse("\"ABC\\D\""));
@@ -49,10 +49,10 @@ public class LooseTest {
 	}
 
 	@Test
-	public void testQuotes() {
+	void testQuotes() {
 		try {
 			assertEquals("ABC", new JsonParser().parse("'ABC'"));
-			fail();
+			fail("error");
 		} catch (JsonException ignore) {
 		}
 
@@ -66,7 +66,7 @@ public class LooseTest {
 	}
 
 	@Test
-	public void testUnquotes() {
+	void testUnquotes() {
 		Map<String, Object> map = new JsonParser().looseMode(true).parse("{foo: BAR , who : me}");
 
 		assertEquals(2, map.size());
@@ -75,7 +75,7 @@ public class LooseTest {
 
 		try {
 			new JsonParser().looseMode(true).parse("{foo: BAR , who : m\te}");
-			fail();
+			fail("error");
 		} catch (JsonException ignore) {
 		}
 	}

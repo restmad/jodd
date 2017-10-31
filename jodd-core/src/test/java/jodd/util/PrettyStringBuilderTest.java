@@ -25,19 +25,19 @@
 
 package jodd.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PrettyStringBuilderTest {
+class PrettyStringBuilderTest {
 
 	@Test
-	public void testList() {
+	void testList() {
 		List<String> l = new ArrayList<>();
 		l.add("One");
 		l.add("Two");
@@ -45,7 +45,7 @@ public class PrettyStringBuilderTest {
 	}
 
 	@Test
-	public void testMap() {
+	void testMap() {
 		Map m = new LinkedHashMap();
 		m.put(1, "One");
 		m.put(2, "Two");
@@ -53,13 +53,13 @@ public class PrettyStringBuilderTest {
 	}
 
 	@Test
-	public void testArray() {
+	void testArray() {
 		int[] arr = new int[]{1, 2, 3};
 		assertEquals("[1,2,3]", new PrettyStringBuilder().toString(arr));
 	}
 
 	@Test
-	public void testMax() {
+	void testMax() {
 		PrettyStringBuilder psb = new PrettyStringBuilder().maxItemsToShow(3);
 		int[] arr = new int[]{1, 2, 3};
 		assertEquals("[1,2,3]", psb.toString(arr));
@@ -68,7 +68,7 @@ public class PrettyStringBuilderTest {
 	}
 
 	@Test
-	public void testDeep() {
+	void testDeep() {
 		List l = new ArrayList();
 		l.add("One");
 		l.add(new int[]{1, 2,});

@@ -26,25 +26,37 @@
 package jodd.petite;
 
 import jodd.petite.config.AutomagicPetiteConfigurator;
-import jodd.petite.scope.ProtoScope;
-import jodd.petite.fixtures.tst.*;
+import jodd.petite.fixtures.tst.Boo;
+import jodd.petite.fixtures.tst.BooC;
+import jodd.petite.fixtures.tst.BooC2;
+import jodd.petite.fixtures.tst.Foo;
+import jodd.petite.fixtures.tst.Goo;
+import jodd.petite.fixtures.tst.Ioo;
+import jodd.petite.fixtures.tst.Loo;
+import jodd.petite.fixtures.tst.Zoo;
 import jodd.petite.fixtures.tst.impl.DefaultIoo;
-import org.junit.Before;
-import org.junit.Test;
+import jodd.petite.scope.ProtoScope;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class WireTest {
+class WireTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeEach
+	void setUp() throws Exception {
 		Foo.instanceCounter = 0;
 	}
 
 	@Test
-	public void testContainer() {
+	void testContainer() {
 		PetiteContainer pc = new PetiteContainer();
 		AutomagicPetiteConfigurator configurator = new AutomagicPetiteConfigurator();
 		configurator.setExcludeAllEntries(true);
@@ -84,7 +96,7 @@ public class WireTest {
 		try {
 			//noinspection UnusedAssignment
 			boo = pc.getBean("boo");
-			fail();
+			fail("error");
 		} catch (PetiteException pex) {
 			// zoo class is missing
 		}
@@ -110,7 +122,7 @@ public class WireTest {
 	}
 
 	@Test
-	public void testCreate() {
+	void testCreate() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.registerPetiteBean(Foo.class, null, null, null, false);
 		pc.registerPetiteBean(Zoo.class, null, null, null, false);
@@ -129,7 +141,7 @@ public class WireTest {
 	}
 
 	@Test
-	public void testCtor() {
+	void testCtor() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.registerPetiteBean(BooC.class, null, null, null, false);
 		pc.registerPetiteBean(Foo.class, null, null, null, false);
@@ -150,14 +162,14 @@ public class WireTest {
 
 		try {
 			pc.getBean("boo");
-			fail();
+			fail("error");
 		} catch (PetiteException pex) {
 			// ignore                       // cyclic dependency
 		}
 	}
 
 	@Test
-	public void testAutowire() {
+	void testAutowire() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.registerPetiteBean(Goo.class, null, ProtoScope.class, null, false);
 		pc.registerPetiteBean(Loo.class, null, null, null, false);
@@ -190,7 +202,7 @@ public class WireTest {
 	}
 
 	@Test
-	public void testInterface() {
+	void testInterface() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.registerPetiteBean(Foo.class, null, null, null, false);
 		pc.registerPetiteBean(DefaultIoo.class, "ioo", null, null, false);
@@ -203,7 +215,7 @@ public class WireTest {
 	}
 
 	@Test
-	public void testSelf() {
+	void testSelf() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.addSelf();
 
@@ -215,7 +227,7 @@ public class WireTest {
 	}
 
 	@Test
-	public void testInit() {
+	void testInit() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.registerPetiteBean(Foo.class, null, null, null, false);
 		pc.registerPetiteBean(Zoo.class, null, null, null, false);

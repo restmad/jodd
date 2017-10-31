@@ -27,18 +27,18 @@ package jodd.petite;
 
 import jodd.petite.fixtures.tst2.Joo;
 import jodd.petite.fixtures.tst2.Koo;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class FullTypeTest {
+class FullTypeTest {
 
 	private void registerBean(PetiteContainer petiteContainer, Class beanType) {
 		petiteContainer.registerPetiteBean(beanType, null, null, null, false);
 	}
 
 	@Test
-	public void testFullTypeProperty() {
+	void testFullTypeProperty() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.getConfig().setUseFullTypeNames(true);
 
@@ -67,7 +67,7 @@ public class FullTypeTest {
 	}
 
 	@Test
-	public void testFullTypeMethodCtor() {
+	void testFullTypeMethodCtor() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.getConfig().setUseFullTypeNames(true);
 
@@ -87,7 +87,7 @@ public class FullTypeTest {
 	}
 
 	@Test
-	public void testOptionalAndNotAllReferences() {
+	void testOptionalAndNotAllReferences() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.getConfig().setDefaultWiringMode(WiringMode.OPTIONAL);
 		pc.getConfig().setUseFullTypeNames(false);

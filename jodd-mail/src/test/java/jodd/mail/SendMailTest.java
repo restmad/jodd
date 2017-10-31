@@ -28,7 +28,7 @@ package jodd.mail;
 import jodd.io.StreamUtil;
 import jodd.mail.att.ByteArrayAttachment;
 import jodd.util.MimeTypes;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import javax.activation.DataSource;
 import javax.mail.Message;
@@ -39,14 +39,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import static jodd.mail.EmailAttachment.attachment;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-public class SendMailTest {
+class SendMailTest {
 
 	@Test
-	public void testFromToBccCc() throws MessagingException, IOException {
+	void testFromToBccCc() throws MessagingException, IOException {
 		Email email = Email.create()
 				.from("from@example.com")
 				.to("to1@example.com").to("Major Tom", "to2@example.com")
@@ -74,7 +74,7 @@ public class SendMailTest {
 	}
 
 	@Test
-	public void testSimpleText() throws MessagingException, IOException {
+	void testSimpleText() throws MessagingException, IOException {
 		Email email = Email.create()
 				.from("from@example.com")
 				.to("to@example.com")
@@ -90,7 +90,7 @@ public class SendMailTest {
 	}
 
 	@Test
-	public void testSimpleTextWithCyrilic() throws MessagingException, IOException {
+	void testSimpleTextWithCyrilic() throws MessagingException, IOException {
 		Email email = Email.create()
 				.from("Тијана Милановић <t@gmail.com>")
 				.to("Јодд <i@jodd.com>")
@@ -109,7 +109,7 @@ public class SendMailTest {
 	}
 
 	@Test
-	public void testTextHtml() throws MessagingException, IOException {
+	void testTextHtml() throws MessagingException, IOException {
 		Email email = Email.create()
 				.from("from@example.com")
 				.to("to@example.com")
@@ -148,7 +148,7 @@ public class SendMailTest {
 	}
 
 	@Test
-	public void testTextHtmlEmbedAttach1() throws MessagingException, IOException {
+	void testTextHtmlEmbedAttach1() throws MessagingException, IOException {
 		Email email = Email.create()
 				.from("from@example.com")
 				.to("to@example.com")
@@ -162,7 +162,7 @@ public class SendMailTest {
 	}
 
 	@Test
-	public void testTextHtmlEmbedAttach2() throws MessagingException, IOException {
+	void testTextHtmlEmbedAttach2() throws MessagingException, IOException {
 		Email email = new Email();
 
 		email.from("from@example.com");

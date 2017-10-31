@@ -35,11 +35,9 @@ public class JoddHtmlStapler {
 	// ---------------------------------------------------------------- module
 
 	static {
-		init();
+		Jodd.initModule();
 	}
 
-	public static void init() {
-		Jodd.init(JoddHtmlStapler.class);
-	}
+	public static void init() {}
 
 }

@@ -25,19 +25,19 @@
 
 package jodd.typeconverter.impl;
 
-import jodd.typeconverter.TypeConverterManager;
-import org.junit.Test;
+import jodd.bean.JoddBean;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class TypeConverterManagerTest {
+class TypeConverterManagerTest {
 
 	@Test
-	public void testRegistration() {
-		FileConverter fileTypeConverter = (FileConverter) TypeConverterManager.lookup(File.class);
+	void testRegistration() {
+		FileConverter fileTypeConverter = (FileConverter) JoddBean.runtime().typeConverterManager().lookup(File.class);
 
 		assertNotNull(fileTypeConverter);
 		assertNull(fileTypeConverter.addonFileConverters);

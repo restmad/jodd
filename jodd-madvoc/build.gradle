@@ -10,21 +10,13 @@ dependencies {
 	compile project(':jodd-servlet')
 	compile project(':jodd-petite')
 	compile project(':jodd-log')
-	compile project(':jodd-proxetta'), optional
+	compile project(':jodd-proxetta')
 
 	provided lib.servlet
 	provided lib.jsp
 
 	testCompile project(':jodd-http')
-	testCompile lib.junit
+	testCompile lib.junit5
 	testCompile lib.tomcat_embed
 	testCompile lib.mockito
-}
-
-// run madvoc integration tests only through the suite
-// so we can control the embedded web server
-
-testIntegration {
-	scanForTestClasses false
-	include 'jodd/madvoc/*Suite.class'
 }

@@ -25,16 +25,23 @@
 
 package jodd.db.oom;
 
-import jodd.db.fixtures.DbHsqldbTestCase;
 import jodd.db.DbQuery;
 import jodd.db.DbSession;
+import jodd.db.DbTestUtil;
 import jodd.db.DbThreadSession;
+import jodd.db.JoddDb;
 import jodd.db.QueryMapper;
+import jodd.db.fixtures.DbHsqldbTestCase;
+import jodd.db.oom.fixtures.BadBoy;
+import jodd.db.oom.fixtures.BadGirl;
+import jodd.db.oom.fixtures.Boy;
+import jodd.db.oom.fixtures.Boy3;
+import jodd.db.oom.fixtures.Girl;
+import jodd.db.oom.fixtures.IdName;
 import jodd.db.oom.sqlgen.DbEntitySql;
 import jodd.db.oom.sqlgen.DbSqlBuilder;
-import jodd.db.oom.fixtures.*;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,22 +52,28 @@ import java.util.Set;
 import static jodd.db.oom.ColumnAliasType.COLUMN_CODE;
 import static jodd.db.oom.DbOomQuery.query;
 import static jodd.db.oom.sqlgen.DbSqlBuilder.sql;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DbOomTest extends DbHsqldbTestCase {
+class DbOomTest extends DbHsqldbTestCase {
 
-	@Before
-	public void setUp() throws Exception {
+	@Override
+	@BeforeEach
+	protected void setUp() throws Exception {
 		super.setUp();
 
-		DbOomManager.resetAll();
-		DbOomManager dbOom = DbOomManager.getInstance();
+		DbTestUtil.resetAll();
+		DbEntityManager dbOom = JoddDb.runtime().dbEntityManager();
+
 		dbOom.registerEntity(Girl.class);
 		dbOom.registerEntity(BadBoy.class);
 	}
 
 	@Test
-	public void testOrm() {
+	void testOrm() {
 		DbSession session = new DbThreadSession(cp);
 
 		// ---------------------------------------------------------------- insert
@@ -101,6 +114,7 @@ public class DbOomTest extends DbHsqldbTestCase {
 		assertTrue(q.isActive());
 
 		girl = q.find(new QueryMapper<Girl>() {
+			@Override
 			public Girl process(ResultSet resultSet) throws SQLException {
 				Girl _girl = new Girl();
 				_girl.id = resultSet.getInt("ID");
@@ -130,6 +144,7 @@ public class DbOomTest extends DbHsqldbTestCase {
 
 		listGirl = q.list(
 			new QueryMapper<Girl>() {
+				@Override
 				public Girl process(ResultSet resultSet) throws SQLException {
 					Girl _girl = new Girl();
 					_girl.id = resultSet.getInt("ID");

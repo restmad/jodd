@@ -35,11 +35,9 @@ public class JoddDecora {
 	// ---------------------------------------------------------------- module
 
 	static {
-		init();
+		Jodd.initModule();
 	}
 
-	public static void init() {
-		Jodd.init(JoddDecora.class);
-	}
+	public static void init() {}
 
 }

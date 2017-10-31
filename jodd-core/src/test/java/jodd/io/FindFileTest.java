@@ -29,23 +29,23 @@ import jodd.io.findfile.FindFile;
 import jodd.io.findfile.RegExpFindFile;
 import jodd.io.findfile.WildcardFindFile;
 import jodd.mutable.MutableInteger;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FindFileTest {
+class FindFileTest {
 
 	protected String dataRoot;
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeEach
+	void setUp() throws Exception {
 		if (dataRoot != null) {
 			return;
 		}
@@ -54,7 +54,7 @@ public class FindFileTest {
 	}
 
 	@Test
-	public void testTwoAccept() {
+	void testTwoAccept() {
 		FindFile ff = new WildcardFindFile()
 						.include("**/*file/a.png")
 						.include("**/*file/a.txt")
@@ -88,7 +88,7 @@ public class FindFileTest {
 	}
 
 	@Test
-	public void testWildcardFile() {
+	void testWildcardFile() {
 		FindFile ff = new WildcardFindFile()
 				.include("**/*file/a*")
 				.recursive(true)
@@ -151,7 +151,7 @@ public class FindFileTest {
 
 
 	@Test
-	public void testWildcardPath() {
+	void testWildcardPath() {
 		FindFile ff = new WildcardFindFile()
 				.include("**/file/*")
 				.recursive(true)
@@ -186,7 +186,7 @@ public class FindFileTest {
 	}
 
 	@Test
-	public void testRegexp() {
+	void testRegexp() {
 		FindFile ff = new RegExpFindFile()
 				.include(".*/a[.].*")
 				.recursive(true)
@@ -222,7 +222,7 @@ public class FindFileTest {
 	}
 
 	@Test
-	public void testFindAll() {
+	void testFindAll() {
 		List<File> foundedFiles = new WildcardFindFile()
 			.include("**/*file/a*")
 			.recursive(true)

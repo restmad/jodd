@@ -29,11 +29,11 @@ import jodd.proxetta.impl.ProxyProxetta;
 import jodd.proxetta.impl.ProxyProxettaBuilder;
 import jodd.proxetta.impl.WrapperProxetta;
 import jodd.proxetta.impl.WrapperProxettaBuilder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class GenericsInDefaultTest {
+class GenericsInDefaultTest {
 
 	public static class Bar<T> {
 	}
@@ -55,7 +55,7 @@ public class GenericsInDefaultTest {
 	}
 
 	@Test
-	public void testClassesWithGenericsAsReturnValueWrapperDefault() {
+	void testClassesWithGenericsAsReturnValueWrapperDefault() {
 		try {
 			ProxyAspect aspect = new ProxyAspect(DelegateAdvice.class);
 			WrapperProxetta proxetta = WrapperProxetta.withAspects(aspect);
@@ -69,7 +69,7 @@ public class GenericsInDefaultTest {
 	}
 
 	@Test
-	public void testClassesWithGenericsAsReturnValueProxyDefault() {
+	void testClassesWithGenericsAsReturnValueProxyDefault() {
 		try {
 			ProxyAspect aspect = new ProxyAspect(DelegateAdvice.class);
 			ProxyProxetta proxetta = ProxyProxetta.withAspects(aspect);

@@ -39,7 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static jodd.json.JoddJson.DEFAULT_CLASS_METADATA_NAME;
+import static jodd.json.JoddJsonDefaults.DEFAULT_CLASS_METADATA_NAME;
 
 /**
  * Simple, developer-friendly JSON parser. It focuses on easy usage
@@ -74,7 +74,7 @@ public class JsonParser extends JsonParserBase {
 	protected char[] input;
 	protected int total;
 	protected Path path;
-	protected boolean useAltPaths = JoddJson.useAltPathsByParser;
+	protected boolean useAltPaths = JoddJson.defaults().isUseAltPathsByParser();
 	protected Class rootType;
 	protected MapToBean mapToBean;
 	protected boolean looseMode;
@@ -212,7 +212,7 @@ public class JsonParser extends JsonParserBase {
 
 	// ---------------------------------------------------------------- class meta data name
 
-	protected String classMetadataName = JoddJson.classMetadataName;
+	protected String classMetadataName = JoddJson.defaults().getClassMetadataName();
 
 	/**
 	 * Sets local class meta-data name.
@@ -246,6 +246,41 @@ public class JsonParser extends JsonParserBase {
 	}
 
 	/**
+	 * Parses input JSON to {@link JsonObject}, special case of {@link #parse(String, Class)}.
+	 */
+	public JsonObject parseAsJsonObject(String input) {
+		return new JsonObject(parse(input));
+	}
+
+	/**
+	 * Parses input JSON to {@link JsonArray}, special case of parsing.
+	 */
+	public JsonArray parseAsJsonArray(String input) {
+		return new JsonArray(parse(input));
+	}
+
+	/**
+	 * Parses input JSON to a list with specified component type.
+	 */
+	public <T> List<T> parseAsList(String string, Class<T> componentType) {
+		return new JsonParser()
+			.map(JsonParser.VALUES, componentType)
+			.parse(string);
+	}
+
+	/**
+	 * Parses input JSON to a list with specified key and value types.
+	 */
+	public <K, V> Map<K, V> parseAsMap(
+		String string, Class<K> keyType, Class<V> valueType) {
+
+		return new JsonParser()
+			.map(JsonParser.KEYS, keyType)
+			.map(JsonParser.VALUES, valueType)
+			.parse(string);
+	}
+
+	/**
 	 * Parses input JSON string.
 	 */
 	public <T> T parse(String input) {
@@ -257,7 +292,7 @@ public class JsonParser extends JsonParserBase {
 	 * Parses input JSON as given type.
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> T parse(char[] input, Class<?> targetType) {
+	public <T> T parse(char[] input, Class<T> targetType) {
 		rootType = targetType;
 		return _parse(input);
 	}
@@ -790,7 +825,7 @@ public class JsonParser extends JsonParserBase {
 		JsonAnnotationManager.TypeData typeData = null;
 
 		if (targetType != null) {
-			targetTypeClassDescriptor = ClassIntrospector.lookup(targetType);
+			targetTypeClassDescriptor = ClassIntrospector.get().lookup(targetType);
 
 			// find if the target is really a map
 			// because when classMetadataName != null we are forcing
@@ -798,7 +833,7 @@ public class JsonParser extends JsonParserBase {
 
 			isTargetRealTypeMap = targetTypeClassDescriptor.isMap();
 
-			typeData = JoddJson.annotationManager.lookupTypeData(targetType);
+			typeData = JoddJson.defaults().getAnnotationManager().lookupTypeData(targetType);
 		}
 
 		if (isTargetRealTypeMap) {
@@ -857,7 +892,7 @@ public class JsonParser extends JsonParserBase {
 
 			if (!isTargetRealTypeMap) {
 				// replace key with real property value
-				key = JoddJson.annotationManager.resolveRealName(targetType, key);
+				key = JoddJson.defaults().getAnnotationManager().resolveRealName(targetType, key);
 			}
 
 			if (!isTargetTypeMap) {

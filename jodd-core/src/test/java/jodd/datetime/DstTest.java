@@ -25,19 +25,19 @@
 
 package jodd.datetime;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import static java.util.Calendar.HOUR;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class DstTest {
+class DstTest {
 
 	@Test
-	public void testSpringForward() {
+	void testSpringForward() {
 		TimeZone englandTZ = TimeZone.getTimeZone("Europe/London");
 		TimeZone.setDefault(englandTZ);
 
@@ -77,7 +77,7 @@ public class DstTest {
 	}
 
 /*
-	public void testOnSpringFormward() {
+	void testOnSpringFormward() {
 		TimeZone englandTZ = TimeZone.getTimeZone("Europe/London");
 		TimeZone.setDefault(englandTZ);
 
@@ -99,7 +99,7 @@ public class DstTest {
 */
 
 	@Test
-	public void testFallBack() {
+	void testFallBack() {
 		TimeZone englandTZ = TimeZone.getTimeZone("Europe/London");
 		TimeZone.setDefault(englandTZ);
 

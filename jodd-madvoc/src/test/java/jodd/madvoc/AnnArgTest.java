@@ -26,14 +26,14 @@
 package jodd.madvoc;
 
 import jodd.madvoc.component.ActionMethodParser;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class AnnArgTest extends MadvocTestCase {
+class AnnArgTest extends MadvocTestCase {
 
 	@Test
-	public void testDefaultMethods() {
+	void testDefaultMethods() {
 		WebApplication webapp = new WebApplication(true);
 		webapp.registerMadvocComponents();
 		ActionMethodParser actionMethodParser = webapp.getComponent(ActionMethodParser.class);

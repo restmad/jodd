@@ -25,34 +25,38 @@
 
 package jodd.db.oom.dao;
 
-import jodd.db.fixtures.DbHsqldbTestCase;
 import jodd.db.DbSession;
+import jodd.db.DbTestUtil;
+import jodd.db.JoddDb;
 import jodd.db.ThreadDbSessionHolder;
-import jodd.db.oom.DbOomManager;
-import org.junit.Before;
-import org.junit.Test;
+import jodd.db.fixtures.DbHsqldbTestCase;
+import jodd.db.oom.DbEntityManager;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class GenericDaoTest extends DbHsqldbTestCase {
+class GenericDaoTest extends DbHsqldbTestCase {
 
-	@Before
-	public void setUp() throws Exception {
+	@Override
+	@BeforeEach
+	protected void setUp() throws Exception {
 		super.setUp();
 
-		DbOomManager.resetAll();
-		DbOomManager dbOom = DbOomManager.getInstance();
+		DbTestUtil.resetAll();
+		DbEntityManager dbOom = JoddDb.runtime().dbEntityManager();
+
 		dbOom.registerEntity(Girl.class);
 		dbOom.registerEntity(Boy.class);
 	}
 
 	@Test
-	public void testAppDao1() {
+	void testAppDao1() {
 		DbSession session = new DbSession(cp);
 		ThreadDbSessionHolder.set(session);
 

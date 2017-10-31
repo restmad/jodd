@@ -25,28 +25,28 @@
 
 package jodd.json;
 
-import jodd.json.meta.JSON;
 import jodd.json.fixtures.mock.LocationAlt;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import jodd.json.meta.JSON;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CustomAnnotationTest {
+class CustomAnnotationTest {
 
-	@Before
-	public void setUp() {
-		JoddJson.jsonAnnotation = JSON2.class;
+	@BeforeEach
+	void setUp() {
+		JoddJson.defaults().setJsonAnnotation(JSON2.class);
 	}
 
-	@After
-	public void tearDown() {
-		JoddJson.jsonAnnotation = JSON.class;
+	@AfterEach
+	void tearDown() {
+		JoddJson.defaults().setJsonAnnotation(JSON.class);
 	}
 
 	@Test
-	public void testAnnName() {
+	void testAnnName() {
 		LocationAlt location = new LocationAlt();
 
 		location.setLatitude(65);
@@ -63,7 +63,7 @@ public class CustomAnnotationTest {
 	}
 
 	@Test
-	public void testAnnNameWithClass() {
+	void testAnnNameWithClass() {
 		LocationAlt location = new LocationAlt();
 
 		location.setLatitude(65);

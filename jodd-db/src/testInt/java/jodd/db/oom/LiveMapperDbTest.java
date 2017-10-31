@@ -27,14 +27,15 @@ package jodd.db.oom;
 
 import jodd.datetime.JDateTime;
 import jodd.db.DbSession;
+import jodd.db.JoddDb;
 import jodd.db.oom.fixtures.Tester2;
 import jodd.db.oom.sqlgen.DbEntitySql;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class LiveMapperDbTest extends DbBaseTest {
+class LiveMapperDbTest extends DbBaseTest {
 
 	/**
 	 * DATABASES TO TEST!
@@ -48,7 +49,7 @@ public class LiveMapperDbTest extends DbBaseTest {
 	/**
 	 * MySql.
 	 */
-	public class MySql extends MySqlDbAccess {
+	class MySql extends MySqlDbAccess {
 
 		@Override
 		public String getCreateTableSql() {
@@ -71,13 +72,13 @@ public class LiveMapperDbTest extends DbBaseTest {
 	/**
 	 * PostgreSql.
 	 */
-	public class PostgreSql extends PostgreSqlDbAccess {
+	class PostgreSql extends PostgreSqlDbAccess {
 
 		@Override
 		public void initDb() {
 			super.initDb();
-			dboom.getTableNames().setLowercase(true);
-			dboom.getColumnNames().setLowercase(true);
+			JoddDb.defaults().getDbOomConfig().getTableNames().setLowercase(true);
+			JoddDb.defaults().getDbOomConfig().getColumnNames().setLowercase(true);
 		}
 
 		@Override
@@ -101,7 +102,7 @@ public class LiveMapperDbTest extends DbBaseTest {
 	/**
 	 * HsqlDB.
 	 */
-	public class HsqlDb extends HsqlDbAccess {
+	class HsqlDb extends HsqlDbAccess {
 
 		@Override
 		public String getCreateTableSql() {
@@ -123,7 +124,7 @@ public class LiveMapperDbTest extends DbBaseTest {
 	// ---------------------------------------------------------------- test
 
 	@Test
-	public void testLiveMapperDb() throws Exception {
+	void testLiveMapperDb() throws Exception {
 		for (DbAccess db : databases) {
 			System.out.println("\t" + db.getClass().getSimpleName());
 			init();

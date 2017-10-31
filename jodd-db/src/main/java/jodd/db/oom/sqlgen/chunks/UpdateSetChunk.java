@@ -25,9 +25,10 @@
 
 package jodd.db.oom.sqlgen.chunks;
 
-import jodd.db.oom.DbEntityDescriptor;
-import jodd.db.oom.DbEntityColumnDescriptor;
 import jodd.bean.BeanUtil;
+import jodd.db.JoddDb;
+import jodd.db.oom.DbEntityColumnDescriptor;
+import jodd.db.oom.DbEntityDescriptor;
 import jodd.db.oom.DbOomUtil;
 import jodd.util.StringUtil;
 
@@ -68,6 +69,12 @@ public class UpdateSetChunk extends SqlChunk {
 
 		int size = 0;
 		for (DbEntityColumnDescriptor dec : decList) {
+			final boolean isUpdateablePrimaryKey = JoddDb.defaults().getSqlGenConfig().isUpdateablePrimaryKey();
+
+			if (dec.isId() && !isUpdateablePrimaryKey) {
+				continue;
+			}
+
 			String property = dec.getPropertyName();
 			Object value = BeanUtil.declared.getProperty(data, property);
 

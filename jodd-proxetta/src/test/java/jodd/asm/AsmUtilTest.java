@@ -25,14 +25,14 @@
 
 package jodd.asm;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AsmUtilTest {
+class AsmUtilTest {
 
 	@Test
-	public void testTyperef2Name() {
+	void testTyperef2Name() {
 		assertEquals("java.lang.String", AsmUtil.typeref2Name("Ljava/lang/String;"));
 	}
 }

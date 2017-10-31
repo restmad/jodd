@@ -25,14 +25,14 @@
 
 package jodd.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class HtmlEncoderTest {
+class HtmlEncoderTest {
 
 	@Test
-	public void testEncodeText() {
+	void testEncodeText() {
 		String html = "< & \" ' > \r\n \n  \t";
 
 		assertEquals("&lt; &amp; \" ' &gt; \r\n \n  \t", HtmlEncoder.text(html));
@@ -45,7 +45,7 @@ public class HtmlEncoderTest {
 	}
 
 	@Test
-	public void testEncodeAttribute() {
+	void testEncodeAttribute() {
 		String html = "< & \" ' > \r\n \n  \t";
 
 		assertEquals("< &amp; &quot; ' > \r\n \n  \t", HtmlEncoder.attributeDoubleQuoted(html));
@@ -53,7 +53,7 @@ public class HtmlEncoderTest {
 	}
 
 	@Test
-	public void testNbsp() {
+	void testNbsp() {
 		assertEquals(" ", HtmlEncoder.text(" "));
 		assertEquals("&nbsp;", HtmlEncoder.text("\u00a0"));
 		assertEquals("\u00a0", HtmlDecoder.decode("&nbsp;"));

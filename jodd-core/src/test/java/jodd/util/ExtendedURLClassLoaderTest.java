@@ -28,8 +28,7 @@ package jodd.util;
 import jodd.io.FileUtil;
 import jodd.util.cl.ExtendedURLClassLoader;
 import jodd.util.fixtures.testdata.A;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,18 +36,14 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Enumeration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class ExtendedURLClassLoaderTest {
+class ExtendedURLClassLoaderTest {
 
 	private final URLClassLoader cl = (URLClassLoader) this.getClass().getClassLoader();
 
 	@Test
-	public void testLoadSystemClasses() throws ClassNotFoundException {
+	void testLoadSystemClasses() throws ClassNotFoundException {
 		URL[] urls = new URL[0];
 
 		// parent-first
@@ -67,7 +62,7 @@ public class ExtendedURLClassLoaderTest {
 	}
 
 	@Test
-	public void testParentFirst() throws ClassNotFoundException {
+	void testParentFirst() throws ClassNotFoundException {
 		URLClassLoader parentCL = (URLClassLoader) A.class.getClassLoader();
 		URL[] urls = parentCL.getURLs();
 
@@ -88,12 +83,12 @@ public class ExtendedURLClassLoaderTest {
 		ecl.addParentOnlyRules(A.class.getName());
 		try {
 			ecl.loadClass(A.class.getName());
-			Assert.fail();
+			fail("error");
 		} catch (ClassNotFoundException ignore) {}
 	}
 
 	@Test
-	public void testParentLast() throws ClassNotFoundException {
+	void testParentLast() throws ClassNotFoundException {
 		URLClassLoader parentCL = (URLClassLoader) A.class.getClassLoader();
 		URL[] urls = parentCL.getURLs();
 
@@ -113,12 +108,12 @@ public class ExtendedURLClassLoaderTest {
 		ecl.addLoaderOnlyRules(A.class.getName());
 		try {
 			ecl.loadClass(A.class.getName());
-			Assert.fail();
+			fail("error");
 		} catch (ClassNotFoundException ignore) {}
 	}
 
 	@Test
-	public void testGetResource() throws IOException {
+	void testGetResource() throws IOException {
 		File tempRoot = FileUtil.createTempDirectory("jodd", "tmp");
 		File temp = new File(tempRoot, "pckg");
 		FileUtil.mkdir(temp);

@@ -26,11 +26,11 @@
 package jodd.db;
 
 import jodd.util.collection.IntArrayList;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class DbQueryTest {
+class DbQueryTest {
 
 	static class DbQueryEx extends DbQueryParser {
 		public DbQueryEx() {
@@ -60,7 +60,7 @@ public class DbQueryTest {
 	}
 
 	@Test
-	public void testPrepareSql() {
+	void testPrepareSql() {
 		DbQueryEx dbp = new DbQueryEx();
 		assertEquals("aaa", dbp.prepare("aaa"));
 		assertFalse(dbp.prepared);

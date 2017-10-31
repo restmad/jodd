@@ -26,20 +26,20 @@
 package jodd.util.buffer;
 
 import jodd.util.RandomString;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class FastCharBufferTest extends FastBufferTestBase {
+class FastCharBufferTest extends FastBufferTestBase {
 
 	@Test
-	public void testAppendString() {
+	void testAppendString() {
 		FastCharBuffer fcb = new FastCharBuffer(10);
 
 		fcb.append("12345678");
@@ -49,7 +49,7 @@ public class FastCharBufferTest extends FastBufferTestBase {
 	}
 
 	@Test
-	public void testRandomAppends() {
+	void testRandomAppends() {
 		StringBuilder sb = new StringBuilder(10);
 		FastCharBuffer fcb = new FastCharBuffer(10);
 
@@ -68,7 +68,7 @@ public class FastCharBufferTest extends FastBufferTestBase {
 
 
 	@Test
-	public void testAppend() {
+	void testAppend() {
 		FastCharBuffer buff = new FastCharBuffer(3);
 
 		buff.append(buff);
@@ -92,7 +92,7 @@ public class FastCharBufferTest extends FastBufferTestBase {
 	}
 
 	@Test
-	public void testChunks() {
+	void testChunks() {
 		FastCharBuffer buff = new FastCharBuffer();
 
 		assertEquals(-1, buff.index());
@@ -126,7 +126,7 @@ public class FastCharBufferTest extends FastBufferTestBase {
 	}
 
 	@Test
-	public void testChunksOverflow() {
+	void testChunksOverflow() {
 		FastCharBuffer buff = new FastCharBuffer();
 
 		assertEquals(-1, buff.index());
@@ -159,7 +159,7 @@ public class FastCharBufferTest extends FastBufferTestBase {
 	}
 
 	@Test
-	public void testClear() {
+	void testClear() {
 		FastCharBuffer buff = new FastCharBuffer();
 
 		assertTrue(buff.isEmpty());
@@ -174,7 +174,7 @@ public class FastCharBufferTest extends FastBufferTestBase {
 
 		try {
 			buff.get(0);
-			fail();
+			fail("error");
 		} catch (IndexOutOfBoundsException ignore) {
 		}
 
@@ -184,7 +184,7 @@ public class FastCharBufferTest extends FastBufferTestBase {
 	}
 
 	@Test
-	public void testToArray() {
+	void testToArray() {
 		FastCharBuffer buff = new FastCharBuffer();
 
 		int sum = 0;
@@ -218,7 +218,7 @@ public class FastCharBufferTest extends FastBufferTestBase {
 	}
 
 	@Test
-	public void testToSubArray() {
+	void testToSubArray() {
 		FastCharBuffer buff = new FastCharBuffer();
 
 		int total = SIZE + (SIZE/2);

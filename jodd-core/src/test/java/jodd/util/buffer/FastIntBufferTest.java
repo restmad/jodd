@@ -25,18 +25,18 @@
 
 package jodd.util.buffer;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class FastIntBufferTest extends FastBufferTestBase {
+class FastIntBufferTest extends FastBufferTestBase {
 
 	@Test
-	public void testAppend() {
+	void testAppend() {
 		FastIntBuffer buff = new FastIntBuffer(3);
 
 		buff.append(buff);
@@ -60,7 +60,7 @@ public class FastIntBufferTest extends FastBufferTestBase {
 	}
 
 	@Test
-	public void testChunks() {
+	void testChunks() {
 		FastIntBuffer buff = new FastIntBuffer();
 
 		assertEquals(-1, buff.index());
@@ -94,7 +94,7 @@ public class FastIntBufferTest extends FastBufferTestBase {
 	}
 
 	@Test
-	public void testChunksOverflow() {
+	void testChunksOverflow() {
 		FastIntBuffer buff = new FastIntBuffer();
 
 		assertEquals(-1, buff.index());
@@ -127,7 +127,7 @@ public class FastIntBufferTest extends FastBufferTestBase {
 	}
 
 	@Test
-	public void testClear() {
+	void testClear() {
 		FastIntBuffer buff = new FastIntBuffer();
 
 		assertTrue(buff.isEmpty());
@@ -142,7 +142,7 @@ public class FastIntBufferTest extends FastBufferTestBase {
 
 		try {
 			buff.get(0);
-			fail();
+			fail("error");
 		} catch (IndexOutOfBoundsException ignore) {
 		}
 
@@ -152,7 +152,7 @@ public class FastIntBufferTest extends FastBufferTestBase {
 	}
 
 	@Test
-	public void testToArray() {
+	void testToArray() {
 		FastIntBuffer buff = new FastIntBuffer();
 
 		int sum = 0;
@@ -186,7 +186,7 @@ public class FastIntBufferTest extends FastBufferTestBase {
 	}
 
 	@Test
-	public void testToSubArray() {
+	void testToSubArray() {
 		FastIntBuffer buff = new FastIntBuffer();
 
 		int total = SIZE + (SIZE/2);

@@ -26,14 +26,14 @@
 package jodd.datetime;
 
 import jodd.util.LocaleUtil;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LocaleTest {
+class LocaleTest {
 
 	@Test
-	public void testFrench() {
+	void testFrench() {
 		JDateTime jdt = new JDateTime(2012, 12, 21);
 		jdt.setLocale(LocaleUtil.getLocale("fr"));
 		assertEquals("décembre", jdt.toString("MML"));

@@ -25,27 +25,29 @@
 
 package jodd.db.oom;
 
-import jodd.db.oom.sqlgen.DbSqlBuilder;
+import jodd.db.DbTestUtil;
+import jodd.db.JoddDb;
 import jodd.db.oom.fixtures.BadBoy;
 import jodd.db.oom.fixtures.BadGirl;
 import jodd.db.oom.fixtures.Boy;
 import jodd.db.oom.fixtures.Girl;
-import org.junit.Before;
-import org.junit.Test;
+import jodd.db.oom.sqlgen.DbSqlBuilder;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static jodd.db.oom.sqlgen.DbSqlBuilder.sql;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DbSqlTemplateWithPrefixTest {
+class DbSqlTemplateWithPrefixTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeEach
+	void setUp() throws Exception {
 
-		DbOomManager.resetAll();
-		DbOomManager dbOom = DbOomManager.getInstance();
+		DbTestUtil.resetAll();
+		DbEntityManager dbOom = JoddDb.runtime().dbEntityManager();
 
-		dbOom.getTableNames().setPrefix("PRE_");
-		dbOom.getTableNames().setSuffix("_SUF");
+		JoddDb.defaults().getDbOomConfig().getTableNames().setPrefix("PRE_");
+		JoddDb.defaults().getDbOomConfig().getTableNames().setSuffix("_SUF");
 
 		dbOom.registerType(Boy.class);
 		dbOom.registerType(BadBoy.class);
@@ -54,7 +56,7 @@ public class DbSqlTemplateWithPrefixTest {
 	}
 
 	@Test
-	public void testTablePrefixSuffix() {
+	void testTablePrefixSuffix() {
 		DbSqlBuilder st;
 
 		st = sql("$T{Boy} $Boy.id $C{Boy.id}");

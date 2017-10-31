@@ -34,17 +34,17 @@ import jodd.proxetta.impl.WrapperProxetta;
 import jodd.proxetta.impl.WrapperProxettaBuilder;
 import jodd.proxetta.pointcuts.AllRealMethodsPointcut;
 import jodd.util.ClassUtil;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AnnTest {
+class AnnTest {
 
 	@Test
-	public void testMethodAnnotationsProxy() {
+	void testMethodAnnotationsProxy() {
 		ProxyProxetta proxetta = ProxyProxetta
 				.withAspects(
 					new ProxyAspect(HeroProxyAdvice.class,
@@ -69,7 +69,7 @@ public class AnnTest {
 	}
 
 	@Test
-	public void testClassAnnotationsProxy() {
+	void testClassAnnotationsProxy() {
 		ProxyProxetta proxetta = ProxyProxetta
 				.withAspects(
 					new ProxyAspect(HeroProxyAdvice2.class,
@@ -94,7 +94,7 @@ public class AnnTest {
 	}
 
 	@Test
-	public void testMethodAnnotationsWrapper() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	void testMethodAnnotationsWrapper() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 		WrapperProxetta proxetta = WrapperProxetta
 				.withAspects(
 					new ProxyAspect(HeroProxyAdvice.class,
@@ -120,7 +120,7 @@ public class AnnTest {
 	}
 
 	@Test
-	public void testClassAnnotationsWrapper() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	void testClassAnnotationsWrapper() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 		WrapperProxetta proxetta = WrapperProxetta
 				.withAspects(
 					new ProxyAspect(HeroProxyAdvice2.class,

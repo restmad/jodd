@@ -26,33 +26,34 @@
 package jodd.db.oom;
 
 import jodd.db.DbSession;
-import jodd.db.oom.sqlgen.DbEntitySql;
 import jodd.db.oom.fixtures.Tester;
-import org.junit.Test;
+import jodd.db.oom.sqlgen.DbEntitySql;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Live database test. Requires database services to be started.
- * There must exist the database: "jodd-test".
  */
-public class LiveDatabaseTest extends DbBaseTest {
+class LiveDatabaseTest extends DbBaseTest {
 
 	/**
 	 * DATABASES TO TEST!
 	 */
 	DbAccess[] databases = new DbAccess[]{
-			new MySql(),
-			new PostgreSql(),
-			new HsqlDb(),
-	};
+				new MySql(),
+				new PostgreSql(),
+				new HsqlDb(),
+				//new MsSqlDb(),
+		};
 
 	/**
 	 * MySql.
 	 */
-	public class MySql extends MySqlDbAccess {
+	class MySql extends MySqlDbAccess {
 
 		@Override
 		public String getCreateTableSql() {
@@ -73,7 +74,7 @@ public class LiveDatabaseTest extends DbBaseTest {
 	/**
 	 * PostgreSql.
 	 */
-	public class PostgreSql extends PostgreSqlDbAccess {
+	class PostgreSql extends PostgreSqlDbAccess {
 
 		@Override
 		public String getCreateTableSql() {
@@ -92,9 +93,29 @@ public class LiveDatabaseTest extends DbBaseTest {
 	}
 
 	/**
+	 * MsSql.
+	 */
+	class MsSqlDb extends MsSqlDbAccess {
+
+		@Override
+		public String getCreateTableSql() {
+			return "create table TESTER (" +
+				"ID			INT NOT NULL IDENTITY PRIMARY KEY," +
+				"NAME		varchar(20)	NOT NULL," +
+				"VALUE		int NULL" +
+				')';
+		}
+
+		@Override
+		public String getTableName() {
+			return "TESTER";
+		}
+	}
+
+	/**
 	 * HsqlDB.
 	 */
-	public class HsqlDb extends HsqlDbAccess {
+	class HsqlDb extends HsqlDbAccess {
 
 		@Override
 		public String getCreateTableSql() {
@@ -114,7 +135,7 @@ public class LiveDatabaseTest extends DbBaseTest {
 	// ---------------------------------------------------------------- test
 
 	@Test
-	public void testLiveDb() throws Exception {
+	void testLiveDb() throws Exception {
 		for (DbAccess db : databases) {
 			System.out.println("\t" + db.getClass().getSimpleName());
 			init();

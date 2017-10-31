@@ -25,14 +25,14 @@
 
 package jodd.datetime;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class BeforeAfterTest {
+class BeforeAfterTest {
 
 	@Test
-	public void testBefore() {
+	void testBefore() {
 		JDateTime now = new JDateTime();
 		JDateTime future = now.clone();
 		future.addSecond(1);
@@ -62,7 +62,7 @@ public class BeforeAfterTest {
 	}
 
 	@Test
-	public void testAfter() {
+	void testAfter() {
 		JDateTime now = new JDateTime();
 		JDateTime past = now.clone();
 		past.subSecond(1);

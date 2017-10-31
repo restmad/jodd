@@ -25,18 +25,18 @@
 
 package jodd.util.buffer;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class FastLongBufferTest extends FastBufferTestBase {
+class FastLongBufferTest extends FastBufferTestBase {
 
 	@Test
-	public void testAppend() {
+	void testAppend() {
 		FastLongBuffer buff = new FastLongBuffer(3);
 
 		buff.append(buff);
@@ -60,7 +60,7 @@ public class FastLongBufferTest extends FastBufferTestBase {
 	}
 
 	@Test
-	public void testChunks() {
+	void testChunks() {
 		FastLongBuffer buff = new FastLongBuffer();
 
 		assertEquals(-1, buff.index());
@@ -94,7 +94,7 @@ public class FastLongBufferTest extends FastBufferTestBase {
 	}
 
 	@Test
-	public void testChunksOverflow() {
+	void testChunksOverflow() {
 		FastLongBuffer buff = new FastLongBuffer();
 
 		assertEquals(-1, buff.index());
@@ -127,7 +127,7 @@ public class FastLongBufferTest extends FastBufferTestBase {
 	}
 
 	@Test
-	public void testClear() {
+	void testClear() {
 		FastLongBuffer buff = new FastLongBuffer();
 
 		assertTrue(buff.isEmpty());
@@ -142,7 +142,7 @@ public class FastLongBufferTest extends FastBufferTestBase {
 
 		try {
 			buff.get(0);
-			fail();
+			fail("error");
 		} catch (IndexOutOfBoundsException ignore) {
 		}
 
@@ -152,7 +152,7 @@ public class FastLongBufferTest extends FastBufferTestBase {
 	}
 
 	@Test
-	public void testToArray() {
+	void testToArray() {
 		FastLongBuffer buff = new FastLongBuffer();
 
 		int sum = 0;
@@ -186,7 +186,7 @@ public class FastLongBufferTest extends FastBufferTestBase {
 	}
 
 	@Test
-	public void testToSubArray() {
+	void testToSubArray() {
 		FastLongBuffer buff = new FastLongBuffer();
 
 		int total = SIZE + (SIZE/2);

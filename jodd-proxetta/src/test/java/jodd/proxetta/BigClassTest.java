@@ -25,30 +25,43 @@
 
 package jodd.proxetta;
 
+import jodd.asm5.Type;
 import jodd.introspector.ClassDescriptor;
 import jodd.introspector.ClassIntrospector;
 import jodd.mutable.MutableBoolean;
-import jodd.proxetta.fixtures.data.*;
+import jodd.proxetta.fixtures.data.Action;
+import jodd.proxetta.fixtures.data.BigFatJoe;
+import jodd.proxetta.fixtures.data.InterceptedBy;
+import jodd.proxetta.fixtures.data.MadvocAction;
+import jodd.proxetta.fixtures.data.PetiteBean;
+import jodd.proxetta.fixtures.data.PetiteInject;
+import jodd.proxetta.fixtures.data.StatCounter;
+import jodd.proxetta.fixtures.data.StatCounterAdvice;
+import jodd.proxetta.fixtures.data.Transaction;
 import jodd.proxetta.impl.ProxyProxetta;
 import jodd.proxetta.pointcuts.ProxyPointcutSupport;
 import jodd.util.ClassLoaderUtil;
-import org.junit.Test;
-import jodd.asm5.Type;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class BigClassTest {
+class BigClassTest {
 
 	@Test
-	public void testAllFeatures() throws IOException, IllegalAccessException, InstantiationException {
+	void testAllFeatures() throws IOException, IllegalAccessException, InstantiationException {
 		StatCounter.counter = 0;
 		final MutableBoolean firstTime = new MutableBoolean(true);
 
 		ProxyAspect aspect = new ProxyAspect(StatCounterAdvice.class, new ProxyPointcutSupport() {
+			@Override
 			public boolean apply(MethodInfo mi) {
 				if (firstTime.value) {
 					firstTime.value = false;
@@ -61,16 +74,16 @@ public class BigClassTest {
 					assertNotNull(anns);
 					assertEquals(3, anns.length);
 					AnnotationInfo ai = anns[0];
-					assertSame(ai, getAnnotation(ci, MadvocAction.class));
+					assertSame(ai, ci.getAnnotation(MadvocAction.class));
 					assertEquals(MadvocAction.class.getName(), ai.getAnnotationClassname());
 					assertEquals("L" + MadvocAction.class.getName().replace('.', '/') + ";", ai.getAnnotationSignature());
 					assertEquals("madvocAction", ai.getElement("value"));
 					ai = anns[1];
-					assertSame(ai, getAnnotation(ci, PetiteBean.class));
+					assertSame(ai, ci.getAnnotation(PetiteBean.class));
 					assertEquals(PetiteBean.class.getName(), ai.getAnnotationClassname());
 					assertEquals("L" + PetiteBean.class.getName().replace('.', '/') + ";", ai.getAnnotationSignature());
 					ai = anns[2];
-					assertSame(ai, getAnnotation(ci, InterceptedBy.class));
+					assertSame(ai, ci.getAnnotation(InterceptedBy.class));
 					assertEquals(InterceptedBy.class.getName(), ai.getAnnotationClassname());
 					assertEquals("L" + InterceptedBy.class.getName().replace('.', '/') + ";", ai.getAnnotationSignature());
 					assertTrue(ai.getElement("value") instanceof Object[]);
@@ -84,18 +97,18 @@ public class BigClassTest {
 					assertEquals(3, anns.length);
 
 					AnnotationInfo ai = anns[0];
-					assertSame(ai, getAnnotation(mi, Action.class));
+					assertSame(ai, mi.getAnnotation(Action.class));
 					assertEquals(Action.class.getName(), ai.getAnnotationClassname());
 					assertEquals("value", ai.getElement("value"));
 					assertEquals("alias", ai.getElement("alias"));
 
 					ai = anns[1];
-					assertSame(ai, getAnnotation(mi, PetiteInject.class));
+					assertSame(ai, mi.getAnnotation(PetiteInject.class));
 					assertEquals(PetiteInject.class.getName(), ai.getAnnotationClassname());
 					assertEquals(0, ai.getElementNames().size());
 
 					ai = anns[2];
-					assertSame(ai, getAnnotation(mi, Transaction.class));
+					assertSame(ai, mi.getAnnotation(Transaction.class));
 					assertEquals(Transaction.class.getName(), ai.getAnnotationClassname());
 					assertEquals(2, ai.getElementNames().size());
 					String s = (String) ai.getElement("propagation");
@@ -107,22 +120,22 @@ public class BigClassTest {
 					assertEquals(3, anns.length);
 
 					AnnotationInfo ai = anns[0];
-					assertSame(ai, getAnnotation(mi, Action.class));
+					assertSame(ai, mi.getAnnotation(Action.class));
 					assertEquals(Action.class.getName(), ai.getAnnotationClassname());
 					assertEquals(0, ai.getElementNames().size());
 
 					ai = anns[1];
-					assertSame(ai, getAnnotation(mi, PetiteInject.class));
+					assertSame(ai, mi.getAnnotation(PetiteInject.class));
 					assertEquals(PetiteInject.class.getName(), ai.getAnnotationClassname());
 					assertEquals(0, ai.getElementNames().size());
 
 					ai = anns[2];
-					assertSame(ai, getAnnotation(mi, Transaction.class));
+					assertSame(ai, mi.getAnnotation(Transaction.class));
 					assertEquals(Transaction.class.getName(), ai.getAnnotationClassname());
 					assertEquals(0, ai.getElementNames().size());
 				}
 				//System.out.println(!isRootMethod(mi) + " " + mi.getDeclaredClassName() + '#' + mi.getMethodName());
-				return !isRootMethod(mi);
+				return !mi.isRootMethod();
 			}
 		});
 
@@ -159,7 +172,7 @@ public class BigClassTest {
 
 
 		// test method annotation
-		ClassDescriptor cd = ClassIntrospector.lookup(clazz);
+		ClassDescriptor cd = ClassIntrospector.get().lookup(clazz);
 		Method m = cd.getMethodDescriptor("publicMethod", false).getMethod();
 		assertNotNull(m);
 		Annotation[] aa = m.getAnnotations();

@@ -26,14 +26,14 @@
 package jodd.petite;
 
 import jodd.petite.fixtures.tst3.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class SetsTest {
+class SetsTest {
 
 	@Test
-	public void testEmptySet() {
+	void testEmptySet() {
 		final PetiteContainer pc = new PetiteContainer();
 
 		pc.registerPetiteBean(GothamCity.class, null, null, null, false);
@@ -45,7 +45,7 @@ public class SetsTest {
 	}
 
 	@Test
-	public void testOneHero() {
+	void testOneHero() {
 		final PetiteContainer pc = new PetiteContainer();
 
 		pc.registerPetiteBean(Batman.class, null, null, null, false);
@@ -62,7 +62,7 @@ public class SetsTest {
 	}
 
 	@Test
-	public void testTwoHeros() {
+	void testTwoHeros() {
 		final PetiteContainer pc = new PetiteContainer();
 
 		pc.registerPetiteBean(Batman.class, null, null, null, false);
@@ -81,7 +81,7 @@ public class SetsTest {
 	}
 
 	@Test
-	public void testCollection() {
+	void testCollection() {
 		final PetiteContainer pc = new PetiteContainer();
 
 		pc.registerPetiteBean(Superman.class, null, null, null, false);

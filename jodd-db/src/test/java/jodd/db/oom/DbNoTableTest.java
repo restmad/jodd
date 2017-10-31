@@ -25,33 +25,36 @@
 
 package jodd.db.oom;
 
-import jodd.db.fixtures.DbHsqldbTestCase;
 import jodd.db.DbSession;
+import jodd.db.DbTestUtil;
 import jodd.db.DbThreadSession;
+import jodd.db.JoddDb;
+import jodd.db.fixtures.DbHsqldbTestCase;
+import jodd.db.oom.fixtures.Girl;
 import jodd.db.oom.meta.DbColumn;
 import jodd.db.oom.meta.DbTable;
 import jodd.db.oom.sqlgen.DbEntitySql;
 import jodd.db.oom.sqlgen.DbSqlBuilder;
-import jodd.db.oom.fixtures.Girl;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class DbNoTableTest extends DbHsqldbTestCase {
+class DbNoTableTest extends DbHsqldbTestCase {
 
-	@Before
-	public void setUp() throws Exception {
+	@Override
+	@BeforeEach
+	protected void setUp() throws Exception {
 		super.setUp();
 
-		DbOomManager.resetAll();
-		DbOomManager dbOom = DbOomManager.getInstance();
-		dbOom.registerEntity(Bean1.class);
+		DbTestUtil.resetAll();
+		DbEntityManager dbEntityManager = JoddDb.runtime().dbEntityManager();
+		dbEntityManager.registerEntity(Bean1.class);
 	}
 
 	@Test
-	public void testMappingNoTable() {
+	void testMappingNoTable() {
 		DbSession session = new DbThreadSession(cp);
 
 		assertEquals(1, DbEntitySql.insert(new Girl(1, "Anna", "swim")).query().autoClose().executeUpdate());

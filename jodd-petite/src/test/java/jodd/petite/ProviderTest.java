@@ -32,14 +32,14 @@ import jodd.petite.fixtures.tst5.Sun;
 import jodd.petite.fixtures.tst5.Sun2;
 import jodd.petite.fixtures.tst5.Planet;
 import jodd.util.ClassUtil;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ProviderTest {
+class ProviderTest {
 
 	@Test
-	public void testInstanceMethodProvider() {
+	void testInstanceMethodProvider() {
 		PetiteContainer pc = new PetiteContainer();
 
 		pc.registerPetiteBean(Solar.class, null, null, null, false);
@@ -52,7 +52,7 @@ public class ProviderTest {
 
 
 	@Test
-	public void testInstanceMethodProviderManualRegistration() {
+	void testInstanceMethodProviderManualRegistration() {
 		PetiteContainer pc = new PetiteContainer();
 
 		pc.registerPetiteBean(Solar2.class, null, null, null, false);
@@ -68,7 +68,7 @@ public class ProviderTest {
 
 
 	@Test
-	public void testInstanceStaticMethodProvider() {
+	void testInstanceStaticMethodProvider() {
 		PetiteContainer pc = new PetiteContainer();
 
 		pc.registerPetiteBean(Solar3.class, null, null, null, false);	// still needs to be a bean
@@ -82,7 +82,7 @@ public class ProviderTest {
 
 
 	@Test
-	public void testProviderLookup() {
+	void testProviderLookup() {
 		PetiteContainer pc = new PetiteContainer();
 
 		pc.registerPetiteBean(Solar3.class, null, null, null, false);

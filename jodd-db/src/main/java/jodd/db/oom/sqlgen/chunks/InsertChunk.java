@@ -25,9 +25,10 @@
 
 package jodd.db.oom.sqlgen.chunks;
 
-import jodd.db.oom.DbEntityDescriptor;
-import jodd.db.oom.DbEntityColumnDescriptor;
 import jodd.bean.BeanUtil;
+import jodd.db.JoddDb;
+import jodd.db.oom.DbEntityColumnDescriptor;
+import jodd.db.oom.DbEntityDescriptor;
 import jodd.util.StringUtil;
 
 /**
@@ -66,6 +67,12 @@ public class InsertChunk extends SqlChunk {
 
 		int size = 0;
 		for (DbEntityColumnDescriptor dec : decList) {
+			final boolean defaultIsUpdateablePrimaryKey = JoddDb.defaults().getSqlGenConfig().isUpdateablePrimaryKey();
+
+			 if (dec.isId() && !defaultIsUpdateablePrimaryKey) {
+			 	continue;
+			 }
+
 			String property = dec.getPropertyName();
 			Object value = BeanUtil.declared.getProperty(data, property);
 			if (value == null) {

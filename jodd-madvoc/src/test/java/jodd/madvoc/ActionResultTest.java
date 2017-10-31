@@ -30,14 +30,14 @@ import jodd.madvoc.component.ActionsManager;
 import jodd.madvoc.component.MadvocConfig;
 import jodd.madvoc.component.ResultMapper;
 import jodd.madvoc.fixtures.tst.BooAction;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class ActionResultTest extends MadvocTestCase {
+class ActionResultTest extends MadvocTestCase {
 
 	@Test
-	public void testResolveResultPath() {
+	void testResolveResultPath() {
 		WebApplication webapp = new WebApplication(true);
 		webapp.registerMadvocComponents();
 		ResultMapper resultMapper = webapp.getComponent(ResultMapper.class);
@@ -127,7 +127,7 @@ public class ActionResultTest extends MadvocTestCase {
 	}
 
 	@Test
-	public void testMethodWithPrefix() {
+	void testMethodWithPrefix() {
 		WebApplication webapp = new WebApplication(true);
 		webapp.registerMadvocComponents();
 		ResultMapper resultMapper = webapp.getComponent(ResultMapper.class);
@@ -162,7 +162,7 @@ public class ActionResultTest extends MadvocTestCase {
 	}
 
 	@Test
-	public void testAlias() {
+	void testAlias() {
 		WebApplication webapp = new WebApplication(true);
 		webapp.registerMadvocComponents();
 
@@ -189,7 +189,7 @@ public class ActionResultTest extends MadvocTestCase {
 	}
 
 	@Test
-	public void testAlias2() {
+	void testAlias2() {
 		WebApplication webapp = new WebApplication(true);
 		webapp.registerMadvocComponents();
 
@@ -208,7 +208,7 @@ public class ActionResultTest extends MadvocTestCase {
 	}
 
 	@Test
-	public void testAlias3() {
+	void testAlias3() {
 		WebApplication webapp = new WebApplication(true);
 		webapp.registerMadvocComponents();
 

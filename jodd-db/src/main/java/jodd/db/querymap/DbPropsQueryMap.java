@@ -25,7 +25,7 @@
 
 package jodd.db.querymap;
 
-import jodd.db.DbManager;
+import jodd.db.JoddDb;
 import jodd.props.Props;
 import jodd.props.PropsUtil;
 
@@ -46,7 +46,7 @@ public class DbPropsQueryMap implements QueryMap {
 	}
 
 	public DbPropsQueryMap() {
-		this("*.sql.props", "*.oom.props");
+		this("*.sql.props", "*.oom.props", "*.sql.properties", "*.oom.properties");
 	}
 
 	/**
@@ -59,6 +59,7 @@ public class DbPropsQueryMap implements QueryMap {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void load() {
 		props = PropsUtil.createFromClasspath(patterns);
 	}
@@ -69,8 +70,9 @@ public class DbPropsQueryMap implements QueryMap {
 	 * Returns query for given key.
 	 * In debug mode, props are reloaded every time before the lookup.
 	 */
+	@Override
 	public String getQuery(String key) {
-		if (DbManager.getInstance().isDebug()) {
+		if (JoddDb.defaults().isDebug()) {
 			load();
 		}
 		return props.getValue(key);

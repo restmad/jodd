@@ -25,16 +25,15 @@
 
 package jodd;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static jodd.Jodd.HTML_STAPLER;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class JoddHtmlStaplerTest {
+class JoddHtmlStaplerTest {
 
 	@Test
-	public void testLoadedModules() {
-		assertTrue(Jodd.isModuleLoaded(HTML_STAPLER));
+	void testLoadedModules() {
+		assertTrue(Jodd.isModuleLoaded(Jodd.JoddModule.HTML_STAPLER));
 	}
 
 }

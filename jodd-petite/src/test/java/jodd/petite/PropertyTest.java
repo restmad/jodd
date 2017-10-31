@@ -29,14 +29,14 @@ import jodd.petite.fixtures.data.PojoBean2;
 import jodd.petite.fixtures.tst2.Joo;
 import jodd.petite.fixtures.tst2.Moo;
 import jodd.props.Props;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class PropertyTest {
+class PropertyTest {
 
 	@Test
-	public void testSet() {
+	void testSet() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.registerPetiteBean(PojoBean2.class, null, null, null, false);
 
@@ -49,14 +49,14 @@ public class PropertyTest {
 	}
 
 	@Test
-	public void testSetWithMultipleDots() {
+	void testSetWithMultipleDots() {
 		PetiteContainer pc = new PetiteContainer();
 
 		pc.registerPetiteBean(PojoBean2.class, "pojo", null, null, false);
 
 		try {
 			pc.setBeanProperty("poco", null);
-			fail();
+			fail("error");
 		} catch (PetiteException ignore) {
 		}
 		pc.setBeanProperty("pojo.val1", "value");
@@ -76,7 +76,7 @@ public class PropertyTest {
 	}
 
 	@Test
-	public void testGet() {
+	void testGet() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.registerPetiteBean(PojoBean2.class, null, null, null, false);
 
@@ -93,7 +93,7 @@ public class PropertyTest {
 	}
 
 	@Test
-	public void testCount() {
+	void testCount() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.registerPetiteBean(Moo.class, null, null, null, false);
 		pc.registerPetiteBean(Joo.class, null, null, null, false);
@@ -120,7 +120,7 @@ public class PropertyTest {
 	}
 
 	@Test
-	public void testProps() {
+	void testProps() {
 		Props props = new Props();
 		props.load("pojoBean2.val2=123");
 		props.load("pojoBean2.val1=\\\\${pojo}");

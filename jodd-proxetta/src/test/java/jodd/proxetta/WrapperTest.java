@@ -25,31 +25,40 @@
 
 package jodd.proxetta;
 
-import jodd.proxetta.fixtures.data.*;
+import jodd.proxetta.fixtures.data.Calc;
+import jodd.proxetta.fixtures.data.CalcImpl;
+import jodd.proxetta.fixtures.data.CalcSuper;
+import jodd.proxetta.fixtures.data.CalcSuperImpl;
+import jodd.proxetta.fixtures.data.StatCounter;
+import jodd.proxetta.fixtures.data.StatCounterAdvice;
 import jodd.proxetta.impl.WrapperProxetta;
 import jodd.proxetta.impl.WrapperProxettaBuilder;
 import jodd.proxetta.pointcuts.ProxyPointcutSupport;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class WrapperTest {
+class WrapperTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeEach
+	void setUp() throws Exception {
 		StatCounter.counter = 0;
 	}
 
 	@Test
-	public void testClassWrapper() throws Exception {
+	void testClassWrapper() throws Exception {
 		Calc calc = new CalcImpl();
 
 		WrapperProxetta proxetta = WrapperProxetta.withAspects(new ProxyAspect(StatCounterAdvice.class, new ProxyPointcutSupport() {
+			@Override
 			public boolean apply(MethodInfo methodInfo) {
-				return !isRootMethod(methodInfo) && isPublic(methodInfo);
+				return !methodInfo.isRootMethod() && methodInfo.isPublicMethod();
 			}
 		}));
 
@@ -89,16 +98,17 @@ public class WrapperTest {
 	}
 
 	@Test
-	public void testClassWrapperCastToInterface() throws Exception {
+	void testClassWrapperCastToInterface() throws Exception {
 		Calc calc = new CalcImpl();
 
 		WrapperProxetta proxetta = WrapperProxetta.withAspects(new ProxyAspect(StatCounterAdvice.class, new ProxyPointcutSupport() {
+			@Override
 			public boolean apply(MethodInfo methodInfo) {
-				return !isRootMethod(methodInfo) && isPublic(methodInfo);
+				return !methodInfo.isRootMethod() && methodInfo.isPublicMethod();
 			}
 		}));
 
-//		proxetta.setDebugFolder("d:\\");
+		//proxetta.setDebugFolder("/Users/igor");
 
 		// wrapper over CLASS casted to interface,
 		// resulting object has ONE interface
@@ -125,12 +135,13 @@ public class WrapperTest {
 	}
 
 	@Test
-	public void testInterfaceWrapper() throws Exception {
+	void testInterfaceWrapper() throws Exception {
 		Calc calc = new CalcImpl();
 
 		WrapperProxetta proxetta = WrapperProxetta.withAspects(new ProxyAspect(StatCounterAdvice.class, new ProxyPointcutSupport() {
+			@Override
 			public boolean apply(MethodInfo methodInfo) {
-				return isTopLevelMethod(methodInfo) && isPublic(methodInfo);
+				return methodInfo.isTopLevelMethod() && methodInfo.isPublicMethod();
 			}
 		}));
 
@@ -159,21 +170,22 @@ public class WrapperTest {
 
 		try {
 			calc2Class.getMethod("customMethod");
-			fail();
+			fail("error");
 		} catch (Exception ex) {
 		}
 	}
 
 
 	@Test
-	public void testPartialMethodsWrapped() throws Exception {
+	void testPartialMethodsWrapped() throws Exception {
 
 		Calc calc = new CalcSuperImpl();
 
 		WrapperProxetta proxetta = WrapperProxetta.withAspects(new ProxyAspect(StatCounterAdvice.class, new ProxyPointcutSupport() {
+			@Override
 			public boolean apply(MethodInfo methodInfo) {
 				return
-						isPublic(methodInfo) &&
+						methodInfo.isPublicMethod() &&
 								(methodInfo.getMethodName().equals("hello") || methodInfo.getMethodName().equals("ola"));
 			}
 		}));
@@ -210,11 +222,12 @@ public class WrapperTest {
 	}
 
 	@Test
-	public void testNoPointcutMatched() throws Exception {
+	void testNoPointcutMatched() throws Exception {
 
 		Calc calc = new CalcSuperImpl();
 
 		WrapperProxetta proxetta = WrapperProxetta.withAspects(new ProxyAspect(StatCounterAdvice.class, new ProxyPointcutSupport() {
+			@Override
 			public boolean apply(MethodInfo methodInfo) {
 				return false;
 			}

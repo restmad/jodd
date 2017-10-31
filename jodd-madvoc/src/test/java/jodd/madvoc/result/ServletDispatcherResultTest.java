@@ -33,7 +33,7 @@ import jodd.madvoc.WebApplication;
 import jodd.madvoc.component.MadvocController;
 import jodd.madvoc.component.ResultMapper;
 import jodd.util.ClassUtil;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -42,14 +42,14 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ServletDispatcherResultTest {
+class ServletDispatcherResultTest {
 
 	@Test
-	public void testServletDispatcherLookup() throws Exception {
+	void testServletDispatcherLookup() throws Exception {
 		WebApplication webapp = new WebApplication(true);
 		webapp.registerMadvocComponents();
 
@@ -150,7 +150,7 @@ public class ServletDispatcherResultTest {
 		return new ActionRequest(madvocController, actionConfig.getActionPath(), actionConfig, action, servletRequest, servletResponse);
 	}
 
-	public class Action {
+	class Action {
 		public void view() {}
 	}
 

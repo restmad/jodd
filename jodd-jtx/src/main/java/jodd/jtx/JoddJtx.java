@@ -35,11 +35,9 @@ public class JoddJtx {
 	// ---------------------------------------------------------------- module
 
 	static {
-		init();
+		Jodd.initModule();
 	}
 
-	public static void init() {
-		Jodd.init(JoddJtx.class);
-	}
+	public static void init() {}
 
 }

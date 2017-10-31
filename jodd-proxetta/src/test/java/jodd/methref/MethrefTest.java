@@ -29,28 +29,28 @@ import jodd.proxetta.ProxyAspect;
 import jodd.proxetta.fixtures.data.Str;
 import jodd.proxetta.impl.ProxyProxetta;
 import jodd.proxetta.pointcuts.AllTopMethodsPointcut;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class MethrefTest {
+class MethrefTest {
 
 	@Test
-	public void testString() {
+	void testString() {
 		assertEquals("foo", Methref.onto(Str.class).foo());
 		assertEquals("foo2", Methref.onto(Str.class).foo2(null, null));
 	}
 
 	@Test
-	public void testNonString() {
+	void testNonString() {
 		Methref<Str> mref = Methref.on(Str.class);
 		assertEquals("redirect:boo", "redirect:" + mref.ref(mref.to().boo()));
 		assertEquals("foo", mref.ref(mref.to().foo()));
 	}
 
 	@Test
-	public void testPrimitives() {
+	void testPrimitives() {
 		Methref<Str> mref = Methref.on(Str.class);
 		assertEquals("izoo", mref.ref(mref.to().izoo()));
 		assertEquals("fzoo", mref.ref(mref.to().fzoo()));
@@ -63,14 +63,14 @@ public class MethrefTest {
 	}
 
 	@Test
-	public void testVoidOrTwoSteps() {
+	void testVoidOrTwoSteps() {
 		Methref<Str> m = Methref.on(Str.class);
 		m.to().voo();
 		assertEquals("voo", m.ref());
 	}
 
 	@Test
-	public void testMethRefOnProxifiedClass() {
+	void testMethRefOnProxifiedClass() {
 		Methref<? extends Oink> m = Methref.on(Oink.class);
 		m.to().woink();
 		assertEquals("woink", m.ref());
@@ -87,7 +87,7 @@ public class MethrefTest {
 	}
 
 	@Test
-	public void testParallelAccess() {
+	void testParallelAccess() {
 		Methref<Str> methref1 = Methref.on(Str.class);
 
 		String m1 = methref1.ref(methref1.to().boo());

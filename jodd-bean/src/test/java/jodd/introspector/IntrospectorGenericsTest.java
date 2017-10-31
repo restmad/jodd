@@ -26,18 +26,18 @@
 package jodd.introspector;
 
 import jodd.util.ClassUtil;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class IntrospectorGenericsTest {
+class IntrospectorGenericsTest {
 
 	public static class MethodParameterType<A> {
 		List<A> f;
@@ -54,8 +54,8 @@ public class IntrospectorGenericsTest {
 	public static class Foo extends MethodParameterType<Integer> {}
 
 	@Test
-	public void testFields() throws NoSuchFieldException {
-		ClassDescriptor cd = ClassIntrospector.lookup(MethodParameterType.class);
+	void testFields() throws NoSuchFieldException {
+		ClassDescriptor cd = ClassIntrospector.get().lookup(MethodParameterType.class);
 
 		assertEquals(MethodParameterType.class, cd.getType());
 		assertEquals(4, cd.getAllFieldDescriptors().length);
@@ -87,7 +87,7 @@ public class IntrospectorGenericsTest {
 		assertEquals(Long.class, fd4.getRawComponentType());
 
 		// impl
-		cd = ClassIntrospector.lookup(Foo.class);
+		cd = ClassIntrospector.get().lookup(Foo.class);
 
 		fd = cd.getFieldDescriptor("f", true);
 		fd2 = cd.getFieldDescriptor("f2", true);
@@ -105,8 +105,8 @@ public class IntrospectorGenericsTest {
 	}
 
 	@Test
-	public void testMethods() throws NoSuchMethodException {
-		ClassDescriptor cd = ClassIntrospector.lookup(MethodParameterType.class);
+	void testMethods() throws NoSuchMethodException {
+		ClassDescriptor cd = ClassIntrospector.get().lookup(MethodParameterType.class);
 
 		assertEquals(MethodParameterType.class, cd.getType());
 		assertEquals(5, cd.getAllMethodDescriptors().length);
@@ -168,7 +168,7 @@ public class IntrospectorGenericsTest {
 
 		Class[] params2 = new Class[] {Integer.class, String.class, List.class, List.class, List.class};
 
-		ClassDescriptor cd1 = ClassIntrospector.lookup(Foo.class);
+		ClassDescriptor cd1 = ClassIntrospector.get().lookup(Foo.class);
 
 		assertEquals(0, Foo.class.getDeclaredMethods().length);
 

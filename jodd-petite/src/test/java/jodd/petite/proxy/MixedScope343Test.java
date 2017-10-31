@@ -28,24 +28,24 @@ package jodd.petite.proxy;
 import jodd.petite.PetiteConfig;
 import jodd.petite.PetiteContainer;
 import jodd.petite.config.AutomagicPetiteConfigurator;
-import jodd.petite.proxy.example1.ExternalBean;
 import jodd.petite.proxetta.ProxettaAwarePetiteContainer;
+import jodd.petite.proxy.example1.ExternalBean;
 import jodd.proxetta.impl.ProxyProxetta;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MixedScope343Test {
+class MixedScope343Test {
 
 	private PetiteContainer petiteContainer;
 
-	@Before
-	public void setupPetiteContainer() {
+	@BeforeEach
+	void setupPetiteContainer() {
 		PetiteConfig petiteConfig = PetiteHelper.createPetiteConfig();
 
 		ProxyProxetta proxyProxetta = PetiteHelper.createProxyProxetta();
@@ -56,28 +56,28 @@ public class MixedScope343Test {
 		petiteConfigurator.configure(petiteContainer);
 	}
 
-	@After
-	public void teardownPetiteContainer() {
+	@AfterEach
+	void teardownPetiteContainer() {
 		petiteContainer.shutdown();
 	}
 
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
-	@Before
-	public void setUpStreams() {
+	@BeforeEach
+	void setUpStreams() {
 		System.setOut(new PrintStream(outContent));
 		System.setErr(new PrintStream(errContent));
 	}
 
-	@After
-	public void cleanUpStreams() {
+	@AfterEach
+	void cleanUpStreams() {
 		System.setOut(null);
 		System.setErr(null);
 	}
 
 	@Test
-	public void testWithMixingScopesSingletonAndProto(){
+	void testWithMixingScopesSingletonAndProto(){
 		ExternalBean externalBean = new ExternalBean();
 		// --> inject
 

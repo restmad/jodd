@@ -29,16 +29,16 @@ import jodd.madvoc.MadvocException;
 import jodd.madvoc.MadvocTestCase;
 import jodd.madvoc.interceptor.*;
 import jodd.petite.PetiteContainer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class InterceptorsManagerTest extends MadvocTestCase {
+class InterceptorsManagerTest extends MadvocTestCase {
 
 	@SuppressWarnings({"unchecked"})
 	@Test
-	public void testExpand() {
+	void testExpand() {
 		InterceptorsManager im = new InterceptorsManager();
 		im.madvocConfig = new MadvocConfig();
 		im.madvocConfig.defaultInterceptors = new Class[]{ServletConfigInterceptor.class};
@@ -55,7 +55,7 @@ public class InterceptorsManagerTest extends MadvocTestCase {
 
 	@SuppressWarnings({"unchecked"})
 	@Test
-	public void testExpand2() {
+	void testExpand2() {
 		InterceptorsManager im = new InterceptorsManager();
 		im.madvocConfig = new MadvocConfig();
 		im.madvocConfig.defaultInterceptors = new Class[]{EchoInterceptor.class, LogEchoInterceptor.class, ServletConfigInterceptor.class};
@@ -77,7 +77,7 @@ public class InterceptorsManagerTest extends MadvocTestCase {
 
 	@SuppressWarnings({"unchecked"})
 	@Test
-	public void testExpandStack() {
+	void testExpandStack() {
 		InjectorsManager injectorsManager = new InjectorsManager();
 		injectorsManager.scopeDataResolver = new ScopeDataResolver();
 		injectorsManager.madvocConfig = new MadvocConfig();
@@ -116,7 +116,7 @@ public class InterceptorsManagerTest extends MadvocTestCase {
 	
 	@SuppressWarnings({"unchecked"})
 	@Test
-	public void testExpandConfigurableStack() {
+	void testExpandConfigurableStack() {
 		InjectorsManager injectorsManager = new InjectorsManager();
 		injectorsManager.scopeDataResolver = new ScopeDataResolver();
 		injectorsManager.madvocConfig = new MadvocConfig();
@@ -163,7 +163,7 @@ public class InterceptorsManagerTest extends MadvocTestCase {
 	
 	@SuppressWarnings({"unchecked"})
 	@Test
-	public void testExpandSelf() {
+	void testExpandSelf() {
 		InterceptorsManager im = new InterceptorsManager();
 		im.madvocConfig = new MadvocConfig();
 
@@ -178,17 +178,17 @@ public class InterceptorsManagerTest extends MadvocTestCase {
 		};
 		try {
 			Class<? extends ActionInterceptor>[] out = im.expand(in);
-			fail();
+			fail("error");
 		} catch (MadvocException ignore) {
 		} catch (Exception ignored) {
-			fail();
+			fail("error");
 		}
 	}
 
 
 	@SuppressWarnings({"unchecked"})
 	@Test
-	public void testExpandStack2() {
+	void testExpandStack2() {
 		InjectorsManager injectorsManager = new InjectorsManager();
 		injectorsManager.scopeDataResolver = new ScopeDataResolver();
 		injectorsManager.madvocConfig = new MadvocConfig();

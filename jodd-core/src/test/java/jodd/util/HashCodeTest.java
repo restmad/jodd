@@ -25,14 +25,14 @@
 
 package jodd.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class HashCodeTest {
+class HashCodeTest {
 
 	@Test
-	public void testhashCode() {
+	void testhashCode() {
 		int hash = HashCode.hash(0, "Hey");
 		hash = HashCode.hash(hash, 1);
 		hash = HashCode.hash(hash, 1.4);

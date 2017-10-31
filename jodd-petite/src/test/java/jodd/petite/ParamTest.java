@@ -26,17 +26,17 @@
 package jodd.petite;
 
 import jodd.petite.fixtures.tst.Foo;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Properties;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class ParamTest {
+class ParamTest {
 
 	@Test
-	public void testSimpleParams() {
+	void testSimpleParams() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.registerPetiteBean(Foo.class, null, null, null, false);
 
@@ -48,7 +48,7 @@ public class ParamTest {
 	}
 
 	@Test
-	public void testRefParams() {
+	void testRefParams() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.registerPetiteBean(Foo.class, null, null, null, false);
 
@@ -64,7 +64,7 @@ public class ParamTest {
 	}
 
 	@Test
-	public void testRefParamsEscape() {
+	void testRefParamsEscape() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.registerPetiteBean(Foo.class, null, null, null, false);
 
@@ -76,7 +76,7 @@ public class ParamTest {
 	}
 
 	@Test
-	public void testRefParamsNoResolve() {
+	void testRefParamsNoResolve() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.getConfig().setResolveReferenceParameters(false);
 		pc.registerPetiteBean(Foo.class, null, null, null, false);
@@ -91,7 +91,7 @@ public class ParamTest {
 	}
 
 	@Test
-	public void testProperties() {
+	void testProperties() {
 		PetiteContainer pc = new PetiteContainer();
 		pc.registerPetiteBean(Foo.class, null, null, null, false);
 

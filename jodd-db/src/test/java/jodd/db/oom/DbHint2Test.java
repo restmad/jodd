@@ -25,25 +25,28 @@
 
 package jodd.db.oom;
 
-import jodd.db.fixtures.DbHsqldbTestCase;
 import jodd.db.DbSession;
 import jodd.db.DbThreadSession;
-import jodd.db.oom.sqlgen.DbEntitySql;
+import jodd.db.JoddDb;
+import jodd.db.fixtures.DbHsqldbTestCase;
 import jodd.db.oom.fixtures.Boy4;
 import jodd.db.oom.fixtures.Girl4;
 import jodd.db.oom.fixtures.Room;
-import org.junit.Before;
-import org.junit.Test;
+import jodd.db.oom.sqlgen.DbEntitySql;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static jodd.db.oom.sqlgen.DbSqlBuilder.sql;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DbHint2Test extends DbHsqldbTestCase {
+class DbHint2Test extends DbHsqldbTestCase {
 
+	@AfterEach
 	@Override
-	public void tearDown() throws Exception {
+	protected void tearDown() throws Exception {
 		DbSession session = new DbSession(cp);
 
 		executeUpdate(session, "drop table GIRL if exists");
@@ -55,6 +58,7 @@ public class DbHint2Test extends DbHsqldbTestCase {
 		super.tearDown();
 	}
 
+	@Override
 	protected void initDb(DbSession session) {
 		executeUpdate(session, "drop table ROOM if exists");
 		executeUpdate(session, "drop table BOY if exists");
@@ -93,20 +97,20 @@ public class DbHint2Test extends DbHsqldbTestCase {
 	}
 
 
-	@Before
-	public void setUp() throws Exception {
+	@Override
+	@BeforeEach
+	protected void setUp() throws Exception {
 		super.setUp();
 
-		DbOomManager.resetAll();
+		DbEntityManager dbOom = JoddDb.runtime().dbEntityManager();
 
-		DbOomManager dbOom = DbOomManager.getInstance();
 		dbOom.registerEntity(Boy4.class);
 		dbOom.registerEntity(Girl4.class);
 		dbOom.registerEntity(Room.class);
 	}
 
 	@Test
-	public void testHint() {
+	void testHint() {
 		DbSession dbSession = new DbThreadSession(cp);
 
 		// prepare data

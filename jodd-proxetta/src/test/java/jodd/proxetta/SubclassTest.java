@@ -30,7 +30,7 @@ import jodd.proxetta.impl.ProxyProxetta;
 import jodd.proxetta.impl.ProxyProxettaBuilder;
 import jodd.proxetta.pointcuts.AllMethodsPointcut;
 import jodd.util.StringUtil;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -38,12 +38,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class SubclassTest {
+class SubclassTest {
 
 	@Test
-	public void test1() {
+	void test1() {
 
 		ProxyAspect a1 = new ProxyAspect(FooProxyAdvice.class, new ProxyPointcut() {
 			public boolean apply(MethodInfo methodInfo) {
@@ -88,7 +88,7 @@ public class SubclassTest {
 	}
 
 	@Test
-	public void testProxyClassNames() {
+	void testProxyClassNames() {
 		ProxyProxetta proxyProxetta = ProxyProxetta.withAspects(new ProxyAspect(FooProxyAdvice.class, new AllMethodsPointcut()));
 		proxyProxetta.setVariableClassName(true);
 
@@ -142,7 +142,7 @@ public class SubclassTest {
 	}
 
 	@Test
-	public void testInnerOverride() {
+	void testInnerOverride() {
 		ProxyProxetta proxyProxetta = ProxyProxetta.withAspects(new ProxyAspect(FooProxyAdvice.class, new AllMethodsPointcut()));
 		ProxyProxettaBuilder builder = proxyProxetta.builder();
 		builder.setTarget(Two.class);
@@ -155,7 +155,7 @@ public class SubclassTest {
 	}
 
 	@Test
-	public void testJdk() throws Exception {
+	void testJdk() throws Exception {
 		ProxyProxetta proxyProxetta = ProxyProxetta.withAspects(new ProxyAspect(StatCounterAdvice.class, new AllMethodsPointcut()));
 		proxyProxetta.setVariableClassName(false);
 
@@ -176,7 +176,7 @@ public class SubclassTest {
 		assertNotNull(object);
 		assertEquals("foo.Object$$Proxetta", object.getClass().getName());
 
-		System.out.println("----------list");
+		//System.out.println("----------list");
 
 		StatCounter.counter = 0;
 

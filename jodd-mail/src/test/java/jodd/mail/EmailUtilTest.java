@@ -25,20 +25,20 @@
 
 package jodd.mail;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.net.URL;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class EmailUtilTest {
+class EmailUtilTest {
 
 	protected String testDataRoot;
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeEach
+	void setUp() throws Exception {
 		if (testDataRoot != null) {
 			return;
 		}
@@ -47,7 +47,7 @@ public class EmailUtilTest {
 	}
 
 	@Test
-	public void testExtractContentType() {
+	void testExtractContentType() {
 		String contentType = "multipart/mixed;";
 		assertEquals("multipart/mixed", EmailUtil.extractMimeType(contentType));
 		assertNull(EmailUtil.extractEncoding(contentType));

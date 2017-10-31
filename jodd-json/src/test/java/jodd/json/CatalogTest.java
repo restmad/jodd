@@ -33,8 +33,8 @@ import jodd.json.fixtures.model.cat.Event;
 import jodd.json.fixtures.model.cat.Performance;
 import jodd.json.fixtures.model.cat.Price;
 import jodd.json.fixtures.model.cat.SeatCategory;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -45,16 +45,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class CatalogTest {
+class CatalogTest {
 
 	protected String dataRoot;
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeEach
+	void setUp() throws Exception {
 		if (dataRoot != null) {
 			return;
 		}
@@ -65,7 +65,7 @@ public class CatalogTest {
 	}
 
 	@Test
-	public void testParseCatalogAsObject() throws IOException {
+	void testParseCatalogAsObject() throws IOException {
 		String json = loadJSON("citm_catalog");
 
 		Catalog catalog = new JsonParser().parse(json, Catalog.class);
@@ -74,7 +74,7 @@ public class CatalogTest {
 	}
 
 	@Test
-	public void testParseCatalogAsObjectWithClassname() throws IOException {
+	void testParseCatalogAsObjectWithClassname() throws IOException {
 		String json = loadJSON("citm_catalog");
 
 		Catalog catalog = new JsonParser().setClassMetadataName("class").parse(json, Catalog.class);
@@ -83,7 +83,7 @@ public class CatalogTest {
 	}
 
 	@Test
-	public void testParseSerializeCatalogNotDeep() throws IOException {
+	void testParseSerializeCatalogNotDeep() throws IOException {
 		String json = loadJSON("citm_catalog");
 
 		Catalog catalog = new JsonParser().parse(json, Catalog.class);
@@ -104,7 +104,7 @@ public class CatalogTest {
 	}
 
 	@Test
-	public void testParseSerializeCatalog() throws IOException {
+	void testParseSerializeCatalog() throws IOException {
 		String json = loadJSON("citm_catalog");
 
 		Catalog catalog = new JsonParser().parse(json, Catalog.class);
@@ -117,7 +117,7 @@ public class CatalogTest {
 	}
 
 	@Test
-	public void testParseCatalogAsMap() throws IOException {
+	void testParseCatalogAsMap() throws IOException {
 		String json = loadJSON("citm_catalog");
 
 		Map catalog = new JsonParser()
@@ -239,7 +239,7 @@ public class CatalogTest {
 	}
 
 	@Test
-	public void test20k() throws IOException {
+	void test20k() throws IOException {
 		String json = loadJSON("20k");
 
 		List<Map<String, Object>> array = new JsonParser().parse(json);

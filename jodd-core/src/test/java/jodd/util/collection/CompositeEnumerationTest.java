@@ -25,8 +25,8 @@
 
 package jodd.util.collection;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -36,17 +36,17 @@ import java.util.NoSuchElementException;
 
 import jodd.util.CollectionUtil;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class CompositeEnumerationTest {
+class CompositeEnumerationTest {
 
 	@Test
-	public void testNextWithOne() {
+	void testNextWithOne() {
 		CompositeEnumeration<Integer> compositeEnumeration = new CompositeEnumeration<>();
 		
 		try {
 			compositeEnumeration.nextElement();
-			fail();
+			fail("error");
 		} catch (NoSuchElementException e) {
 			// ignore
 		}
@@ -57,7 +57,7 @@ public class CompositeEnumerationTest {
 		
 		try {
 			compositeEnumeration.add(e);
-			fail();
+			fail("error");
 		} catch (IllegalArgumentException iaex) {
 			// ignore
 		}
@@ -73,7 +73,7 @@ public class CompositeEnumerationTest {
 	}
 
 	@Test
-	public void testRemoveWithOne() {
+	void testRemoveWithOne() {
 		CompositeEnumeration compositeEnumeration = new CompositeEnumeration();
 		List list = createList(4);
 		compositeEnumeration.add(e(list.iterator()));
@@ -87,7 +87,7 @@ public class CompositeEnumerationTest {
 
 
 	@Test
-	public void testNextWithTwo() {
+	void testNextWithTwo() {
 		CompositeEnumeration compositeEnumeration = new CompositeEnumeration();
 		List list = createList(4);
 		int count = list.size();
@@ -106,7 +106,7 @@ public class CompositeEnumerationTest {
 	}
 
 	@Test
-	public void testRemoveWithTwo() {
+	void testRemoveWithTwo() {
 		List<Integer> list1 = createList(4);
 		List<Integer> list2 = createList(4);
 		int count = list1.size() + list2.size();
@@ -124,7 +124,7 @@ public class CompositeEnumerationTest {
 	}
 
 	@Test
-	public void testNextWithThree() {
+	void testNextWithThree() {
 		List<Integer> list1 = createList(4);
 		List<Integer> list2 = createList(4);
 		List<Integer> list3 = createList(4);
@@ -143,7 +143,7 @@ public class CompositeEnumerationTest {
 	}
 
 	@Test
-	public void testRemoveWithThree() {
+	void testRemoveWithThree() {
 		List<Integer> list1 = createList(4);
 		List<Integer> list2 = new ArrayList<>();
 		List<Integer> list3 = createList(4);
@@ -162,7 +162,7 @@ public class CompositeEnumerationTest {
 	}
 
 	@Test
-	public void testPartialIterationWithThree1() {
+	void testPartialIterationWithThree1() {
 		List<Integer> list1 = createList(4);
 		Enumeration<Integer> it1 = e(list1.iterator());
 		List<Integer> list2 = createList(3);
@@ -189,7 +189,7 @@ public class CompositeEnumerationTest {
 	}
 
 	@Test
-	public void testPartialIterationWithThree2() {
+	void testPartialIterationWithThree2() {
 		List<Integer> list1 = createList(4);
 		Enumeration<Integer> it1 = e(list1.iterator());
 		List<Integer> list2 = createList(3);

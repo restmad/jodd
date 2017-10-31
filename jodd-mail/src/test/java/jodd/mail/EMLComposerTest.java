@@ -25,14 +25,14 @@
 
 package jodd.mail;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class EMLComposerTest {
+class EMLComposerTest {
 
 	@Test
-	public void testWriteSimpleEmail() {
+	void testWriteSimpleEmail() {
 		Email email = Email.create().from("Joe@example.com").to("Pig@example.com").addText("Hello");
 
 		String eml = EMLComposer.create().compose(email);

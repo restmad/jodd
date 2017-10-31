@@ -25,11 +25,11 @@
 
 package jodd.joy.crypt;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BlockCipherTest {
+class BlockCipherTest {
 
 	static class FooBlockCipher extends BlockCipher {
 
@@ -53,7 +53,7 @@ public class BlockCipherTest {
 	}
 
 	@Test
-	public void testBlock8() {
+	void testBlock8() {
 		FooBlockCipher cypher = new FooBlockCipher();
 
 		byte[] encrypted = cypher.encrypt("Jodd".getBytes());

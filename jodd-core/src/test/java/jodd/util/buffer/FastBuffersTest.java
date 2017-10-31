@@ -25,18 +25,18 @@
 
 package jodd.util.buffer;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class FastBuffersTest {
+class FastBuffersTest {
 
 	@Test
-	public void testEmptyBuffer() {
+	void testEmptyBuffer() {
 		FastLongBuffer flb = new FastLongBuffer();
 
 		assertEquals(0, flb.size());
@@ -45,7 +45,7 @@ public class FastBuffersTest {
 	}
 
 	@Test
-	public void testCommon() {
+	void testCommon() {
 		FastIntBuffer fib = new FastIntBuffer(2);
 		fib.append(1);
 		fib.append(2);
@@ -64,7 +64,7 @@ public class FastBuffersTest {
 	}
 
 	@Test
-	public void testChunks() {
+	void testChunks() {
 		FastIntBuffer fib = new FastIntBuffer(2);
 
 		assertEquals(0, fib.size());
@@ -95,7 +95,7 @@ public class FastBuffersTest {
 	}
 
 	@Test
-	public void testInnerBuffers() {
+	void testInnerBuffers() {
 		FastIntBuffer fib = new FastIntBuffer(1);
 
 		fib.append(new int[2]);
@@ -125,7 +125,7 @@ public class FastBuffersTest {
 	}
 
 	@Test
-	public void testAt() {
+	void testAt() {
 		FastCharBuffer fcb = new FastCharBuffer(2);
 		fcb.append("12abc");
 
@@ -139,24 +139,24 @@ public class FastBuffersTest {
 	}
 
 	@Test
-	public void testAtExceptions() {
+	void testAtExceptions() {
 		FastCharBuffer fcb = new FastCharBuffer();
 
 		try {
 			fcb.charAt(-1);
-			fail();
+			fail("error");
 		} catch (IndexOutOfBoundsException ioobex) {
 		}
 
 		try {
 			fcb.charAt(0);
-			fail();
+			fail("error");
 		} catch (IndexOutOfBoundsException ioobex) {
 		}
 
 		try {
 			fcb.charAt(1);
-			fail();
+			fail("error");
 		} catch (IndexOutOfBoundsException ioobex) {
 		}
 
@@ -165,13 +165,13 @@ public class FastBuffersTest {
 
 		try {
 			fcb.charAt(1);
-			fail();
+			fail("error");
 		} catch (IndexOutOfBoundsException ioobex) {
 		}
 	}
 
 	@Test
-	public void testArray() {
+	void testArray() {
 		String str = "12abcd12345678qw";
 		FastCharBuffer fcb = new FastCharBuffer(2);
 		fcb.append(str);
@@ -188,7 +188,7 @@ public class FastBuffersTest {
 	}
 
 	@Test
-	public void testAppend() {
+	void testAppend() {
 		String str = "1AB123412345678QWER";
 		FastCharBuffer fcb = new FastCharBuffer(1);
 		fcb.append(str);
@@ -202,7 +202,7 @@ public class FastBuffersTest {
 	}
 
 	@Test
-	public void testIterator() {
+	void testIterator() {
 		FastBuffer<String> fb = new FastBuffer<>();
 		for (int i = 0; i < 100; i++) {
 			fb.append(String.valueOf(i));
@@ -220,7 +220,7 @@ public class FastBuffersTest {
 
 		try {
 			it.next();
-			fail();
+			fail("error");
 		} catch (NoSuchElementException nseex) {
 		}
 	}

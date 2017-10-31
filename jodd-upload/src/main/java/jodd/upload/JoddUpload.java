@@ -26,28 +26,22 @@
 package jodd.upload;
 
 import jodd.Jodd;
-import jodd.JoddModule;
 import jodd.upload.typeconverter.FileUploadBinder;
 
 /**
  * Jodd UPLOAD module.
  */
-public class JoddUpload implements JoddModule {
+public class JoddUpload {
 
 	// ---------------------------------------------------------------- module
 
 	static {
-		init();
+		Jodd.initModule(() -> {
+			if (Jodd.isModuleLoaded(Jodd.JoddModule.BEAN)) {
+				FileUploadBinder.registerTypeConverter();
+			}
+		});
 	}
 
-	public static void init() {
-		Jodd.init(JoddUpload.class);
-	}
-
-	public void start() {
-		if (Jodd.isModuleLoaded(Jodd.BEAN)) {
-			FileUploadBinder.registerTypeConverter();
-		}
-	}
-
+	public static void init() {}
 }

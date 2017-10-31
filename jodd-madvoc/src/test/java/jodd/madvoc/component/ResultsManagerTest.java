@@ -27,15 +27,15 @@ package jodd.madvoc.component;
 
 import jodd.madvoc.result.ActionResult;
 import jodd.madvoc.result.ServletRedirectResult;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class ResultsManagerTest {
+class ResultsManagerTest {
 
 	@Test
-	public void testDuplicateResults1() {
+	void testDuplicateResults1() {
 		ResultsManager resultsManager = new ResultsManager() {
 			@Override
 			protected void initializeResult(ActionResult result) {
@@ -64,7 +64,7 @@ public class ResultsManagerTest {
 	}
 
 	@Test
-	public void testDuplicateResults2() {
+	void testDuplicateResults2() {
 		ResultsManager resultsManager = new ResultsManager() {
 			@Override
 			protected void initializeResult(ActionResult result) {

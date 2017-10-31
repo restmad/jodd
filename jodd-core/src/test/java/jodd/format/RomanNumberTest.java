@@ -25,20 +25,20 @@
 
 package jodd.format;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static jodd.format.RomanNumber.convertToArabic;
 import static jodd.format.RomanNumber.convertToRoman;
 import static jodd.format.RomanNumber.isValidRomanNumber;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class RomanNumberTest {
+class RomanNumberTest {
 
 	@Test
-	public void testConvertToRoman() {
+	void testConvertToRoman() {
 		assertEquals(convertToRoman(1), "I");
 		assertEquals(convertToRoman(2), "II");
 		assertEquals(convertToRoman(3), "III");
@@ -55,13 +55,13 @@ public class RomanNumberTest {
 
 		try {
 			convertToRoman(-1);
-			fail();
+			fail("error");
 		} catch (Exception ignore) {
 		}
 	}
 
 	@Test
-	public void testConvertToArabic() {
+	void testConvertToArabic() {
 		assertEquals(convertToArabic("I"), 1);
 		assertEquals(convertToArabic("II"), 2);
 		assertEquals(convertToArabic("III"), 3);
@@ -78,7 +78,7 @@ public class RomanNumberTest {
 	}
 
 	@Test
-	public void testIsValidRomanNumber() {
+	void testIsValidRomanNumber() {
 		assertTrue(isValidRomanNumber("I"));
 		assertTrue(isValidRomanNumber("IV"));
 		assertTrue(isValidRomanNumber("V"));

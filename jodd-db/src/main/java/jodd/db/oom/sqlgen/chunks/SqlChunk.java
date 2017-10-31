@@ -25,8 +25,9 @@
 
 package jodd.db.oom.sqlgen.chunks;
 
-import jodd.db.oom.DbEntityDescriptor;
+import jodd.db.JoddDb;
 import jodd.db.oom.DbEntityColumnDescriptor;
+import jodd.db.oom.DbEntityDescriptor;
 import jodd.db.oom.sqlgen.DbSqlBuilderException;
 import jodd.db.oom.sqlgen.TemplateData;
 import jodd.util.CharUtil;
@@ -154,7 +155,7 @@ public abstract class SqlChunk {
 	 * Lookups for entity name and throws exception if entity name not found.
 	 */
 	protected DbEntityDescriptor lookupName(String entityName) {
-		DbEntityDescriptor ded = templateData.getDbOomManager().lookupName(entityName);
+		DbEntityDescriptor ded = JoddDb.runtime().dbEntityManager().lookupName(entityName);
 		if (ded == null) {
 			throw new DbSqlBuilderException("Entity name not registered: " + entityName);
 		}
@@ -165,7 +166,7 @@ public abstract class SqlChunk {
 	 * Lookups for entity name and throws an exception if entity type is invalid.
 	 */
 	protected DbEntityDescriptor lookupType(Class entity) {
-		DbEntityDescriptor ded = templateData.getDbOomManager().lookupType(entity);
+		DbEntityDescriptor ded = JoddDb.runtime().dbEntityManager().lookupType(entity);
 		if (ded == null) {
 			throw new DbSqlBuilderException("Invalid or not-persistent entity: " + entity.getName());
 		}
@@ -193,7 +194,7 @@ public abstract class SqlChunk {
 	}
 
 	/**
-	 * Finds for table that contains column,
+	 * Finds a table that contains given column.
 	 */
 	protected DbEntityDescriptor findColumnRef(String columnRef) {
 		DbEntityDescriptor ded = templateData.findTableDescriptorByColumnRef(columnRef);

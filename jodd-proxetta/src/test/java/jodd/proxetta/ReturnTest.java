@@ -31,16 +31,16 @@ import jodd.proxetta.fixtures.data.ReturnNullAdvice;
 import jodd.proxetta.impl.ProxyProxetta;
 import jodd.proxetta.impl.ProxyProxettaBuilder;
 import jodd.proxetta.pointcuts.AllMethodsPointcut;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.lang.reflect.Field;
 
 
-public class ReturnTest {
+class ReturnTest {
 
 	@Test
-	public void testWrapperWithProxyReturns() throws Exception {
+	void testWrapperWithProxyReturns() throws Exception {
 		ProxyProxetta proxetta = ProxyProxetta.withAspects(
 				new ProxyAspect(ReflectionReplacementAdvice.class, new AllMethodsPointcut()));
 
@@ -79,7 +79,7 @@ public class ReturnTest {
 	}
 
 	@Test
-	public void testNullReturns() throws Exception {
+	void testNullReturns() throws Exception {
 		ProxyProxetta proxetta = ProxyProxetta.withAspects(
 				new ProxyAspect(ReturnNullAdvice.class, new AllMethodsPointcut()));
 

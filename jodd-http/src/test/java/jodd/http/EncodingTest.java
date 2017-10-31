@@ -28,41 +28,41 @@ package jodd.http;
 import jodd.http.up.ByteArrayUploadable;
 import jodd.util.MimeTypes;
 import jodd.util.StringPool;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class EncodingTest {
+class EncodingTest {
 
 	static TestServer testServer;
 
-	@BeforeClass
-	public static void startServer() throws Exception {
+	@BeforeAll
+	static void startServer() throws Exception {
 		testServer = new TomcatServer();
 		testServer.start();
 	}
 
-	@AfterClass
-	public static void stopServer() throws Exception {
+	@AfterAll
+	static void stopServer() throws Exception {
 		testServer.stop();
 	}
 
-	@Before
-	public void setUp() {
+	@BeforeEach
+	void setUp() {
 		EchoServlet.testinit();
 	}
 
 	@Test
-	public void testContentTypeHeader() {
+	void testContentTypeHeader() {
 		HttpRequest req = HttpRequest.get("localhost/hello");
 
 		assertNull(req.contentType());
@@ -89,19 +89,19 @@ public class EncodingTest {
 	}
 
 	@Test
-	public void testRequestEncoding1() throws IOException {
+	void testRequestEncoding1() throws IOException {
 		testRequestEncoding(1);
 	}
 	@Test
-	public void testRequestEncoding2() throws IOException {
+	void testRequestEncoding2() throws IOException {
 		testRequestEncoding(2);
 	}
 	@Test
-	public void testRequestEncoding3() throws IOException {
+	void testRequestEncoding3() throws IOException {
 		testRequestEncoding(3);
 	}
 	@Test
-	public void testRequestEncoding4() throws IOException {
+	void testRequestEncoding4() throws IOException {
 		testRequestEncoding(4);
 	}
 	private void testRequestEncoding(int i) throws IOException {
@@ -146,15 +146,15 @@ public class EncodingTest {
 	}
 
 	@Test
-	public void testFormParams1() {
+	void testFormParams1() {
 		testFormParams(1);
 	}
 	@Test
-	public void testFormParams2() {
+	void testFormParams2() {
 		testFormParams(2);
 	}
 	@Test
-	public void testFormParams3() {
+	void testFormParams3() {
 		testFormParams(3);
 	}
 	private void testFormParams(int i) {
@@ -195,11 +195,11 @@ public class EncodingTest {
 	}
 
 	@Test
-	public void testQueryParams1() throws IOException {
+	void testQueryParams1() throws IOException {
 		testQueryParams(1);
 	}
 	@Test
-	public void testQueryParams2() throws IOException {
+	void testQueryParams2() throws IOException {
 		testQueryParams(2);
 	}
 	private void testQueryParams(int i) throws IOException {
@@ -226,7 +226,7 @@ public class EncodingTest {
 	}
 
 	@Test
-	public void testMultipart() {
+	void testMultipart() {
 		HttpRequest request = HttpRequest.post("http://localhost:8173/echo2");
 		request
 			.formEncoding("UTF-8")		// optional
@@ -250,7 +250,7 @@ public class EncodingTest {
 	}
 
 	@Test
-	public void testUploadWithUploadable() throws IOException {
+	void testUploadWithUploadable() throws IOException {
 		HttpResponse response = HttpRequest
 				.post("http://localhost:8173/echo2")
 				.multipart(true)

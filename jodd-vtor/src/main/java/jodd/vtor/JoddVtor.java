@@ -35,11 +35,9 @@ public class JoddVtor {
 	// ---------------------------------------------------------------- module
 
 	static {
-		init();
+		Jodd.initModule();
 	}
 
-	public static void init() {
-		Jodd.init(JoddVtor.class);
-	}
+	public static void init() {}
 
 }

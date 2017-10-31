@@ -26,25 +26,26 @@
 package jodd.db.oom;
 
 import jodd.db.DbDetector;
-import jodd.db.DbManager;
 import jodd.db.DbQuery;
 import jodd.db.DbSession;
+import jodd.db.DbTestUtil;
+import jodd.db.JoddDb;
 import jodd.db.pool.CoreConnectionPool;
 import jodd.exception.UncheckedException;
 import jodd.log.LoggerFactory;
 import jodd.log.impl.NOPLogger;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Abstract common DB integration test class.
  */
 public abstract class DbBaseTest {
 
-	public static final String DB_NAME = "jodd-test";
+	public static final String DB_NAME = "jodd_test";
 
 	protected CoreConnectionPool connectionPool;
-	protected DbOomManager dboom;
+	protected DbEntityManager dboom;
 
 	protected void init() {
 		LoggerFactory.setLoggerProvider(name -> new NOPLogger("") {
@@ -63,16 +64,16 @@ public abstract class DbBaseTest {
 				throw new UncheckedException("NO WARNINGS ALLOWED: " + message);
 			}
 		});
-		DbOomManager.resetAll();
+		DbTestUtil.resetAll();
 
-		dboom = DbOomManager.getInstance();
+		dboom = JoddDb.runtime().dbEntityManager();
 
 		connectionPool = new CoreConnectionPool();
 	}
 
 	protected void connect() {
 		connectionPool.init();
-		DbManager.getInstance().setConnectionProvider(connectionPool);
+		JoddDb.runtime().connectionProvider(connectionPool);
 	}
 
 	// ---------------------------------------------------------------- dbaccess
@@ -116,27 +117,18 @@ public abstract class DbBaseTest {
 	 */
 	public abstract class MySqlDbAccess extends DbAccess {
 
+		@Override
 		public final void initDb() {
 			connectionPool.setDriver("com.mysql.jdbc.Driver");
-			connectionPool.setUrl("jdbc:mysql://" + dbhost() + ":3306");
+			connectionPool.setUrl("jdbc:mysql://" + dbhost() + ":3306/" + DB_NAME);
 			connectionPool.setUser("root");
 			connectionPool.setPassword("root!");
 
-			dboom.getTableNames().setUppercase(true);
-			dboom.getColumnNames().setUppercase(true);
+			JoddDb.defaults().getDbOomConfig().getTableNames().setUppercase(true);
+			JoddDb.defaults().getDbOomConfig().getColumnNames().setUppercase(true);
 
 			//dboom.getTableNames().setLowercase(true);
 			//dboom.getColumnNames().setLowercase(true);
-
-			connectionPool.init();
-
-			DbSession session = new DbSession(connectionPool);
-			DbQuery query = new DbQuery(session, "create database IF NOT EXISTS `jodd-test` CHARACTER SET utf8 COLLATE utf8_general_ci;");
-			query.executeUpdate();
-			session.closeSession();
-
-			connectionPool.close();
-			connectionPool.setUrl("jdbc:mysql://" + dbhost() + ":3306/" + DB_NAME);
 		}
 	}
 
@@ -145,6 +137,7 @@ public abstract class DbBaseTest {
 	 */
 	public abstract class PostgreSqlDbAccess extends DbAccess {
 
+		@Override
 		public void initDb() {
 			connectionPool.setDriver("org.postgresql.Driver");
 			connectionPool.setUrl("jdbc:postgresql://" + dbhost() + "/" + DB_NAME);
@@ -156,10 +149,27 @@ public abstract class DbBaseTest {
 	}
 
 	/**
+	 * MS SQL.
+	 */
+	public abstract class MsSqlDbAccess extends DbAccess {
+
+		@Override
+		public void initDb() {
+			connectionPool.setDriver("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			connectionPool.setUrl("jdbc:sqlserver://" + dbhost() + ":1433;" + "databaseName=" + DB_NAME);
+			connectionPool.setUser("sa");
+			connectionPool.setPassword("root!R00t!");
+
+			DbDetector.detectDatabaseAndConfigureDbOom(connectionPool);
+		}
+	}
+
+	/**
 	 * HsqlDB.
 	 */
 	public abstract class HsqlDbAccess extends DbAccess {
 
+		@Override
 		public final void initDb() {
 			connectionPool = new CoreConnectionPool();
 			connectionPool.setDriver("org.hsqldb.jdbcDriver");
@@ -167,8 +177,8 @@ public abstract class DbBaseTest {
 			connectionPool.setUser("sa");
 			connectionPool.setPassword("");
 
-			dboom.getTableNames().setUppercase(true);
-			dboom.getColumnNames().setUppercase(true);
+			JoddDb.defaults().getDbOomConfig().getTableNames().setUppercase(true);
+			JoddDb.defaults().getDbOomConfig().getColumnNames().setUppercase(true);
 		}
 	}
 

@@ -25,14 +25,14 @@
 
 package jodd.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TupleTest {
+class TupleTest {
 
 	@Test
-	public void testTuple() {
+	void testTuple() {
 		Tuple tuple = Tuple.of("one", "two");
 		assertEquals(2, tuple.size());
 		assertEquals("one", tuple.get(0));

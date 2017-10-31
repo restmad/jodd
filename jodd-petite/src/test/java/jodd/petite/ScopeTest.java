@@ -33,16 +33,16 @@ import jodd.petite.scope.ThreadLocalScope;
 import jodd.petite.fixtures.tst.Boo;
 import jodd.petite.fixtures.tst.Foo;
 import jodd.petite.fixtures.tst.Zoo;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Semaphore;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class ScopeTest {
+class ScopeTest {
 
 	@Test
-	public void testThreadLocalScope() throws InterruptedException {
+	void testThreadLocalScope() throws InterruptedException {
 		final PetiteContainer pc = new PetiteContainer();
 
 		pc.registerPetiteBean(Foo.class, "foo", null, null, false);
@@ -77,7 +77,7 @@ public class ScopeTest {
 	}
 
 	@Test
-	public void testScopeAccept() {
+	void testScopeAccept() {
 		final PetiteContainer pc = new PetiteContainer();
 
 		SingletonScope singletonScope = pc.resolveScope(SingletonScope.class);

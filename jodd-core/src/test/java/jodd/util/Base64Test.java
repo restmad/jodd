@@ -25,12 +25,12 @@
 
 package jodd.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class Base64Test {
+class Base64Test {
 
 	String text = "Man is distinguished, not only by his reason, but by this singular passion from other animals," +
 			" which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge," +
@@ -43,7 +43,7 @@ public class Base64Test {
 			"ZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4=";
 
 	@Test
-	public void testEncoding() {
+	void testEncoding() {
 		assertEquals(enc, Base64.encodeToString(text));
 		assertEquals("TQ==", Base64.encodeToString("M"));
 		assertEquals("TWE=", Base64.encodeToString("Ma"));
@@ -51,7 +51,7 @@ public class Base64Test {
 	}
 
 	@Test
-	public void testDecode() {
+	void testDecode() {
 		assertEquals(text, Base64.decodeToString(enc));
 		assertEquals("M", Base64.decodeToString("TQ=="));
 		assertEquals("Ma", Base64.decodeToString("TWE="));
@@ -59,7 +59,7 @@ public class Base64Test {
 	}
 
 	@Test
-	public void testUTF8() {
+	void testUTF8() {
 		String utf8string = "Здоровая";
 
 		String encoded = Base64.encodeToString(utf8string);

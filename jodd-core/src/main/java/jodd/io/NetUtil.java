@@ -28,7 +28,6 @@ package jodd.io;
 import jodd.util.StringUtil;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Inet4Address;
@@ -38,7 +37,6 @@ import java.net.UnknownHostException;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 /**
@@ -85,7 +83,7 @@ public class NetUtil {
 	}
 
 	public static int getMaskAsInt(String mask) {
-		if (!validateHostIp(mask)) {
+		if (!validateAgaintIPAdressV4Format(mask)) {
 			mask = DEFAULT_MASK;
 		}
 		return getIpAsInt(mask);
@@ -101,15 +99,19 @@ public class NetUtil {
 	}
 
 	/**
-	 * Validates IP address given as a string.
+	 * Checks given string against IP address v4 format.
+	 *
+	 * @param input an ip address - may be null
+	 * @return <tt>true</tt> if param has a valid ip v4 format <tt>false</tt> otherwise
+	 * @see <a href="https://en.wikipedia.org/wiki/IP_address#IPv4_addresses">ip address v4</a>
 	 */
-	public static boolean validateHostIp(String host) {
-		if (host == null) {
+	public static boolean validateAgaintIPAdressV4Format(String input) {
+		if (input == null) {
 			return false;
 		}
 
 		int hitDots = 0;
-		char[] data = host.toCharArray();
+		char[] data = input.toCharArray();
 		for (int i = 0; i < data.length; i++) {
 			char c = data[i];
 			int b = 0;
@@ -151,24 +153,27 @@ public class NetUtil {
 	 * Downloads resource as byte array.
 	 */
 	public static byte[] downloadBytes(String url) throws IOException {
-		InputStream inputStream = new URL(url).openStream();
-		return StreamUtil.readBytes(inputStream);
+		try (InputStream inputStream = new URL(url).openStream()) {
+			return StreamUtil.readBytes(inputStream);
+		}
 	}
 
 	/**
 	 * Downloads resource as String.
 	 */
 	public static String downloadString(String url, String encoding) throws IOException {
-		InputStream inputStream = new URL(url).openStream();
-		return new String(StreamUtil.readChars(inputStream, encoding));
+		try (InputStream inputStream = new URL(url).openStream()) {
+			return new String(StreamUtil.readChars(inputStream, encoding));
+		}
 	}
 
 	/**
 	 * Downloads resource as String.
 	 */
 	public static String downloadString(String url) throws IOException {
-		InputStream inputStream = new URL(url).openStream();
-		return new String(StreamUtil.readChars(inputStream));
+		try (InputStream inputStream = new URL(url).openStream()) {
+			return new String(StreamUtil.readChars(inputStream));
+		}
 	}
 
 	/**

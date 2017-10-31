@@ -25,27 +25,27 @@
 
 package jodd.typeconverter.impl;
 
-import jodd.Jodd;
 import jodd.typeconverter.TypeConverterManager;
 import jodd.upload.FileUpload;
+import jodd.upload.JoddUpload;
 import jodd.upload.typeconverter.FileUploadConverter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class UploadTypeConverterManagerAddonTest {
+class UploadTypeConverterManagerAddonTest {
 
 	@Test
-	public void testRegistration() {
-		Jodd.initAllModules();
+	void testRegistration() {
+		JoddUpload.init();
 
-		FileUploadConverter fileUploadConverter = (FileUploadConverter) TypeConverterManager.lookup(FileUpload.class);
+		FileUploadConverter fileUploadConverter = (FileUploadConverter) TypeConverterManager.get().lookup(FileUpload.class);
 
 		assertNotNull(fileUploadConverter);
 
-		FileConverter fileTypeConverter = (FileConverter) TypeConverterManager.lookup(File.class);
+		FileConverter fileTypeConverter = (FileConverter) TypeConverterManager.get().lookup(File.class);
 
 		assertNotNull(fileTypeConverter);
 		assertNotNull(fileTypeConverter.addonFileConverters);

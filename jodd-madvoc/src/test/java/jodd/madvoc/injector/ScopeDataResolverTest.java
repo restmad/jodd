@@ -30,18 +30,18 @@ import jodd.madvoc.ScopeType;
 import jodd.madvoc.component.ScopeDataResolver;
 import jodd.madvoc.meta.In;
 import jodd.madvoc.meta.Out;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ScopeDataResolverTest {
+class ScopeDataResolverTest {
 
 	static class Action {
 		@In String input;
 	}
 
 	@Test
-	public void testInAnnotations() {
+	void testInAnnotations() {
 		ScopeDataResolver scopeDataResolver = new ScopeDataResolver();
 
 		ScopeData[] scopeData = scopeDataResolver.resolveScopeData(Action.class);
@@ -65,7 +65,7 @@ public class ScopeDataResolverTest {
 	}
 
 	@Test
-	public void testGenericAction() {
+	void testGenericAction() {
 		ScopeDataResolver scopeDataResolver = new ScopeDataResolver();
 
 		ScopeData[] scopeData = scopeDataResolver.resolveScopeData(GenAction.class);

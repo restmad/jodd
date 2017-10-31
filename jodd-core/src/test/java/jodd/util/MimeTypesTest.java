@@ -25,16 +25,16 @@
 
 package jodd.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MimeTypesTest {
+class MimeTypesTest {
 
 	@Test
-	public void testSimpleMime() {
+	void testSimpleMime() {
 		assertEquals("application/atom+xml", MimeTypes.getMimeType("atom"));
 		assertEquals("audio/x-wav", MimeTypes.getMimeType("wav"));
 		assertEquals("image/jpeg", MimeTypes.getMimeType("jpg"));
@@ -47,7 +47,7 @@ public class MimeTypesTest {
 	}
 
 	@Test
-	public void testFind() {
+	void testFind() {
 		String[] extensionArray = MimeTypes.findExtensionsByMimeTypes("image/jpeg", false);
 
 		String extensions = ArraysUtil.toString(extensionArray) + ',';
@@ -65,7 +65,7 @@ public class MimeTypesTest {
 	}
 
 	@Test
-	public void testFindWithWildcards() {
+	void testFindWithWildcards() {
 		String[] extensionArray = MimeTypes.findExtensionsByMimeTypes("image/*", true);
 
 		String extensions = ArraysUtil.toString(extensionArray) + ',';

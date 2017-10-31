@@ -25,31 +25,34 @@
 
 package jodd.db.oom;
 
-import jodd.db.fixtures.DbHsqldbTestCase;
 import jodd.db.DbSession;
+import jodd.db.DbTestUtil;
 import jodd.db.DbThreadSession;
-import jodd.db.oom.sqlgen.DbEntitySql;
-import jodd.db.oom.sqlgen.ParsedSql;
+import jodd.db.JoddDb;
+import jodd.db.fixtures.DbHsqldbTestCase;
 import jodd.db.oom.fixtures.Boy2;
 import jodd.db.oom.fixtures.Girl;
-import org.junit.Before;
-import org.junit.Test;
+import jodd.db.oom.sqlgen.DbEntitySql;
+import jodd.db.oom.sqlgen.ParsedSql;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static jodd.db.oom.sqlgen.DbSqlBuilder.sql;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class DbHintTest extends DbHsqldbTestCase {
+class DbHintTest extends DbHsqldbTestCase {
 
-	@Before
+	@Override
+	@BeforeEach
 	public void setUp() throws Exception {
 		super.setUp();
 
-		DbOomManager.resetAll();
-		DbOomManager dbOom = DbOomManager.getInstance();
-		dbOom.registerEntity(Boy2.class);
-		dbOom.registerEntity(Girl.class);
+		DbTestUtil.resetAll();
+		DbEntityManager dbEntityManager = JoddDb.runtime().dbEntityManager();
+		dbEntityManager.registerEntity(Boy2.class);
+		dbEntityManager.registerEntity(Girl.class);
 
 		q1 = sql("select $C{boy.*}, $C{girl.*} from $T{Boy2 boy} join $T{Girl girl} on $boy.id=$girl.id").parse();
 
@@ -73,7 +76,7 @@ public class DbHintTest extends DbHsqldbTestCase {
 
 
 	@Test
-	public void testHint() {
+	void testHint() {
 		DbSession dbSession = new DbThreadSession(cp);
 
 		// prepare data

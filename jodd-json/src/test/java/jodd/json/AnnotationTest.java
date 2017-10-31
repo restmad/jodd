@@ -26,29 +26,19 @@
 package jodd.json;
 
 import jodd.json.fixtures.mock.Location;
-import jodd.json.fixtures.model.App;
-import jodd.json.fixtures.model.MyFolder1;
-import jodd.json.fixtures.model.MyFolder2;
-import jodd.json.fixtures.model.MyFolder3;
-import jodd.json.fixtures.model.MyFolder4;
-import jodd.json.fixtures.model.User;
-import jodd.json.fixtures.model.UserHolder;
-import org.junit.Test;
+import jodd.json.fixtures.model.*;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class AnnotationTest {
+class AnnotationTest {
 
 	@Test
-	public void testAnnName() {
+	void testAnnName() {
 		Location location = new Location();
 
 		location.setLatitude(65);
@@ -65,7 +55,7 @@ public class AnnotationTest {
 	}
 
 	@Test
-	public void testAnnNameWithClass() {
+	void testAnnNameWithClass() {
 		Location location = new Location();
 
 		location.setLatitude(65);
@@ -82,7 +72,7 @@ public class AnnotationTest {
 	}
 
 	@Test
-	public void testAnnIncludeOfCollection() {
+	void testAnnIncludeOfCollection() {
 		App app = new App();
 
 		String json = new JsonSerializer().serialize(app);
@@ -92,7 +82,7 @@ public class AnnotationTest {
 	}
 
 	@Test
-	public void testClassInArraySerialize() {
+	void testClassInArraySerialize() {
 		User user = new User();
 		user.setId(123);
 		user.setName("joe");
@@ -125,7 +115,7 @@ public class AnnotationTest {
 	}
 
 	@Test
-	public void testCustomMap() {
+	void testCustomMap() {
 		String json = "{\"userId\" : 123, \"name\": 456}";
 
 		Map<String, Integer> map = JsonParser.create().parse(json);
@@ -156,7 +146,7 @@ public class AnnotationTest {
 	}
 
 		@Test
-	public void testClassInArrayOrMapParse() {
+	void testClassInArrayOrMapParse() {
 		String json = "{\"userId\" : 123, \"name\":\"Joe\"}";
 
 		User user = JsonParser.create().parse(json, User.class);
@@ -186,7 +176,7 @@ public class AnnotationTest {
 	}
 
 	@Test
-	public void testBeanSettersGetters() {
+	void testBeanSettersGetters() {
 		String json = "{\"foo.folder\":\"vvvv\"}";
 
 		{

@@ -25,19 +25,19 @@
 
 package jodd.servlet;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class JspResolverTest {
+class JspResolverTest {
 
 	static class Foo {
 		String name = "Hello";
@@ -49,8 +49,8 @@ public class JspResolverTest {
 	ServletContext servletContext;
 
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeEach
+	void setUp() throws Exception {
 
 		servletRequest = mock(HttpServletRequest.class);
 		httpSession = mock(HttpSession.class);
@@ -70,7 +70,7 @@ public class JspResolverTest {
 	}
 
 	@Test
-	public void testAttributes() {
+	void testAttributes() {
 		assertEquals("value", JspResolver.attribute("name", servletRequest));
 		assertEquals("value2", JspResolver.attribute("name2", servletRequest));
 		assertEquals("value3-1", JspResolver.attribute("name3", servletRequest));
@@ -81,7 +81,7 @@ public class JspResolverTest {
 	}
 
 	@Test
-	public void testValues() {
+	void testValues() {
 		JspResolver jspResolver = new JspResolver(servletRequest);
 		assertEquals("value", jspResolver.value("name"));
 		assertEquals("value1", jspResolver.value("name2"));

@@ -25,65 +25,56 @@
 
 package jodd.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.UnsupportedEncodingException;
 
-import static jodd.util.URLCoder.encodeFragment;
-import static jodd.util.URLCoder.encodeHost;
-import static jodd.util.URLCoder.encodeHttpUrl;
-import static jodd.util.URLCoder.encodePath;
-import static jodd.util.URLCoder.encodePathSegment;
-import static jodd.util.URLCoder.encodePort;
-import static jodd.util.URLCoder.encodeQuery;
-import static jodd.util.URLCoder.encodeQueryParam;
-import static jodd.util.URLCoder.encodeScheme;
-import static jodd.util.URLCoder.encodeUri;
-import static jodd.util.URLCoder.encodeUserInfo;
+import static jodd.util.URLCoder.*;
 import static jodd.util.URLDecoder.decode;
 import static jodd.util.URLDecoder.decodeQuery;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class URLCoderTest {
+class URLCoderTest {
 	
 	@Test
-	public void testEncodeScheme() {
+	void testEncodeScheme() {
 		assertEquals("foobar+-.", encodeScheme("foobar+-."));
 		assertEquals("foo%20bar", encodeScheme("foo bar"));
 	}
 
 	@Test
-	public void testEncodeUserInfo() {
+	void testEncodeUserInfo() {
 		assertEquals("foobar:", encodeUserInfo("foobar:"));
 		assertEquals("foo%20bar", encodeUserInfo("foo bar"));
 	}
 
 	@Test
-	public void testEncodeHost() {
+	void testEncodeHost() {
 		assertEquals("foobar", encodeHost("foobar"));
 		assertEquals("foo%20bar", encodeHost("foo bar"));
 	}
 
 	@Test
-	public void testEncodePort() {
+	void testEncodePort() {
 		assertEquals("80", encodePort("80"));
 	}
 
 	@Test
-	public void testEncodePath() {
+	void testEncodePath() {
 		assertEquals("/foo/bar", encodePath("/foo/bar"));
 		assertEquals("/foo%20bar", encodePath("/foo bar"));
 		assertEquals("/Z%C3%BCrich", encodePath("/Z\u00fcrich"));
 	}
 
 	@Test
-	public void testEncodePathSegment() {
+	void testEncodePathSegment() {
 		assertEquals("foobar", encodePathSegment("foobar"));
 		assertEquals("%2Ffoo%2Fbar", encodePathSegment("/foo/bar"));
 	}
 
 	@Test
-	public void testEncodeQuery() {
+	void testEncodeQuery() {
 		assertEquals("foobar", encodeQuery("foobar"));
 		assertEquals("foo%20bar", encodeQuery("foo bar"));
 		assertEquals("foobar/+", encodeQuery("foobar/+"));
@@ -93,7 +84,7 @@ public class URLCoderTest {
 	}
 
 	@Test
-	public void testEncodeQueryParam() {
+	void testEncodeQueryParam() {
 		assertEquals("foobar", encodeQueryParam("foobar"));
 		assertEquals("foo%20bar", encodeQueryParam("foo bar"));
 		assertEquals("foobar/+", encodeQuery("foobar/+"));
@@ -104,14 +95,14 @@ public class URLCoderTest {
 	}
 
 	@Test
-	public void testEncodeFragment() {
+	void testEncodeFragment() {
 		assertEquals("foobar", encodeFragment("foobar"));
 		assertEquals("foo%20bar", encodeFragment("foo bar"));
 		assertEquals("foobar/", encodeFragment("foobar/"));
 	}
 
 	@Test
-	public void testDecode() {
+	void testDecode() {
 		assertEquals("", decode(""));
 		assertEquals("foobar", decode("foobar"));
 		assertEquals("foo bar", decode("foo%20bar"));
@@ -124,14 +115,14 @@ public class URLCoderTest {
 	}
 
 	@Test
-	public void testEncodeUri() {
+	void testEncodeUri() {
 		assertEquals("http://www.ietf.org/rfc/rfc3986.txt",
 				encodeUri("http://www.ietf.org/rfc/rfc3986.txt"));
 		assertEquals("https://www.ietf.org/rfc/rfc3986.txt",
 				encodeUri("https://www.ietf.org/rfc/rfc3986.txt"));
 		assertEquals("http://www.google.com/?q=Z%C3%BCrich",
 				encodeUri("http://www.google.com/?q=Z\u00fcrich"));
-		assertEquals("Invalid encoded URI",
+		assertEquals(
 				"http://arjen:foobar@java.sun.com:80/javase/6/docs/api/java/util/BitSet.html?foo=bar#and(java.util.BitSet)",
 				encodeUri("http://arjen:foobar@java.sun.com:80/javase/6/docs/api/java/util/BitSet.html?foo=bar#and(java.util.BitSet)"));
 		assertEquals("http://java.sun.com/j2se/1.3/",
@@ -150,34 +141,33 @@ public class URLCoderTest {
 	}
 
 	@Test
-	public void testEncodeHttpUrl() {
-		assertEquals("Invalid encoded HTTP URL", "http://www.ietf.org/rfc/rfc3986.txt",
+	void testEncodeHttpUrl() {
+		assertEquals("http://www.ietf.org/rfc/rfc3986.txt",
 				encodeHttpUrl("http://www.ietf.org/rfc/rfc3986.txt"));
 		assertEquals("https://www.ietf.org/rfc/rfc3986.txt",
 				encodeHttpUrl("https://www.ietf.org/rfc/rfc3986.txt"));
-		assertEquals("Invalid encoded HTTP URL", "http://www.google.com/?q=Z%C3%BCrich",
+		assertEquals("http://www.google.com/?q=Z%C3%BCrich",
 				encodeHttpUrl("http://www.google.com/?q=Z\u00fcrich"));
-		assertEquals("Invalid encoded HTTP URL", "http://ws.geonames.org/searchJSON?q=T%C5%8Dky%C5%8D&style=FULL&maxRows=300",
+		assertEquals("http://ws.geonames.org/searchJSON?q=T%C5%8Dky%C5%8D&style=FULL&maxRows=300",
 				encodeHttpUrl("http://ws.geonames.org/searchJSON?q=T\u014dky\u014d&style=FULL&maxRows=300"));
-		assertEquals("Invalid encoded HTTP URL",
+		assertEquals(
 				"http://arjen:foobar@java.sun.com:80/javase/6/docs/api/java/util/BitSet.html?foo=bar",
-				encodeHttpUrl(
-						"http://arjen:foobar@java.sun.com:80/javase/6/docs/api/java/util/BitSet.html?foo=bar"));
-		assertEquals("Invalid encoded HTTP URL", "http://search.twitter.com/search.atom?q=%23avatar",
+				encodeHttpUrl("http://arjen:foobar@java.sun.com:80/javase/6/docs/api/java/util/BitSet.html?foo=bar"));
+		assertEquals("http://search.twitter.com/search.atom?q=%23avatar",
 				encodeHttpUrl("http://search.twitter.com/search.atom?q=#avatar"));
-		assertEquals("Invalid encoded HTTP URL", "http://java.sun.com/j2se/1.3/",
+		assertEquals("http://java.sun.com/j2se/1.3/",
 				encodeHttpUrl("http://java.sun.com/j2se/1.3/"));
-		assertEquals("Invalid encoded HTTP URL", "http://example.com/query=foo@bar",
+		assertEquals("http://example.com/query=foo@bar",
 				encodeHttpUrl("http://example.com/query=foo@bar"));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void encodeHttpUrlMail() {
-		encodeHttpUrl("mailto:java-net@java.sun.com");
+		assertThrows(IllegalArgumentException.class, () -> encodeHttpUrl("mailto:java-net@java.sun.com"));
 	}
 
 	@Test
-	public void testEncodeUrl() {
+	void testEncodeUrl() {
 		assertEquals("/aaa", URLCoder.encodeUri("/aaa"));
 		assertEquals("/aaa?", URLCoder.encodeUri("/aaa?"));
 		assertEquals("/aaa?b", URLCoder.encodeUri("/aaa?b"));
@@ -192,7 +182,7 @@ public class URLCoderTest {
 	}
 
 	@Test
-	public void testQuerySimple() throws UnsupportedEncodingException {
+	void testQuerySimple() throws UnsupportedEncodingException {
 		assertEquals("%C5%BD%C4%8C%C4%86", encodeQueryParam("ŽČĆ"));    // utf8
 		assertEquals("@-._~%2B%20", encodeQueryParam("@-._~+ "));
 		assertEquals("http://jodd.org/download?param=I%20love%20Jodd+Java", URLCoder.encodeHttpUrl("http://jodd.org/download?param=I love Jodd+Java"));
@@ -200,7 +190,7 @@ public class URLCoderTest {
 	}
 
 	@Test
-	public void testUrlBuilder() {
+	void testUrlBuilder() {
 		assertEquals("http://jodd.org", URLCoder.build("http://jodd.org").toString());
 		assertEquals("http://jodd.org?param=jodd%26java", URLCoder.build("http://jodd.org").queryParam("param", "jodd&java").toString());
 		assertEquals("http://jodd.org?pa%20ram=jodd%2Bjava", URLCoder.build("http://jodd.org").queryParam("pa ram", "jodd+java").toString());

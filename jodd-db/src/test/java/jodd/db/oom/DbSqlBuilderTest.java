@@ -25,31 +25,35 @@
 
 package jodd.db.oom;
 
-import jodd.db.oom.sqlgen.DbSqlBuilder;
-import jodd.db.oom.sqlgen.ParameterValue;
+import jodd.db.DbTestUtil;
+import jodd.db.JoddDb;
 import jodd.db.oom.fixtures.BadBoy;
 import jodd.db.oom.fixtures.BadGirl;
 import jodd.db.oom.fixtures.Boy;
 import jodd.db.oom.fixtures.Girl;
-import org.junit.Before;
-import org.junit.Test;
+import jodd.db.oom.sqlgen.DbSqlBuilder;
+import jodd.db.oom.sqlgen.ParameterValue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static jodd.db.oom.ColumnAliasType.*;
+import static jodd.db.oom.ColumnAliasType.COLUMN_CODE;
+import static jodd.db.oom.ColumnAliasType.TABLE_NAME;
+import static jodd.db.oom.ColumnAliasType.TABLE_REFERENCE;
 import static jodd.db.oom.sqlgen.DbSqlBuilder.sql;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class DbSqlBuilderTest {
+class DbSqlBuilderTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeEach
+	void setUp() throws Exception {
 
-		DbOomManager.resetAll();
-		DbOomManager dbOom = DbOomManager.getInstance();
+		DbTestUtil.resetAll();
+		DbEntityManager dbOom = JoddDb.runtime().dbEntityManager();
 		dbOom.registerType(Girl.class);
 		dbOom.registerType(BadGirl.class);
 		dbOom.registerType(Boy.class);
@@ -57,7 +61,7 @@ public class DbSqlBuilderTest {
 	}
 
 	@Test
-	public void testTable() {
+	void testTable() {
 		DbSqlBuilder s;
 
 		// [1]
@@ -141,7 +145,7 @@ public class DbSqlBuilderTest {
 	}
 
 	@Test
-	public void testColumn() {
+	void testColumn() {
 		assertEquals("BOY.ID BOY", sql().column("Boy.id").table("Boy", null).generateQuery());
 		assertEquals("BOY.ID BOY", sql().column("Boy", "id").table("Boy", null).generateQuery());
 		assertEquals("Boy.ID BOY Boy", sql().column("Boy.id").table("Boy", "Boy").generateQuery());
@@ -163,7 +167,7 @@ public class DbSqlBuilderTest {
 	}
 
 	@Test
-	public void testReferences() {
+	void testReferences() {
 		assertEquals("b.ID BOY b", sql().ref("b", "id").$(" ").table("Boy", "b").generateQuery());
 		assertEquals("b.ID BOY b", sql().ref("b.+").$(" ").table("BadBoy", "b").generateQuery());
 		assertEquals("b BOY b", sql().ref("b").table("Boy", "b").generateQuery());
@@ -181,7 +185,7 @@ public class DbSqlBuilderTest {
 	}
 
 	@Test
-	public void testInsert() {
+	void testInsert() {
 		Boy b = new Boy();
 
 		DbSqlBuilder dbc = sql().insert("Boy", b);
@@ -206,7 +210,7 @@ public class DbSqlBuilderTest {
 
 	@Test
 	@SuppressWarnings({"unchecked"})
-	public void testValue() {
+	void testValue() {
 		Boy b = new Boy();
 		DbSqlBuilder dbc = new DbSqlBuilder();
 		assertEquals(":zzz", dbc.value("zzz", Integer.valueOf(b.girlId)).generateQuery());
@@ -233,7 +237,7 @@ public class DbSqlBuilderTest {
 	}
 
 	@Test
-	public void testUpdateSet() {
+	void testUpdateSet() {
 		Boy b = new Boy();
 		b.id = 1;
 		b.girlId = 2;
@@ -264,13 +268,13 @@ public class DbSqlBuilderTest {
 	}
 
 	@Test
-	public void testStrings() {
+	void testStrings() {
 		DbSqlBuilder dbc = sql().$("123").$("xxx");
 		assertEquals("123xxx", dbc.generateQuery());
 	}
 
 	@Test
-	public void testWhere() {
+	void testWhere() {
 		{
 			Boy b = new Boy();
 			b.id = 1;
@@ -322,7 +326,7 @@ public class DbSqlBuilderTest {
 	}
 
 	@Test
-	public void testCriteria() {
+	void testCriteria() {
 		BadBoy bb = new BadBoy();
 		BadGirl bg = new BadGirl();
 
@@ -350,7 +354,7 @@ public class DbSqlBuilderTest {
 	}
 
 	@Test
-	public void testCriteria2() {
+	void testCriteria2() {
 		Girl girl = new Girl();
 		girl.speciality = "piano";
 

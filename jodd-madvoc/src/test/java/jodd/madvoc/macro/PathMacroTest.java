@@ -26,13 +26,13 @@
 package jodd.madvoc.macro;
 
 import jodd.util.StringPool;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class PathMacroTest {
+class PathMacroTest {
 
 	private static final String[] SEP1 = new String[] {
 			StringPool.DOLLAR_LEFT_BRACE, StringPool.COLON, StringPool.RIGHT_BRACE
@@ -42,7 +42,7 @@ public class PathMacroTest {
 	};
 
 	@Test
-	public void testSimplePathMacro() {
+	void testSimplePathMacro() {
 		PathMacros pathMacros = new WildcardPathMacros();
 
 		assertFalse(pathMacros.init("/some/path/no/macros", SEP1));
@@ -59,7 +59,7 @@ public class PathMacroTest {
 	}
 
 	@Test
-	public void testSimplePathMacroSep2() {
+	void testSimplePathMacroSep2() {
 		PathMacros pathMacros = new WildcardPathMacros();
 
 		assertFalse(pathMacros.init("/some/path/no/macros", SEP2));
@@ -76,7 +76,7 @@ public class PathMacroTest {
 	}
 
 	@Test
-	public void testFirstLastPathMacro() {
+	void testFirstLastPathMacro() {
 		PathMacros pathMacros = new WildcardPathMacros();
 
 		assertTrue(pathMacros.init("${di}/img/${id}", SEP1));
@@ -93,7 +93,7 @@ public class PathMacroTest {
 	}
 
 	@Test
-	public void testSinglePathMacro() {
+	void testSinglePathMacro() {
 		PathMacros pathMacros = new WildcardPathMacros();
 
 		assertTrue(pathMacros.init("${id}", SEP1));
@@ -108,7 +108,7 @@ public class PathMacroTest {
 	}
 
 	@Test
-	public void testThreesomePathMacro() {
+	void testThreesomePathMacro() {
 		PathMacros pathMacros = new WildcardPathMacros();
 
 		assertTrue(pathMacros.init("/user/${userId}/doc${docId}/v${version}", SEP1));
@@ -146,7 +146,7 @@ public class PathMacroTest {
 	}
 
 	@Test
-	public void testDummyPathMacro() {
+	void testDummyPathMacro() {
 		PathMacros pathMacros = new WildcardPathMacros();
 
 		assertTrue(pathMacros.init("/user/${userId}${version}", SEP1));
@@ -162,7 +162,7 @@ public class PathMacroTest {
 	}
 
 	@Test
-	public void testWildcardMatch() {
+	void testWildcardMatch() {
 		PathMacros pathMacros = new WildcardPathMacros();
 
 		assertTrue(pathMacros.init("/user-${userId:1*7?3}", SEP1));
@@ -174,7 +174,7 @@ public class PathMacroTest {
 	}
 
 	@Test
-	public void testWildcardMatchContaining() {
+	void testWildcardMatchContaining() {
 		PathMacros pathMacros1 = new WildcardPathMacros();
 		assertTrue(pathMacros1.init("/${entityName}/dba.delete", SEP1));
 		assertEquals("entityName", pathMacros1.getNames()[0]);
@@ -188,7 +188,7 @@ public class PathMacroTest {
 	}
 
 	@Test
-	public void testWildcardMatchContaining2() {
+	void testWildcardMatchContaining2() {
 		PathMacros pathMacros1 = new WildcardPathMacros();
 		assertTrue(pathMacros1.init("/dba.delete/${entityName}", SEP1));
 		assertEquals("entityName", pathMacros1.getNames()[0]);
@@ -202,7 +202,7 @@ public class PathMacroTest {
 	}
 
 	@Test
-	public void testWildcardMatchContainingWithTwo() {
+	void testWildcardMatchContainingWithTwo() {
 		PathMacros pathMacros1 = new WildcardPathMacros();
 		assertTrue(pathMacros1.init("/${entityName}/dba.delete${xxx}", SEP1));
 		assertEquals("entityName", pathMacros1.getNames()[0]);

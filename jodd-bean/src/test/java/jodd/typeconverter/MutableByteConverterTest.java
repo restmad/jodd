@@ -25,17 +25,20 @@
 
 package jodd.typeconverter;
 
+import jodd.bean.JoddBean;
 import jodd.mutable.MutableByte;
 import jodd.typeconverter.impl.MutableByteConverter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class MutableByteConverterTest {
+class MutableByteConverterTest {
 
 	@Test
-	public void testConversion() {
-		MutableByteConverter mutableByteConverter = (MutableByteConverter) TypeConverterManager.lookup(MutableByte.class);
+	void testConversion() {
+		MutableByteConverter mutableByteConverter = (MutableByteConverter) JoddBean.runtime().typeConverterManager().lookup(MutableByte.class);
 
 		assertNull(mutableByteConverter.convert(null));
 
@@ -48,7 +51,7 @@ public class MutableByteConverterTest {
 
 		try {
 			mutableByteConverter.convert("a");
-			fail();
+			fail("error");
 		} catch (TypeConversionException ignore) {
 		}
 	}

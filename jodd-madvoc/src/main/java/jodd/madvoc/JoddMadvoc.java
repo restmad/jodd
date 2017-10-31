@@ -32,21 +32,12 @@ import jodd.Jodd;
  */
 public class JoddMadvoc {
 
-	/**
-	 * Defines if Proxetta should be used.
-	 */
-	public static boolean useProxetta;
-
 	// ---------------------------------------------------------------- module
 
 	static {
-		init();
+		Jodd.initModule();
 	}
 
-	public static void init() {
-		Jodd.init(JoddMadvoc.class);
-
-		useProxetta = Jodd.isModuleLoaded(Jodd.PROXETTA);
-	}
+	public static void init() {}
 
 }

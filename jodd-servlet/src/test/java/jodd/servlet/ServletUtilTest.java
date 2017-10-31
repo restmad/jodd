@@ -25,14 +25,14 @@
 
 package jodd.servlet;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class ServletUtilTest {
+class ServletUtilTest {
 
 	@Test
-	public void testPrepareParameters() {
+	void testPrepareParameters() {
 		String[] p = new String[]{"one", "", " three ", null, "five"};
 		p = ServletUtil.prepareParameters(p, true, false, false);
 		assertEquals("three", p[2]);

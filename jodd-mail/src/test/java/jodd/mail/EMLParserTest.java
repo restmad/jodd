@@ -26,8 +26,8 @@
 package jodd.mail;
 
 import jodd.datetime.JDateTime;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import javax.mail.MessagingException;
 import java.io.File;
@@ -38,17 +38,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class EMLParserTest {
+class EMLParserTest {
 
 	protected String testDataRoot;
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeEach
+	void setUp() throws Exception {
 		if (testDataRoot != null) {
 			return;
 		}
@@ -57,7 +57,7 @@ public class EMLParserTest {
 	}
 
 	@Test
-	public void testParseEML() throws FileNotFoundException, MessagingException {
+	void testParseEML() throws FileNotFoundException, MessagingException {
 		File emlFile = new File(testDataRoot, "example.eml");
 
 		ReceivedEmail email = EMLParser.create().parse(emlFile);
@@ -132,7 +132,7 @@ public class EMLParserTest {
 	}
 
 	@Test
-	public void testParseEMLCyrilic() throws FileNotFoundException, MessagingException, UnsupportedEncodingException {
+	void testParseEMLCyrilic() throws FileNotFoundException, MessagingException, UnsupportedEncodingException {
 		File emlFile = new File(testDataRoot, "cyrilic.eml");
 
 		ReceivedEmail email = EMLParser.create().parse(emlFile);
@@ -161,7 +161,7 @@ public class EMLParserTest {
 	}
 
 	@Test
-	public void testSimpleEML() throws FileNotFoundException, MessagingException {
+	void testSimpleEML() throws FileNotFoundException, MessagingException {
 		File emlFile = new File(testDataRoot, "simple.eml");
 
 		ReceivedEmail email = EMLParser.create().parse(emlFile);
@@ -189,7 +189,7 @@ public class EMLParserTest {
 	}
 
 	@Test
-	public void testSimpleNullEML() throws FileNotFoundException, MessagingException {
+	void testSimpleNullEML() throws FileNotFoundException, MessagingException {
 		File emlFile = new File(testDataRoot, "simple-null.eml");
 
 		ReceivedEmail email = EMLParser.create().parse(emlFile);

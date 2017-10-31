@@ -26,22 +26,28 @@
 package jodd.io;
 
 import jodd.util.StringUtil;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URL;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class FileUtilTest {
+class FileUtilTest {
 
 	protected String dataRoot;
 	protected String utfdataRoot;
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeEach
+	void setUp() throws Exception {
 		if (dataRoot != null) {
 			return;
 		}
@@ -52,7 +58,7 @@ public class FileUtilTest {
 	}
 
 	@Test
-	public void testFileManipulation() throws IOException {
+	void testFileManipulation() throws IOException {
 		FileUtil.copy(new File(dataRoot, "sb.data"), new File(dataRoot, "sb1.data"));
 		assertFalse(FileUtil.isNewer(new File(dataRoot, "sb.data"), new File(dataRoot, "sb1.data")));
 		assertFalse(FileUtil.isOlder(new File(dataRoot, "sb.data"), new File(dataRoot, "sb1.data")));
@@ -60,7 +66,7 @@ public class FileUtilTest {
 	}
 
 	@Test
-	public void testString() {
+	void testString() {
 		String s = "This is a test file\nIt only has\nthree lines!!";
 
 		try {
@@ -105,7 +111,7 @@ public class FileUtilTest {
 	}
 
 	@Test
-	public void testUnicodeString() {
+	void testUnicodeString() {
 		String s = "This is a test file\nIt only has\nthree lines!!";
 
 		char[] buf = s.toCharArray();
@@ -135,7 +141,7 @@ public class FileUtilTest {
 	}
 
 	@Test
-	public void testFileManipulations() {
+	void testFileManipulations() {
 		String root = dataRoot + "/file/";
 		String tmp = root + "tmp/";
 		String tmp2 = root + "xxx/";
@@ -160,14 +166,6 @@ public class FileUtilTest {
 			fail(ioex.toString());
 		}
 
-		// don't overwrite
-		try {
-			FileUtil.copyFileToDir(root + "a.txt", tmp, FileUtil.params().setOverwrite(false));
-			fail("copy file don't overwrite");
-		} catch (IOException e) {
-			// ignore
-		}
-
 		// move
 		try {
 			FileUtil.moveFile(root + "w.txt", tmp + "w.txt");
@@ -175,14 +173,6 @@ public class FileUtilTest {
 		} catch (IOException ioex) {
 			fail(ioex.toString());
 		}
-
-		try {
-			FileUtil.moveFileToDir(root + "w.png", tmp, FileUtil.cloneParams().setOverwrite(false));
-			fail("move file don't overwrite");
-		} catch (IOException e) {
-			// ignore
-		}
-
 
 		// delete
 
@@ -226,7 +216,7 @@ public class FileUtilTest {
 	}
 
 	@Test
-	public void testBytes() {
+	void testBytes() {
 		try {
 			File file = new File(dataRoot + "/file/a.txt");
 			byte[] bytes = FileUtil.readBytes(dataRoot + "/file/a.txt");
@@ -243,7 +233,7 @@ public class FileUtilTest {
 	}
 
 	@Test
-	public void testUTFReads() throws IOException {
+	void testUTFReads() throws IOException {
 		String content = FileUtil.readUTFString(new File(utfdataRoot, "utf-8.txt"));
 		content = content.replace("\r\n", "\n");
 
@@ -271,4 +261,26 @@ public class FileUtilTest {
 		content163 = content163.replace("\r\n", "\n");
 		assertEquals(content, content163);
 	}
+
+	@ParameterizedTest (name = "{index} : FileUtil#{0}")
+	@CsvSource(
+			{
+				"md5, 529a2cfd3346c7fe17b845b6ec90fcfd",
+				"sha1, 7687b985b2eeff4a981480cead1787bd3f26929c",
+				"sha256, b2a3dec0059df342e9b33721957fd54221ab7fb7daa99d9f35af729dc2568e51",
+				"sha384, 1eb67f4b35ae69bbd815dbceee9584c9a65b82e8a209b0a3ab9e6def0a74cf5915228ce32f6154ba5c9ee6dfc66f6414",
+				"sha512, 4b53d8ca344fc63dd0a69b2ef4c5275279b4c31a834d5e0501a0ab646d1cc56f15e45a019e3f46597be288924b8b6fba19e4ebad1552f5007d56e7f12c3cb1d2"
+			}
+	)
+	@DisplayName(value = "tests for digest-algorithms")
+	void testDigestAlgorithms(final String method, final String expected) throws Exception {
+		Method declaredMethod = FileUtil.class.getMethod(method, File.class);
+		File file = new File(FileUtilTest.class.getResource("data/file/a.png").toURI());
+		
+		final String actual = (String) declaredMethod.invoke(null, file);
+
+		// asserts
+		assertEquals(expected, actual.toLowerCase());
+	}
+
 }

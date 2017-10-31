@@ -27,20 +27,20 @@ package jodd.bean;
 
 import jodd.bean.fixtures.Abean;
 import jodd.util.StringTemplateParser;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class BeanTemplateParserTest {
+class BeanTemplateParserTest {
 
 	BeanTemplateParser beanTemplateParser = new BeanTemplateParser();
 
 	@Test
-	public void testTemplate() {
+	void testTemplate() {
 		Abean a = new Abean();
 
 		assertEquals("xxxx", beanTemplateParser.parse("xxxx", a));
@@ -65,7 +65,7 @@ public class BeanTemplateParserTest {
 	}
 
 	@Test
-	public void testNoParenthes() {
+	void testNoParenthes() {
 		BeanTemplateParser beanTemplateParser = new BeanTemplateParser();
 
 		Map<String, Object> ctx = new HashMap<>();
@@ -76,7 +76,7 @@ public class BeanTemplateParserTest {
 	}
 
 	@Test
-	public void testMap() {
+	void testMap() {
 		HashMap<String, String> map = new HashMap<>();
 		map.put("key1", "value1");
 
@@ -84,7 +84,7 @@ public class BeanTemplateParserTest {
 	}
 
 	@Test
-	public void testMissing() {
+	void testMissing() {
 		HashMap<String, String> map = new HashMap<>();
 		map.put("key1", "value1");
 
@@ -100,7 +100,7 @@ public class BeanTemplateParserTest {
 	}
 
 	@Test
-	public void testInner() {
+	void testInner() {
 		HashMap<String, String> map = new HashMap<>();
 		map.put("key0", "1");
 		map.put("key1", "2");
@@ -112,7 +112,7 @@ public class BeanTemplateParserTest {
 	}
 
 	@Test
-	public void testReplaceMissingKey() {
+	void testReplaceMissingKey() {
 		StringTemplateParser stp = new StringTemplateParser();
 
 		BeanTemplateParser btp = new BeanTemplateParser();
@@ -137,7 +137,7 @@ public class BeanTemplateParserTest {
 	}
 
 	@Test
-	public void testResolveEscapes() {
+	void testResolveEscapes() {
 		Abean a = new Abean();
 		BeanTemplateParser btp = new BeanTemplateParser();
 		btp.setResolveEscapes(false);

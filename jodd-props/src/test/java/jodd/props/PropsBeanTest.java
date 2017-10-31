@@ -26,13 +26,13 @@
 package jodd.props;
 
 import jodd.bean.BeanCopy;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PropsBeanTest {
+class PropsBeanTest {
 
 	public static class HttpConfig {
 		public int port;
@@ -41,7 +41,7 @@ public class PropsBeanTest {
 	}
 
 	@Test
-	public void testInnerMapToBean() {
+	void testInnerMapToBean() {
 		String data = "http.port=10101\n" +
 			"http.address=localhost\n" +
 			"http.pool=30\n" +

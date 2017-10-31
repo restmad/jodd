@@ -30,12 +30,12 @@ import jodd.madvoc.config.ManualMadvocConfigurator;
 import jodd.madvoc.interceptor.EchoInterceptor;
 import jodd.madvoc.result.TextResult;
 import jodd.madvoc.fixtures.tst.BooAction;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class ManualRegistrationTest {
+class ManualRegistrationTest {
 
 	public static class ManualRegistration extends ManualMadvocConfigurator {
 		public void configure() {
@@ -56,7 +56,7 @@ public class ManualRegistrationTest {
 	}
 
 	@Test
-	public void testManualAction() {
+	void testManualAction() {
 		Madvoc madvoc = new Madvoc();
 		madvoc.setMadvocConfiguratorClass(ManualRegistration.class);
 		madvoc.startNewWebApplication(null);

@@ -25,16 +25,16 @@
 
 package jodd.madvoc;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class RootPackagesTest {
+class RootPackagesTest {
 
 	@Test
-	public void testRootPackagesPackagePath() {
+	void testRootPackagesPackagePath() {
 		RootPackages rootPackages = new RootPackages();
 
 		rootPackages.addRootPackage("xx");
@@ -50,7 +50,7 @@ public class RootPackagesTest {
 	}
 
 	@Test
-	public void testRootPackagesFindForPath() {
+	void testRootPackagesFindForPath() {
 		RootPackages rootPackages = new RootPackages();
 
 		rootPackages.addRootPackage("xx");
@@ -65,12 +65,12 @@ public class RootPackagesTest {
 	}
 
 	@Test
-	public void testDuplicateRootPackages() {
+	void testDuplicateRootPackages() {
 		RootPackages rootPackages = new RootPackages();
 		rootPackages.addRootPackage("xx.zz", "foo");
 		try {
 			rootPackages.addRootPackage("xx.zz", "bar");
-			fail();
+			fail("error");
 		} catch (MadvocException ignore) {}
 	}
 

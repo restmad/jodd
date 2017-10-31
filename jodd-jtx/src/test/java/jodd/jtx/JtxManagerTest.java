@@ -26,14 +26,20 @@
 package jodd.jtx;
 
 import jodd.exception.UncheckedException;
-import jodd.jtx.data.WorkResourceManager;
-import jodd.jtx.data.WorkSession;
+import jodd.jtx.fixtures.WorkResourceManager;
+import jodd.jtx.fixtures.WorkSession;
 import jodd.jtx.worker.LeanJtxWorker;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class JtxManagerTest {
+class JtxManagerTest {
 
 	private JtxTransactionManager createManager() {
 		JtxTransactionManager jtxManager = new JtxTransactionManager();
@@ -48,7 +54,7 @@ public class JtxManagerTest {
 	// ---------------------------------------------------------------- ro
 
 	@Test
-	public void testReadOnly() {
+	void testReadOnly() {
 		JtxTransactionManager manager = createManager();
 		JtxTransaction jtx = manager.requestTransaction(new JtxTransactionMode().propagationRequired().readOnly(true));
 		WorkSession work = jtx.requestResource(WorkSession.class);
@@ -58,7 +64,7 @@ public class JtxManagerTest {
 
 		try {
 			work.writeValue("new value");
-			fail();
+			fail("error");
 		} catch (UncheckedException ignored) {
 		}
 
@@ -69,7 +75,7 @@ public class JtxManagerTest {
 	// ---------------------------------------------------------------- rollback
 
 	@Test
-	public void testRollback() {
+	void testRollback() {
 		JtxTransactionManager manager = createManager();
 		JtxTransaction jtx = manager.requestTransaction(new JtxTransactionMode().propagationRequired().readOnly(false));
 		WorkSession work = jtx.requestResource(WorkSession.class);
@@ -86,7 +92,7 @@ public class JtxManagerTest {
 	// ---------------------------------------------------------------- required
 
 	@Test
-	public void testPropagationRequired() {
+	void testPropagationRequired() {
 
 		JtxTransactionManager manager = createManager();
 
@@ -115,7 +121,7 @@ public class JtxManagerTest {
 	}
 
 	@Test
-	public void testPropagationRequiredWithWorker() {
+	void testPropagationRequiredWithWorker() {
 
 		LeanJtxWorker worker = createWorker();
 
@@ -143,7 +149,7 @@ public class JtxManagerTest {
 	// ---------------------------------------------------------------- supports
 
 	@Test
-	public void testPropagationSupports() {
+	void testPropagationSupports() {
 
 		JtxTransactionManager manager = createManager();
 
@@ -162,7 +168,7 @@ public class JtxManagerTest {
 	// ---------------------------------------------------------------- required
 
 	@Test
-	public void testPropagationRequiresNew() {
+	void testPropagationRequiresNew() {
 
 		JtxTransactionManager manager = createManager();
 

@@ -25,15 +25,15 @@
 
 package jodd.jtx.meta;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
 
 import static jodd.jtx.JtxIsolationLevel.*;
 import static jodd.jtx.JtxPropagationBehavior.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TransactionAnnotationTest {
+class TransactionAnnotationTest {
 
 	@Transaction
 	public void hello() {
@@ -53,7 +53,7 @@ public class TransactionAnnotationTest {
 
 
 	@Test
-	public void testTransactionAnnotationOnly() throws NoSuchMethodException {
+	void testTransactionAnnotationOnly() throws NoSuchMethodException {
 		TransactionAnnotation<Transaction> txAnnotation = new TransactionAnnotation<>(Transaction.class);
 		assertEquals(Transaction.class, txAnnotation.getAnnotationClass());
 
@@ -75,7 +75,7 @@ public class TransactionAnnotationTest {
 	}
 
 	@Test
-	public void testCustomTransactionAnnotation() throws NoSuchMethodException {
+	void testCustomTransactionAnnotation() throws NoSuchMethodException {
 		TransactionAnnotation<CustomTransaction> txAnnotation = new TransactionAnnotation<>(CustomTransaction.class);
 		assertEquals(CustomTransaction.class, txAnnotation.getAnnotationClass());
 

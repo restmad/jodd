@@ -25,17 +25,17 @@
 
 package jodd.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.text.DateFormatSymbols;
 import java.util.Locale;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class LocaleUtilTest {
+class LocaleUtilTest {
 
 	@Test
-	public void testLocaleUtil() {
+	void testLocaleUtil() {
 		Locale locale1 = LocaleUtil.getLocale("fr", "FR");
 		Locale locale2 = LocaleUtil.getLocale("fr_FR");
 		assertSame(locale1, locale2);

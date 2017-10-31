@@ -30,14 +30,14 @@ import jodd.madvoc.ActionDef;
 import jodd.madvoc.WebApplication;
 import jodd.madvoc.macro.RegExpPathMacros;
 import jodd.madvoc.macro.WildcardPathMacros;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class ActionsManagerTest {
+class ActionsManagerTest {
 
 	public static class FooAction {
 		public void one() {
@@ -49,7 +49,7 @@ public class ActionsManagerTest {
 	}
 
 	@Test
-	public void testActionPathMacros1() {
+	void testActionPathMacros1() {
 		WebApplication webapp = new WebApplication(true);
 		webapp.registerMadvocComponents();
 		ActionsManager actionsManager = webapp.getComponent(ActionsManager.class);
@@ -66,7 +66,7 @@ public class ActionsManagerTest {
 	}
 
 	@Test
-	public void testActionPathMacros2() {
+	void testActionPathMacros2() {
 		WebApplication webapp = new WebApplication(true);
 		webapp.registerMadvocComponents();
 		ActionsManager actionsManager = webapp.getComponent(ActionsManager.class);
@@ -86,7 +86,7 @@ public class ActionsManagerTest {
 	}
 
 	@Test
-	public void testActionPathMacros3() {
+	void testActionPathMacros3() {
 		WebApplication webapp = new WebApplication(true);
 		webapp.registerMadvocComponents();
 		ActionsManager actionsManager = webapp.getComponent(ActionsManager.class);
@@ -107,14 +107,14 @@ public class ActionsManagerTest {
 
 		try {
 			actionsManager.register(FooAction.class, "two", new ActionDef("/xxx-${two}"));
-			Assert.fail();
+			fail("error");
 		} catch (Exception ex) {
 			// ignore
 		}
 	}
 
 	@Test
-	public void testActionPathMacros4() {
+	void testActionPathMacros4() {
 		WebApplication webapp = new WebApplication(true);
 		webapp.registerMadvocComponents();
 		ActionsManager actionsManager = webapp.getComponent(ActionsManager.class);
@@ -141,7 +141,7 @@ public class ActionsManagerTest {
 	}
 
 	@Test
-	public void testActionPathMacrosRegexp() {
+	void testActionPathMacrosRegexp() {
 		WebApplication webapp = new WebApplication(true);
 		webapp.registerMadvocComponents();
 		ActionsManager actionsManager = webapp.getComponent(ActionsManager.class);
@@ -159,7 +159,7 @@ public class ActionsManagerTest {
 	}
 
 	@Test
-	public void testActionPathMacrosWildcard() {
+	void testActionPathMacrosWildcard() {
 		WebApplication webapp = new WebApplication(true);
 		webapp.registerMadvocComponents();
 		ActionsManager actionsManager = webapp.getComponent(ActionsManager.class);

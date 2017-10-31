@@ -30,27 +30,37 @@ import jodd.db.jtx.DbJtxSessionProvider;
 import jodd.db.jtx.DbJtxTransactionManager;
 import jodd.jtx.JtxTransactionManager;
 import jodd.jtx.JtxTransactionMode;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DbJtxTransactionManagerTest extends DbHsqldbTestCase {
+class DbJtxTransactionManagerTest extends DbHsqldbTestCase {
 
-	@After
-	public void tearDown() {
-		DbManager.resetAll();
+	DbSessionProvider sessionProvider;
+
+	@BeforeEach
+	void setup() {
+		sessionProvider = JoddDb.runtime().sessionProvider();
+	}
+
+	@Override
+	@AfterEach
+	protected void tearDown() {
+		JoddDb.runtime().sessionProvider(sessionProvider);
 	}
 
 	@Test
-	public void testSessionProvider() {
+	void testSessionProvider() {
 		// prepare
 		JtxTransactionManager jtxManager = new DbJtxTransactionManager(cp);
 		DbJtxSessionProvider sessionProvider = new DbJtxSessionProvider(jtxManager);
-		DbManager.getInstance().setSessionProvider(sessionProvider);
+
+		JoddDb.runtime().sessionProvider(sessionProvider);
 
 		for (int i = 0; i < 2; i++) {
 

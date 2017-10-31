@@ -26,18 +26,18 @@
 package jodd.json;
 
 import jodd.json.fixtures.mock.Surfer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class JsonValueContextTest {
+class JsonValueContextTest {
 
 	@Test
-	public void testJsonValueContextBean() {
+	void testJsonValueContextBean() {
 		Surfer surfer = new Surfer();
 
 		surfer.setName("Igor");
@@ -56,7 +56,7 @@ public class JsonValueContextTest {
 	}
 
 	@Test
-	public void testJsonValueContextList() {
+	void testJsonValueContextList() {
 		List<String> list = new ArrayList<>();
 
 		list.add("one");
@@ -78,7 +78,7 @@ public class JsonValueContextTest {
 	}
 
 	@Test
-	public void testJsonValueContextArray() {
+	void testJsonValueContextArray() {
 		String[] array = new String[] {"one", "two", "three"};
 
 		JsonSerializer jsonSerializer = new JsonSerializer()
@@ -96,7 +96,7 @@ public class JsonValueContextTest {
 	}
 
 	@Test
-	public void testJsonValueContextArray2() {
+	void testJsonValueContextArray2() {
 		Object[] array = new Object[] {new Surfer(), "two", "three"};
 
 		JsonSerializer jsonSerializer = new JsonSerializer()
@@ -115,6 +115,7 @@ public class JsonValueContextTest {
 
 	public static class MyTypeJsonSerializer implements TypeJsonSerializer<String> {
 
+		@Override
 		public boolean serialize(JsonContext jsonContext, String value) {
 			JsonValueContext jsonValueContext = jsonContext.peekValueContext();
 
@@ -132,6 +133,7 @@ public class JsonValueContextTest {
 
 	public static class MyTypeJsonSerializer2 implements TypeJsonSerializer<String> {
 
+		@Override
 		public boolean serialize(JsonContext jsonContext, String value) {
 			JsonValueContext jsonValueContext = jsonContext.peekValueContext();
 

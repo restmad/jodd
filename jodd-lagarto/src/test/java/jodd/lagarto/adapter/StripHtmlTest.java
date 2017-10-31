@@ -27,14 +27,14 @@ package jodd.lagarto.adapter;
 
 import jodd.lagarto.LagartoParser;
 import jodd.lagarto.TagWriter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StripHtmlTest {
+class StripHtmlTest {
 
 	@Test
-	public void testStripHtml() {
+	void testStripHtml() {
 		LagartoParser lagartoParser = new LagartoParser(
 				"<html>  <div   id='a'>   x \n\n\n </div>  </html>", false);
 

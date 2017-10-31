@@ -25,29 +25,32 @@
 
 package jodd.db.oom;
 
-import jodd.db.fixtures.DbHsqldbTestCase;
 import jodd.db.DbQuery;
 import jodd.db.DbSession;
+import jodd.db.DbTestUtil;
 import jodd.db.DbThreadSession;
+import jodd.db.JoddDb;
+import jodd.db.fixtures.DbHsqldbTestCase;
 import jodd.db.oom.fixtures.Enumerator;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static jodd.db.oom.sqlgen.DbEntitySql.insert;
 
-public class DbEnumTest extends DbHsqldbTestCase {
+class DbEnumTest extends DbHsqldbTestCase {
 
-	@Before
-	public void setUp() throws Exception {
+	@Override
+	@BeforeEach
+	protected void setUp() throws Exception {
 		super.setUp();
 
-		DbOomManager.resetAll();
-		DbOomManager dbOom = DbOomManager.getInstance();
-		dbOom.registerEntity(Enumerator.class);
+		DbTestUtil.resetAll();
+		DbEntityManager dbEntityManager = JoddDb.runtime().dbEntityManager();
+		dbEntityManager.registerEntity(Enumerator.class);
 	}
 
 	@Test
-	public void testEnums() {
+	void testEnums() {
 		DbSession session = new DbThreadSession(cp);
 
 		String sql = "create table ENUMERATOR(ID int, NAME varchar(20), STATUS int)";

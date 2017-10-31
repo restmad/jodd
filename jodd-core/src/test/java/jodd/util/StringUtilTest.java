@@ -25,21 +25,21 @@
 
 package jodd.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static jodd.util.ArraysUtil.*;
+import static jodd.util.ArraysUtil.array;
 import static jodd.util.StringPool.ISO_8859_1;
 import static jodd.util.StringPool.UTF_8;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class StringUtilTest {
+class StringUtilTest {
 
 	@Test
-	public void testSplit() {
+	void testSplit() {
 		String src = "1,22,3,44,5";
 		String[] r;
 
@@ -75,7 +75,7 @@ public class StringUtilTest {
 
 
 	@Test
-	public void testSplit2() {
+	void testSplit2() {
 		String src = "1,22,3,44,5";
 		String[] r;
 
@@ -150,7 +150,7 @@ public class StringUtilTest {
 
 
 	@Test
-	public void testReplace() {
+	void testReplace() {
 		String src = "12345";
 
 		assertEquals("12qwe45", StringUtil.replace(src, "3", "qwe"));
@@ -189,11 +189,13 @@ public class StringUtilTest {
 		assertEquals("11221144", src);
 		src = StringUtil.replaceLast(src, "55", "11");
 		assertEquals("11221144", src);
+
+		assertEquals("qwerty", StringUtil.replace("qwerty", "", "xxxxxxxxxxxxx"));
 	}
 
 
 	@Test
-	public void testIndexOf() {
+	void testIndexOf() {
 		String src = "1234567890qWeRtY";
 
 		assertEquals(1, StringUtil.indexOfIgnoreCase(src, new String[]{"345", "234"})[0]);
@@ -345,7 +347,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testRemove() {
+	void testRemove() {
 		String s = "qwertyq";
 		assertEquals("qwertyq", StringUtil.remove(s, "W"));
 		assertEquals("qertyq", StringUtil.remove(s, "w"));
@@ -364,7 +366,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testArrays() {
+	void testArrays() {
 		String s = "qwertyuiop";
 
 		assertEquals("qWERtyuIOp", StringUtil.replace(s, new String[]{"wer", "io"}, new String[]{"WER", "IO"}));
@@ -390,7 +392,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testRanges() {
+	void testRanges() {
 		String s = "qwertyiop";
 
 		assertEquals(1, StringUtil.indexOf(s, "wer", 0, 5));
@@ -529,7 +531,7 @@ public class StringUtilTest {
 
 
 	@Test
-	public void testEscapeQuotes() {
+	void testEscapeQuotes() {
 		String s = "ccc'aaa";
 		assertEquals("ccc\\'aaa", StringUtil.replace(s, "'", "\\'"));
 
@@ -539,7 +541,7 @@ public class StringUtilTest {
 
 
 	@Test
-	public void testTrim() {
+	void testTrim() {
 		assertEquals("123", StringUtil.trimDown(" 123 "));
 		assertEquals("123", StringUtil.trimDown("123"));
 		assertNull(StringUtil.trimDown(""));
@@ -567,14 +569,14 @@ public class StringUtilTest {
 
 	void checkInts(int x, int y, int z, int w, int[] arr) {
 		assertNotNull(arr);
-		assertEquals("1.arg", x, arr[0]);
-		assertEquals("2.arg", y, arr[1]);
-		assertEquals("3.arg", z, arr[2]);
-		assertEquals("4.arg", w, arr[3]);
+		assertEquals(x, arr[0], "1.arg");
+		assertEquals(y, arr[1], "2.arg");
+		assertEquals(z, arr[2], "3.arg");
+		assertEquals(w, arr[3], "4.arg");
 	}
 
 	@Test
-	public void testRegion() {
+	void testRegion() {
 		String string = "qwertyuiop";
 		assertNull(StringUtil.indexOfRegion(string, "x", "e"));
 		int[] res;
@@ -639,7 +641,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testReplaceChar() {
+	void testReplaceChar() {
 		String s = "1234567890";
 
 		assertEquals("x234567890", StringUtil.replaceChar(s, '1', 'x'));
@@ -648,7 +650,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testSurround() {
+	void testSurround() {
 		assertEquals("preqwesuf", StringUtil.surround("qwe", "pre", "suf"));
 		assertEquals("preqwesuf", StringUtil.surround("preqwe", "pre", "suf"));
 		assertEquals("preqwesuf", StringUtil.surround("qwesuf", "pre", "suf"));
@@ -665,7 +667,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testCuts() {
+	void testCuts() {
 		assertEquals("1", StringUtil.cutToIndexOf("123", "2"));
 		assertEquals("1", StringUtil.cutToIndexOf("123", '2'));
 		assertEquals("123", StringUtil.cutToIndexOf("123", "4"));
@@ -696,7 +698,7 @@ public class StringUtilTest {
 
 
 	@Test
-	public void testCount() {
+	void testCount() {
 		String s = "qwertywer";
 		assertEquals(0, StringUtil.count(s, "xxx"));
 		assertEquals(0, StringUtil.count(s, ""));
@@ -719,7 +721,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testIndexOfChars() {
+	void testIndexOfChars() {
 		String s = "12345qwerty";
 		assertEquals(0, StringUtil.indexOfChars(s, "1q"));
 		assertEquals(0, StringUtil.indexOfChars(s, "1q", 0));
@@ -734,7 +736,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testEquals() {
+	void testEquals() {
 		assertTrue(StringUtil.equals("1", "1"));
 		assertFalse(StringUtil.equals("1", null));
 		assertFalse(StringUtil.equals(null, "2"));
@@ -752,7 +754,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testEmpty() {
+	void testEmpty() {
 		assertFalse(StringUtil.isBlank("foo"));
 		assertTrue(StringUtil.isNotBlank("foo"));
 		assertTrue(StringUtil.isBlank(""));
@@ -782,7 +784,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testToString() {
+	void testToString() {
 		assertEquals("aaa", StringUtil.toString("aaa"));
 		assertEquals("173", StringUtil.toString(Integer.valueOf(173)));
 		assertNull(StringUtil.toString(null));
@@ -791,7 +793,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testToPrettyString() {
+	void testToPrettyString() {
 		assertEquals(StringPool.NULL, StringUtil.toPrettyString(null));
 
 		assertEquals("[A,B]", StringUtil.toPrettyString(new String[]{"A", "B"}));
@@ -805,7 +807,7 @@ public class StringUtilTest {
 
 		try {
 			StringUtil.toPrettyString(new char[]{'a','b'});
-			fail();
+			fail("error");
 		} catch (IllegalArgumentException e) {
 			// ignore
 		}
@@ -820,7 +822,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testCapitalize() {
+	void testCapitalize() {
 		assertEquals("F", StringUtil.capitalize("f"));
 		assertEquals("Foo", StringUtil.capitalize("foo"));
 		assertEquals("Foo", StringUtil.capitalize("Foo"));
@@ -840,7 +842,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testTruncate() {
+	void testTruncate() {
 		assertEquals("fo", StringUtil.truncate("foo", 2));
 		assertEquals("f", StringUtil.truncate("foo", 1));
 		assertEquals("", StringUtil.truncate("foo", 0));
@@ -848,7 +850,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testStartWith() {
+	void testStartWith() {
 		assertTrue(StringUtil.startsWithChar("asd", 'a'));
 		assertFalse(StringUtil.startsWithChar("asd", 's'));
 		assertFalse(StringUtil.startsWithChar("", 'a'));
@@ -870,7 +872,7 @@ public class StringUtilTest {
 
 
 	@Test
-	public void testStrip() {
+	void testStrip() {
 		assertEquals("we", StringUtil.stripLeadingChar("qwe", 'q'));
 		assertEquals("qwe", StringUtil.stripLeadingChar("qwe", '4'));
 		assertEquals("qw", StringUtil.stripTrailingChar("qwe", 'e'));
@@ -884,7 +886,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testCrop() {
+	void testCrop() {
 		assertEquals("123", StringUtil.crop("123"));
 		assertEquals(" ", StringUtil.crop(" "));
 		assertNull(StringUtil.crop(""));
@@ -897,7 +899,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testJoin() {
+	void testJoin() {
 		assertNull(StringUtil.join(null));
 		assertEquals(StringPool.EMPTY, StringUtil.join(new Object[] {}));
 
@@ -929,7 +931,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testCharset() {
+	void testCharset() {
 		assertEquals("123", StringUtil.convertCharset("123", UTF_8, UTF_8));
 		assertEquals("123", StringUtil.convertCharset("123", ISO_8859_1, UTF_8));
 		String s = StringUtil.convertCharset("\250\275", UTF_8, ISO_8859_1);
@@ -941,14 +943,14 @@ public class StringUtilTest {
 
 		try {
 			assertEquals("123", StringUtil.convertCharset("123", "yyy", "xxx"));
-			fail();
+			fail("error");
 		} catch (IllegalArgumentException e) {
 			// ignore
 		}
 	}
 
 	@Test
-	public void testIsCharAt() {
+	void testIsCharAt() {
 		assertTrue(StringUtil.isCharAtEqual("123", 0, '1'));
 		assertTrue(StringUtil.isCharAtEqual("123", 1, '2'));
 		assertTrue(StringUtil.isCharAtEqual("123", 2, '3'));
@@ -958,7 +960,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testEscape() {
+	void testEscape() {
 		assertFalse(StringUtil.isCharAtEscaped("1\\23", 1, '\\'));
 		assertTrue(StringUtil.isCharAtEscaped("1\\23", 2, '\\'));
 		assertFalse(StringUtil.isCharAtEscaped("1\\23", 3, '\\'));
@@ -971,18 +973,18 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testRepeat() {
+	void testRepeat() {
 		assertEquals("1212", StringUtil.repeat("12", 2));
 		assertEquals("xxxx", StringUtil.repeat('x', 4));
 	}
 
 	@Test
-	public void testReverse() {
+	void testReverse() {
 		assertEquals("12345", StringUtil.reverse("54321"));
 	}
 
 	@Test
-	public void testMaxCommonPrefix() {
+	void testMaxCommonPrefix() {
 		assertEquals("", StringUtil.maxCommonPrefix("qwe", "asd"));
 		assertEquals("1", StringUtil.maxCommonPrefix("1qwe", "1asd"));
 		assertEquals("123", StringUtil.maxCommonPrefix("123", "123"));
@@ -990,7 +992,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testToCamelCase() {
+	void testToCamelCase() {
 		assertEquals("oneTwoThree", StringUtil.toCamelCase("one two   three", false, ' '));
 		assertEquals("OneTwo.Three", StringUtil.toCamelCase("one two. three", true, ' '));
 		assertEquals("OneTwoThree", StringUtil.toCamelCase("One-two-three", true, '-'));
@@ -1002,7 +1004,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testFromCamelCase() {
+	void testFromCamelCase() {
 		assertEquals("one two three", StringUtil.fromCamelCase("oneTwoThree", ' '));
 		assertEquals("one-two-three", StringUtil.fromCamelCase("oneTwoThree", '-'));
 		assertEquals("one. two. three", StringUtil.fromCamelCase("one.Two.Three", ' '));
@@ -1021,7 +1023,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testJavaEscapes() {
+	void testJavaEscapes() {
 		String from = "\r\t\b\f\n\\\"asd\u0111q\u0173aa\u0ABC\u0abc";
 		String to = "\\r\\t\\b\\f\\n\\\\\\\"asd\\u0111q\\u0173aa\\u0abc\\u0abc";
 
@@ -1030,14 +1032,14 @@ public class StringUtilTest {
 
 		try {
 			StringUtil.unescapeJava("\\r\\t\\b\\f\\q");
-			fail();
+			fail("error");
 		} catch (IllegalArgumentException e) {
 			// ignore
 		}
 	}
 
 	@Test
-	public void testFindCommonPrefix() {
+	void testFindCommonPrefix() {
 		assertEquals("", StringUtil.findCommonPrefix("123", "234"));
 		assertEquals("123", StringUtil.findCommonPrefix("123"));
 		assertEquals("12", StringUtil.findCommonPrefix("123xxx", "125", "12xxxxx"));
@@ -1047,24 +1049,24 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testShorten() {
+	void testShorten() {
 		assertEquals("Long...", StringUtil.shorten("Long long sentence", 8, "..."));
 		assertEquals("Longl...", StringUtil.shorten("Longlong sentence", 8, "..."));
 	}
 
 	@Test
-	public void testCompressChars() {
+	void testCompressChars() {
 		assertEquals("1 2 3", StringUtil.compressChars("1   2    3", ' '));
 		assertEquals("1 2 3", StringUtil.compressChars("1 2 3", ' '));
 	}
 
 	@Test
-	public void testTitle() {
+	void testTitle() {
 		assertEquals("A New Day Is Born", StringUtil.title("a neW day IS born"));
 	}
 
 	@Test
-	public void testSubstring() {
+	void testSubstring() {
 		assertEquals("2", StringUtil.substring("123", 1, 2));
 		assertEquals("23", StringUtil.substring("123", 1, 2000));
 		assertEquals("123", StringUtil.substring("123", -1000, 2000));
@@ -1086,7 +1088,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testStripFromToChar() {
+	void testStripFromToChar() {
 		assertEquals("1", StringUtil.stripFromChar("1234", '2'));
 		assertEquals("", StringUtil.stripFromChar("1234", '1'));
 		assertEquals("1234", StringUtil.stripFromChar("1234", 'X'));
@@ -1098,7 +1100,7 @@ public class StringUtilTest {
 
 
 	@Test
-	public void testFormatPara() {
+	void testFormatPara() {
 		String txt = "123 567 90AB";
 		String p = StringUtil.formatParagraph(txt, 6, false);
 		assertEquals("123 56\n7 90AB\n", p);
@@ -1130,7 +1132,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testTabsToSpaces() {
+	void testTabsToSpaces() {
 		String s = StringUtil.convertTabsToSpaces("q\tqa\t", 3);
 		assertEquals("q  qa ", s);
 
@@ -1139,7 +1141,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testContainsOnly() {
+	void testContainsOnly() {
 		assertTrue(StringUtil.containsOnlyWhitespaces("       "));
 		assertFalse(StringUtil.containsOnlyWhitespaces("12345"));
 		assertTrue(StringUtil.containsOnlyDigits("12345"));
@@ -1149,7 +1151,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testToStringArray() {
+	void testToStringArray() {
 		assertArrayEquals(new String[0], StringUtil.toStringArray(null));
 		assertArrayEquals(new String[]{"abc"}, StringUtil.toStringArray("abc"));
 		assertArrayEquals(new String[]{"ab", "cd"}, StringUtil.toStringArray(new String[]{"ab", "cd"}));
@@ -1163,14 +1165,14 @@ public class StringUtilTest {
 		assertArrayEquals(new String[] {"true", "false"}, StringUtil.toStringArray(new boolean[] {true, false}));
 		try {
 			StringUtil.toStringArray(new char[]{'a','b'});
-			fail();
+			fail("error");
 		} catch (IllegalArgumentException e) {
 			// ignore
 		}
 	}
 
 	@Test
-	public void testInsert() {
+	void testInsert() {
 		assertEquals("abcd12345", StringUtil.insert("12345", "abcd"));
 		assertEquals("abcd12345", StringUtil.insert("12345", "abcd", -1));
 		assertEquals("12345abcd", StringUtil.insert("12345", "abcd", 6));
@@ -1178,7 +1180,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testToLowerCase() {
+	void testToLowerCase() {
 		assertNull(StringUtil.toLowerCase(null));
 		assertEquals("abcd", StringUtil.toLowerCase("abCD"));
 		assertEquals("abcdčđž", StringUtil.toLowerCase("abCDČđŽ"));
@@ -1187,7 +1189,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testToUpperCase() {
+	void testToUpperCase() {
 		assertNull(StringUtil.toUpperCase(null));
 		assertEquals("ABCD", StringUtil.toUpperCase("abCD"));
 		assertEquals("ABCDČĐŽ", StringUtil.toUpperCase("abCDČđŽ"));
@@ -1196,13 +1198,13 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testToHexString() {
+	void testToHexString() {
 		assertEquals("3F", StringUtil.toHexString(new byte[] {0x3F}));
 		assertEquals("CAFEBABE", StringUtil.toHexString(new byte[] {(byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE}));
 	}
 
 	@Test
-	public void testCutBetween() {
+	void testCutBetween() {
 		assertEquals("45", StringUtil.cutBetween("123456", "23", "6"));
 		assertEquals("", StringUtil.cutBetween("123456", "234", "456"));
 		assertEquals("", StringUtil.cutBetween("123456", "2345", "456"));
@@ -1211,7 +1213,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testIsSubstringAt() {
+	void testIsSubstringAt() {
 		assertTrue(StringUtil.isSubstringAt("qwerty", "we", 1));
 		assertTrue(StringUtil.isSubstringAt("qwerty", "qwe", 0));
 		assertTrue(StringUtil.isSubstringAt("qwerty", "qwerty", 0));
@@ -1222,7 +1224,7 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testRemoveQuotes() {
+	void testRemoveQuotes() {
 		assertEquals("123", StringUtil.removeQuotes("123"));
 		assertEquals("'123", StringUtil.removeQuotes("'123"));
 		assertEquals("123", StringUtil.removeQuotes("'123'"));

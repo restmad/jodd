@@ -31,13 +31,13 @@ import jodd.petite.proxetta.ProxettaAwarePetiteContainer;
 import jodd.proxetta.ProxyAspect;
 import jodd.proxetta.impl.ProxyProxetta;
 import jodd.proxetta.pointcuts.AllRealMethodsPointcut;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class ProxettaAwareContainerTest {
+class ProxettaAwareContainerTest {
 
 	@PetiteBean
 	public static class SecretService {
@@ -88,7 +88,7 @@ public class ProxettaAwareContainerTest {
 	}
 
 	@Test
-	public void testProxyProxetta() {
+	void testProxyProxetta() {
 		ProxyProxetta proxetta = ProxyProxetta.withAspects(
 			new ProxyAspect(AddStringAdvice.class, new AllRealMethodsPointcut()));
 

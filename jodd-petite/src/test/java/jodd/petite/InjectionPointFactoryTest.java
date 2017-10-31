@@ -25,23 +25,23 @@
 
 package jodd.petite;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class InjectionPointFactoryTest {
+class InjectionPointFactoryTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeEach
+	void setUp() throws Exception {
 		ipf = new InjectionPointFactory(new PetiteConfig());
 	}
 
 	InjectionPointFactory ipf;
 
 	@Test
-	public void testDuplicateNamesSpecialCases() {
+	void testDuplicateNamesSpecialCases() {
 		String[] s = new String[]{};
 		ipf.removeDuplicateNames(s);
 		assertEquals(0, s.length);
@@ -61,7 +61,7 @@ public class InjectionPointFactoryTest {
 	}
 
 	@Test
-	public void testDuplicateNames() {
+	void testDuplicateNames() {
 		String[] s = new String[]{"foo", "foo", "boo", "foo"};
 		ipf.removeDuplicateNames(s);
 		assertEquals("foo", s[0]);
@@ -71,7 +71,7 @@ public class InjectionPointFactoryTest {
 	}
 
 	@Test
-	public void testDuplicateNames2() {
+	void testDuplicateNames2() {
 		String[] s = new String[]{"boo", "foo", "boo", "foo"};
 		ipf.removeDuplicateNames(s);
 		assertEquals("boo", s[0]);
@@ -81,7 +81,7 @@ public class InjectionPointFactoryTest {
 	}
 
 	@Test
-	public void testDuplicateNames3() {
+	void testDuplicateNames3() {
 		String[] s = new String[]{"boo", "boo"};
 		ipf.removeDuplicateNames(s);
 		assertEquals("boo", s[0]);

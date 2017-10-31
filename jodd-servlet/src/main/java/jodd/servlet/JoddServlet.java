@@ -35,10 +35,8 @@ public class JoddServlet {
 	// ---------------------------------------------------------------- module
 
 	static {
-		init();
+		Jodd.initModule();
 	}
 
-	public static void init() {
-		Jodd.init(JoddServlet.class);
-	}
+	public static void init() {}
 }

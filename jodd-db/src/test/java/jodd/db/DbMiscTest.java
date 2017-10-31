@@ -26,19 +26,19 @@
 package jodd.db;
 
 import jodd.db.fixtures.DbHsqldbTestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class DbMiscTest extends DbHsqldbTestCase {
+class DbMiscTest extends DbHsqldbTestCase {
 
 	@Test
-	public void testBig() throws Exception {
+	void testBig() throws Exception {
 		DbSession session = new DbSession(cp);
 
 		DbQuery query = new DbQuery(session, "girlCount");
@@ -139,7 +139,7 @@ public class DbMiscTest extends DbHsqldbTestCase {
 	}
 
 	@Test
-	public void testSetMap() throws SQLException {
+	void testSetMap() throws SQLException {
 		DbSession session = new DbSession(cp);
 		DbQuery dbQuery = new DbQuery(session, "select * from GIRL where ID = :id");
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -154,7 +154,7 @@ public class DbMiscTest extends DbHsqldbTestCase {
 	}
 
 	@Test
-	public void testSetObjects() throws SQLException {
+	void testSetObjects() throws SQLException {
 		DbSession session = new DbSession(cp);
 		DbQuery dbQuery = new DbQuery(session, "select * from GIRL where ID = ?");
 		Object[] o = {Integer.valueOf(1)};

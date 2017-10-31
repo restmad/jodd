@@ -27,15 +27,14 @@ package jodd.petite;
 
 import jodd.bean.BeanUtil;
 import jodd.introspector.Setter;
+import jodd.log.Logger;
+import jodd.log.LoggerFactory;
 import jodd.petite.meta.InitMethodInvocationStrategy;
 import jodd.petite.scope.Scope;
 import jodd.petite.scope.SingletonScope;
+import jodd.typeconverter.Converter;
 
 import java.util.Collection;
-
-import jodd.typeconverter.Convert;
-import jodd.log.Logger;
-import jodd.log.LoggerFactory;
 
 /**
  * Petite IOC container.
@@ -67,20 +66,10 @@ public class PetiteContainer extends PetiteBeans {
 	public PetiteContainer(PetiteConfig config) {
 		super(config);
 
-		if (JoddPetite.useProxetta) {
-			scopedProxyManager = new ScopedProxyManager();
-		} else {
-			scopedProxyManager = null;
-		}
+		scopedProxyManager = new ScopedProxyManager();
 
 		if (log.isDebugEnabled()) {
 			log.debug("Petite container created");
-
-			if (JoddPetite.useProxetta) {
-				log.debug("Petite proxy features enabled");
-			} else {
-				log.debug("Petite proxy features not available");
-			}
 		}
 	}
 
@@ -104,7 +93,7 @@ public class PetiteContainer extends PetiteBeans {
 				if (args[i] == null) {
 					if ((def.wiringMode == WiringMode.STRICT)) {
 						throw new PetiteException(
-								"Wiring constructor failed. References '" + Convert.toString(def.ctor.references[i]) +
+								"Wiring constructor failed. References '" + Converter.get().toString(def.ctor.references[i]) +
 								"' not found for constructor: " + def.ctor.constructor);
 					}
 				}
@@ -165,7 +154,7 @@ public class PetiteContainer extends PetiteBeans {
 			if (value == null) {
 				if ((def.wiringMode == WiringMode.STRICT)) {
 					throw new PetiteException("Wiring failed. Beans references: '" +
-							Convert.toString(refNames) + "' not found for property: "+ def.type.getName() +
+							Converter.get().toString(refNames) + "' not found for property: "+ def.type.getName() +
 							'#' + pip.propertyDescriptor.getName());
 				}
 				continue;
@@ -243,7 +232,7 @@ public class PetiteContainer extends PetiteBeans {
 				if (value == null) {
 					if ((def.wiringMode == WiringMode.STRICT)) {
 						throw new PetiteException("Wiring failed. Beans references: '" +
-								Convert.toString(refName) + "' not found for method: " + def.type.getName() + '#' + methodRef.method.getName());
+								Converter.get().toString(refName) + "' not found for method: " + def.type.getName() + '#' + methodRef.method.getName());
 					}
 				}
 			}

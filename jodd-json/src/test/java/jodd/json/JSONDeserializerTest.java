@@ -25,7 +25,6 @@
 
 package jodd.json;
 
-import jodd.json.impl.DateJsonSerializer;
 import jodd.json.fixtures.mock.Employee;
 import jodd.json.fixtures.mock.Group;
 import jodd.json.fixtures.mock.Network;
@@ -40,10 +39,11 @@ import jodd.json.fixtures.mock.superhero.SuperPower;
 import jodd.json.fixtures.mock.superhero.Villian;
 import jodd.json.fixtures.mock.superhero.XRayVision;
 import jodd.json.fixtures.model.Account;
+import jodd.json.impl.DateJsonSerializer;
 import jodd.util.StringUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.awt.geom.Point2D;
 import java.text.ParseException;
@@ -57,29 +57,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class JSONDeserializerTest {
+class JSONDeserializerTest {
 
 	private static final double DELTA = 0.000000001;
 
 	private DataCreator creator;
 
-	@Before
-	public void setUp() {
+	@BeforeEach
+	void setUp() {
 		creator = new DataCreator();
 	}
 
-	@After
-	public void tearDown() {
-		JoddJson.classMetadataName = null;
+	@AfterEach
+	void tearDown() {
+		JoddJson.defaults().setClassMetadataName(null);
 	}
 
 	@Test
-	public void testDeserializeNoIncludes() {
+	void testDeserializeNoIncludes() {
 		Person jodder = creator.createJodder();
 		String json = new JsonSerializer().serialize(jodder);
 		Person jsonJodder = new JsonParser().parse(json, Person.class);
@@ -102,7 +102,7 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testDeserializeWithPath() {
+	void testDeserializeWithPath() {
 		Person igor = creator.createJodder();
 		Map map = new HashMap();
 		map.put("person", igor);
@@ -128,7 +128,7 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testDeserializeWithIncludes() {
+	void testDeserializeWithIncludes() {
 		Person igor = creator.createJodder();
 		String json = new JsonSerializer().include("phones", "hobbies").serialize(igor);
 		Person jsonIgor = new JsonParser().parse(json, Person.class);
@@ -138,7 +138,7 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testSubClassDeserialize() {
+	void testSubClassDeserialize() {
 		Employee dilbert = creator.createDilbert();
 
 		String json = new JsonSerializer().include("phones", "hobbies").serialize(dilbert);
@@ -150,7 +150,7 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testDeserializeInterfaces() {
+	void testDeserializeInterfaces() {
 		Hero superman = creator.createSuperman();
 		String json = new JsonSerializer().include("powers").setClassMetadataName("class").serialize(superman);
 		Hero jsonSuperMan = new JsonParser().setClassMetadataName("class").parse(json, Hero.class);
@@ -159,11 +159,11 @@ public class JSONDeserializerTest {
 		assertEquals(4, jsonSuperMan.getPowers().size());
 		assertHeroHasSuperPowers(jsonSuperMan);
 
-		JoddJson.classMetadataName = null;
+		JoddJson.defaults().setClassMetadataName(null);
 	}
 
 	@Test
-	public void testDeserializeInterfaces2() {
+	void testDeserializeInterfaces2() {
 		Hero superman = creator.createSuperman();
 		String json = new JsonSerializer().include("powers").withClassMetadata(true).serialize(superman);
 		Hero jsonSuperMan = new JsonParser().withClassMetadata(true).parse(json, Hero.class);
@@ -172,12 +172,12 @@ public class JSONDeserializerTest {
 		assertEquals(4, jsonSuperMan.getPowers().size());
 		assertHeroHasSuperPowers(jsonSuperMan);
 
-		JoddJson.classMetadataName = null;
+		JoddJson.defaults().setClassMetadataName(null);
 	}
 
 	@Test
-	public void testNoClassHints() {
-		JoddJson.classMetadataName = null;
+	void testNoClassHints() {
+		JoddJson.defaults().setClassMetadataName(null);
 
 		Hero superman = creator.createSuperman();
 		String json = new JsonSerializer().exclude("*.class").serialize(superman);
@@ -197,8 +197,8 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testNoHintsButClassesForCollection() {
-		JoddJson.classMetadataName = "class";
+	void testNoHintsButClassesForCollection() {
+		JoddJson.defaults().setClassMetadataName("class");
 
 		Hero superman = creator.createSuperman();
 		String json = new JsonSerializer()
@@ -210,8 +210,8 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testNoClassHintsForCollections() {
-		JoddJson.classMetadataName = "class";
+	void testNoClassHintsForCollections() {
+		JoddJson.defaults().setClassMetadataName("class");
 
 		Hero superman = creator.createSuperman();
 		String json = new JsonSerializer()
@@ -236,8 +236,8 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testListSerialization() {
-		JoddJson.classMetadataName = "class";
+	void testListSerialization() {
+		JoddJson.defaults().setClassMetadataName("class");
 
 		Person modesty = creator.createModesty();
 		Person igor = creator.createJodder();
@@ -266,8 +266,8 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testGenericTypeDeserialization() {
-		JoddJson.classMetadataName = "class";
+	void testGenericTypeDeserialization() {
+		JoddJson.defaults().setClassMetadataName("class");
 
 		Pair<Hero, Villian> archenemies = new Pair<>(creator.createSuperman(), creator.createLexLuthor());
 
@@ -292,7 +292,7 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testGenericTypeDeserialization2() {
+	void testGenericTypeDeserialization2() {
 		Pair<Hero, Villian> archenemies = new Pair<>(creator.createSuperman(), creator.createLexLuthor());
 
 		String json = new JsonSerializer()
@@ -315,8 +315,8 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testGeneralMapDeserialization() {
-		JoddJson.classMetadataName = "class";
+	void testGeneralMapDeserialization() {
+		JoddJson.defaults().setClassMetadataName("class");
 
 		String json = new JsonSerializer().exclude("*.class").serialize(creator.createJodder());
 		Map<String, Object> deserialized = new JsonParser().parse(json);
@@ -328,7 +328,7 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testGeneralMapDeserialization2() {
+	void testGeneralMapDeserialization2() {
 		String json = new JsonSerializer().serialize(creator.createJodder());
 		Map<String, Object> deserialized = new JsonParser().parse(json);
 
@@ -339,8 +339,8 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testListDeserializationNoClass() {
-		JoddJson.classMetadataName = "class";
+	void testListDeserializationNoClass() {
+		JoddJson.defaults().setClassMetadataName("class");
 
 		Person modesty = creator.createModesty();
 		Person igor = creator.createJodder();
@@ -361,7 +361,7 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testListDeserializationNoClass2() {
+	void testListDeserializationNoClass2() {
 		Person modesty = creator.createModesty();
 		Person igor = creator.createJodder();
 		Person pedro = creator.createPedro();
@@ -381,7 +381,7 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testDateTransforming() throws ParseException {
+	void testDateTransforming() throws ParseException {
 		final SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 		Person foo = new Person("Foo", "Bar", new Date(), null, null);
 		foo.setBirthdate(df.parse("2009/01/02"));
@@ -397,6 +397,7 @@ public class JSONDeserializerTest {
 
 		Person newUser = new JsonParser()
 				.withValueConverter("birthdate", new ValueConverter<String, Date>() {
+					@Override
 					public Date convert(String data) {
 						try {
 							return df.parse(data);
@@ -412,7 +413,7 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testMapWithEmbeddedObject() {
+	void testMapWithEmbeddedObject() {
 		Map<String, Network> networks = new JsonParser()
 				.setClassMetadataName("class")
 				.parse("{\"1\": {\"class\":\"" + Network.class.getName() + "\", \"name\": \"Jodd\"} }");
@@ -426,8 +427,8 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testMapWithEmbeddedObject2() {
-		JoddJson.classMetadataName = null;
+	void testMapWithEmbeddedObject2() {
+		JoddJson.defaults().setClassMetadataName(null);
 
 		Map<String, Pair<Phone, Network>> complex = new JsonParser()
 				.map("values", Pair.class)
@@ -446,7 +447,7 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testListWithEmbeddedObject() {
+	void testListWithEmbeddedObject() {
 		List<Network> networks = new JsonParser()
 				.setClassMetadataName("class")
 				.parse("[" +
@@ -464,7 +465,7 @@ public class JSONDeserializerTest {
 
 
 	@Test
-	public void testArrayType() {
+	void testArrayType() {
 		Person igor = creator.createJodder();
 		Person modesty = creator.createModesty();
 
@@ -480,7 +481,7 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testEmptyArray() {
+	void testEmptyArray() {
 		Group group = new JsonParser().parse("{\"people\": [], \"groupName\": \"Nobody\" }", Group.class);
 		assertEquals("Nobody", group.getGroupName());
 		assertEquals(0, group.getPeople().length);
@@ -488,7 +489,7 @@ public class JSONDeserializerTest {
 
 
 	@Test
-	public void testNullDeserialization() {
+	void testNullDeserialization() {
 		String input = "{\"property\": null, \"property2\":5, \"property3\":\"abc\"}";
 
 		JsonParser deserializer = new JsonParser();
@@ -499,11 +500,11 @@ public class JSONDeserializerTest {
 		// fails on this line, because the first property is not deserialized
 		assertEquals(3, result.size());
 		assertTrue(result.containsKey("property"));
-		assertNull("the value should be null", result.get("property"));
+		assertNull(result.get("property"), "the value should be null");
 	}
 
 	@Test
-	public void testPrimitives() {
+	void testPrimitives() {
 		List<Date> dates = new ArrayList<>();
 		dates.add(new Date());
 		dates.add(new Date(1970, 1, 12));
@@ -540,7 +541,7 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testArray() {
+	void testArray() {
 		Person[] p = new Person[3];
 		p[0] = creator.createJodder();
 		p[1] = creator.createDilbert();
@@ -556,10 +557,25 @@ public class JSONDeserializerTest {
 		assertEquals("Modesty", jsonP[2].getFirstname());
 	}
 
+	@Test
+	void testArray_boolean() {
+		final boolean[] input = new boolean[] {true,false,true};
+		final boolean[] expected_bools = input;
+		final String expected_json = "[true,false,true]";
+
+		final String actual_json = new JsonSerializer().serialize(input);
+		final boolean[] actual_bools = new JsonParser().parse(actual_json, boolean[].class);
+
+		// asserts
+		assertNotNull(actual_json);
+		assertNotNull(actual_bools);
+		assertEquals(expected_json, actual_json);
+		assertArrayEquals(expected_bools, actual_bools);
+	}
 
 	@Test
-	public void testDeserializationIntoPublicFields() {
-		JoddJson.classMetadataName = "class";
+	void testDeserializationIntoPublicFields() {
+		JoddJson.defaults().setClassMetadataName("class");
 
 		Spiderman spiderman = new Spiderman();
 		spiderman.spideySense = false;
@@ -573,7 +589,7 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testAutoTypeConvertToNumerical() {
+	void testAutoTypeConvertToNumerical() {
 		Account account = new JsonParser()
 				.parse("{\"id\": \"5\", \"accountNumber\": \"1234567-123\"}", Account.class);
 		assertEquals(new Integer(5), account.getId());
@@ -583,7 +599,7 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testDeserializeURL() {
+	void testDeserializeURL() {
 		String json = "{\n" +
 				"  \"oslc_cm:next\": \"http:\\/\\/localhost:9080\\/results\\/3\",\n" +
 				"  \"oslc_cm:previous\": \"http:\\/\\/localhost:9080\\/results\\/1\", \n" +
@@ -606,8 +622,8 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testPoint() {
-		JoddJson.classMetadataName = "__class";
+	void testPoint() {
+		JoddJson.defaults().setClassMetadataName("__class");
 		String json = new JsonSerializer().serialize(new Point2D.Float(1.0f, 2.0f));
 		Point2D.Float point = new JsonParser().parse(json);
 		assertEquals(1.0f, point.x, DELTA);
@@ -615,7 +631,7 @@ public class JSONDeserializerTest {
 	}
 
 	@Test
-	public void testUnixEpoch() {
+	void testUnixEpoch() {
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeZone(TimeZone.getTimeZone("GMT"));
 
@@ -639,6 +655,7 @@ public class JSONDeserializerTest {
 	}
 
 	public static class SimpleClassnameTransformer implements TypeJsonSerializer {
+		@Override
 		public boolean serialize(JsonContext jsonContext, Object value) {
 			String name = value.toString() + "***";
 			jsonContext.writeString(name);
